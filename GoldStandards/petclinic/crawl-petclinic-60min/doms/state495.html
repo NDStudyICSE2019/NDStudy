@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en"><!--
+PetClinic :: a Spring Framework demonstration
+--><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>PetClinic :: a Spring Framework demonstration</title>
+
+
+    
+    <link href="/petclinic/webjars/bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="/petclinic/resources/css/petclinic.css" rel="stylesheet">
+
+    
+    <script src="/petclinic/webjars/jquery/2.0.3/jquery.js"></script>
+
+	<!-- jquery-ui.js file is really big so we only load what we need instead of loading everything -->
+    
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.core.js"></script>
+
+	
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.datepicker.js"></script>
+    
+    <!-- jquery-ui.css file is not that big so we can afford to load it -->
+    
+    <link href="/petclinic/webjars/jquery-ui/1.10.3/themes/base/jquery-ui.css" rel="stylesheet">
+</head>
+
+
+
+
+<body style="">
+<div class="container">
+    
+
+
+
+<img src="/petclinic/resources/images/banner-graphic.png">
+
+<div class="navbar" style="width: 601px;">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li style="width: 120px;"><a href="/petclinic/"><i class="icon-home"></i>
+                Home</a></li>
+            <li style="width: 150px;"><a href="/petclinic/owners/find.html"><i class="icon-search"></i> Find owners</a></li>
+            <li style="width: 160px;"><a href="/petclinic/vets.html"><i class="icon-th-list"></i> Veterinarians</a></li>
+            <li style="width: 110px;"><a href="/petclinic/oups.html" title="trigger a RuntimeException to see how it is handled"><i class="icon-warning-sign"></i> Error</a></li>
+        </ul>
+    </div>
+</div>
+	
+
+
+    <h2>Owner Information</h2>
+
+    <table class="table table-striped" style="width:600px;">
+        <tbody><tr>
+            <th>Name</th>
+            <td><b>Eduardo Rodriquez</b></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>2693 Commerce St.</td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td>McFarland</td>
+        </tr>
+        <tr>
+            <th>Telephone</th>
+            <td>6085558763</td>
+        </tr>
+         <tr>
+            <td> 
+            	
+                    
+                
+                <a href="3/edit.html" class="btn btn-info">Edit Owner</a></td>
+            <td>
+            	
+                    
+                
+                <a href="3/pets/new.html" class="btn btn-success">Add New Pet</a></td>
+        </tr>
+    </tbody></table>
+
+    <h2>Pets and Visits</h2>
+
+    
+        <table class="table" style="width:600px;">
+            <tbody><tr>
+                <td valign="top" style="width: 120px;">
+                    <dl class="dl-horizontal">
+                        <dt>Name</dt>
+                        <dd>Jewel</dd>
+                        <dt>Birth Date</dt>
+                        <dd>2010-03-05</dd>
+                        <dt>Type</dt>
+                        <dd>dog</dd>
+                    </dl>
+                </td>
+                <td valign="top">
+                    <table class="table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Visit Date</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        
+                        <tbody><tr>
+                            <td> 
+                            	
+			                        
+			                        
+			                    
+			                    <a href="/petclinic/owners/3/pets/4/edit">Edit Pet</a>
+			                </td>
+                            <td>
+			                    
+			                        
+			                        
+			                    
+			                    <a href="/petclinic/owners/3/pets/4/visits/new">Add Visit</a>
+                            </td>
+                       	</tr>
+                    </tbody></table>
+                </td>
+            </tr>
+        </tbody></table>
+    
+        <table class="table" style="width:600px;">
+            <tbody><tr>
+                <td valign="top" style="width: 120px;">
+                    <dl class="dl-horizontal">
+                        <dt>Name</dt>
+                        <dd>Rosy</dd>
+                        <dt>Birth Date</dt>
+                        <dd>2011-04-16</dd>
+                        <dt>Type</dt>
+                        <dd>dog</dd>
+                    </dl>
+                </td>
+                <td valign="top">
+                    <table class="table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Visit Date</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        
+                        <tbody><tr>
+                            <td> 
+                            	
+			                        
+			                        
+			                    
+			                    <a href="/petclinic/owners/3/pets/3/edit">Edit Pet</a>
+			                </td>
+                            <td>
+			                    
+			                        
+			                        
+			                    
+			                    <a href="/petclinic/owners/3/pets/3/visits/new">Add Visit</a>
+                            </td>
+                       	</tr>
+                    </tbody></table>
+                </td>
+            </tr>
+        </tbody></table>
+    
+
+    
+
+<table class="footer">
+    <tbody><tr>
+        <td width="70%"></td>
+        <td align="right"><img src="/petclinic/resources/images/spring-pivotal-logo.png" alt="Sponsored by Pivotal"></td>
+    </tr>
+</tbody></table>
+
+
+
+
+</div>
+
+
+
+
+</body></html>

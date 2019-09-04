@@ -1,0 +1,16 @@
+#set ( $page = "urls") #set( $baseUrl = ".")
+<div class="page-header">
+	<h1>URL's visited</h1>
+</div>
+<table class="table table-bordered table-striped url-table">
+	<tbody>
+		#foreach( $url in $urls.keySet() )
+		<tr>
+			<td><a href="${url}">${url}</a></td>
+			<td>#foreach( $state in $urls.get($url) ) <a
+				href="states/${state}.html">${state}</a>, #end
+			</td>
+		</tr>
+		#end
+	</tbody>
+</table>

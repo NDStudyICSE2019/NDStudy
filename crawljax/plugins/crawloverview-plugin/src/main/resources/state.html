@@ -1,0 +1,137 @@
+#set( $page = "state")
+#set( $baseUrl = "..")
+#parse( "header.html" )
+<link href="../css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="../css/shCoreDefault.css" rel="stylesheet" type="text/css" />
+<style>
+.tooltip-inner {
+	max-width: 300px;
+	word-wrap: break-word;
+}
+
+body {
+	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+</style>
+</head>
+<body>
+	#parse( "nav.html")
+	<div class='container' >
+		<h1>Summary of ${name}</h1>
+		<table class="table table-bordered table-striped">
+			<colgroup>
+				<col class="span1">
+				<col class="span7">
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>URL</th>
+					<td><a href='${url}'>${url}</a></td>
+				</tr>
+				<tr>
+					<th>Fan in</th>
+					<td>${fanIn}</td>
+				</tr>
+				<tr>
+					<th>Fan out</th>
+					<td>${fanOut}</td>
+				</tr>
+				<tr>
+					<th>Interaction elements</th>
+					<td>${elements.size()}</td>
+				</tr>
+				<tr>
+					<th>Nearest State</th>
+					<td>${nearestState}</td>
+				</tr>
+				<tr>
+					<th>Distance to nearest State</th>
+					<td>${distToNearestState}</td>
+				</tr>
+				<tr>
+					<th>Has Near Duplicate</th>
+					<td>${hasNearDuplicate}</td>
+				</tr>
+				<tr>
+					<th>Cluster</th>
+					<td>${cluster}</td>
+				</tr>
+				<tr>
+					<th>Failed events</th>
+					<td>${failedEvents}</td>
+			</tbody>
+		</table>
+		<ul id='tabs' class="nav nav-tabs">
+			<li class="active">
+				<a href="#screenshot">Screenshot</a>
+			</li>
+			<li>
+				<a href="#dom">Captured DOM</a>
+			</li>	
+			<li>
+				<a href="#interactions">Interactions</a>
+			</li>			
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" style="position: relative;" id='screenshot'>			
+				<img style='max-width: none;' border='0' src='../screenshots/${screenshot}' /> 
+				#foreach( $element in $elements )
+				<div rel="tooltip" data-original-title="${element.xpath}" class='hovers'
+				style="position: absolute; z-index: ${element.zindex}; left: ${element.left}px; top: ${element.top}px; width: ${element.width}px; height: ${element.height}px; border: 2px solid ${element.color}; #if(${element.targetname} != "") cursor: pointer;" onclick="location.href='${element.targetname}.html'"#else " #end></div>
+				#end				
+			</div>
+			<div class="tab-pane" id='dom'>
+				<h2>Captured DOM</h2>
+				<pre class='brush: html'>${dom}</pre>
+			</div>
+			<div class="tab-pane" id='interactions'>
+				<h2>Interactions</h2>
+				<table class="table table-bordered table-striped">
+					<tbody>
+						<tr>
+							<th>Xpath</th>
+							<th>Destination</tg>
+						</tr>
+						#foreach( $element in $elements )
+						<tr>
+							<td>${element.xpath}</td>
+							<td><a href="${element.targetname}.html">${element.targetname}</a></td>
+						</tr>
+						#end						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../lib/shCore.js"></script>
+	<script type="text/javascript" src="../lib/shBrushXml.js"></script>
+	<script type="text/javascript" src="../lib/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="../lib/bootstrap.min.js"></script>
+	<script type="text/javascript">
+    	$(document).ready(function() {
+			SyntaxHighlighter.all()
+
+			$('#tabs a').click(function (e) {
+		  		e.preventDefault();
+		  		$(this).tab('show');
+			})
+		});
+    	
+    	$('.hovers').tooltip({
+    	    placement: function(a, element) {
+    	        var position = $(element).position();
+    	        if (position.left > 515) {
+    	            return "left";
+    	        }
+    	        if (position.left < 515) {
+    	            return "right";
+    	        }
+    	        if (position.top < 110){
+    	            return "bottom";
+    	        }
+    	        return "top";
+    	    }
+    	});
+	</script>
+</body>
+</html>

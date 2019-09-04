@@ -1,0 +1,926 @@
+<html>
+<head>
+<title>{{ title }}</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-v3.3.7.min.css" />
+<style>
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 99;
+  cursor: pointer;
+}
+
+</style>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap-v3.3.7.min.js">></script> 
+<!-- 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+-->
+<script>
+	json_data = '';
+	json_data_original = [].concat({{jsonData}}) ;
+	json_uploaded = '';
+	submitted = 0;
+	saved = 0;
+	autoNextEnabled = false;
+	tags = {0:['visually same'], 1:['dynamic content', 'advertisements'], 2:['different pages', 'different content', 'advertisements']};
+	tagsDisplayed = [];
+
+	function saveJson() {
+		var fileName = "{{saveJsonName}}";
+		var a = document.createElement("a");
+		var file = new Blob([JSON.stringify(json_data)], {type: 'text/plain'});
+		a.href = URL.createObjectURL(file);
+		a.download = fileName;
+		a.click();
+		saved = submitted;
+		window.onbeforeunload = null;
+		$("#saveJson").html("Save Reponses as JSON <span class='badge'>" + (submitted-saved).toString()  + "</span>");
+	}
+
+	function checkDataFromJSON(json){
+		console.log(json)
+		if(json.length == 0){
+			return false;
+		}
+		if(! json[0].hasOwnProperty('response')){
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	function loadJsonConfirm(){
+
+			console.log("Loading JSON from file.");
+			var isValid = checkDataFromJSON(json_uploaded);
+			if(isValid){
+				json_data = json_uploaded;
+				ezBSAlert({
+					messageText: "Successfully loaded the JSON",
+					alertType: "success"
+				}).done(function (e) {console.log("Alert shown and done.")});
+				
+				submitted = 0;
+				saved = 0;
+				var max = 0;
+				for(jsonId in json_data){
+					if(json_data[jsonId].response != -1){
+						console.log("Setting max : " + jsonId + " : " + json_data[jsonId]);
+						submitted +=1;
+						max=parseInt(jsonId);
+					}
+				}
+				saved = submitted;
+				loadTagsFromJson();
+				updateProgressBar();
+				currentImage = max;
+				loadNextImage();
+			}
+	}
+
+	function loadTagsFromJson(){
+		for(i in json_data){
+			var response = json_data[i].response;
+			var jsontags = json_data[i].tags;
+			if(response != -1){
+				console.log('jsontags : ' + jsontags);
+				if(jsontags.length > 0){
+					tags[response] = tags[response].concat(jsontags);
+				}
+			}
+		}
+		tags[0] = [...new Set(tags[0])];
+		tags[1] = [...new Set(tags[1])];
+		tags[2] = [...new Set(tags[2])];
+	}
+
+	function loadJson(e) {
+		if(e){
+			console.log(e);
+			if(saved != submitted){
+				ezBSAlert({
+					type: "confirm",
+					messageText: "Do you Want to save your current changes?",
+					alertType: "danger"
+				}).done(function(e){
+					if(e){
+						saveJson();
+						console.log("saving current changes.")
+						loadJsonConfirm();
+					}
+					else{
+						console.log("Purging current changes.")
+						loadJsonConfirm();
+					}
+				});
+			}
+			else{
+				loadJsonConfirm()
+			}
+			
+		}
+		else{
+			console.log(e);
+			console.log("Ignoring the file.");
+		}
+	}
+
+
+	doneImage = "doneImage.png"
+	beginImage = "beginImage.png"
+	currentImage = -1;
+	doneTakingResponses = false;
+	imageZoom = 1;
+
+	function loadNextImage(){
+		var checkedRadio = $("input[name='response']:checked");
+
+		checkedRadio.prop('checked', false);
+		if(currentImage == json_data.length -1 ){
+			imageToShow = doneImage;
+			doneTakingResponses = true;
+			// $("#responseForm").hide("slide");
+			// //$("#saveJson").show();
+			// $("#nextButton").hide();
+			// $("#prevButton").show();
+			currentImage += 1;
+		}
+		else {
+			//$("#imagePanel>.panel-heading").html("Images to Compare");
+			// $("#responseForm").show("slide");
+			// $("#prevButton").show();
+			currentImage += 1;
+			console.log('currentImage : ' + currentImage)
+			imageToShow =  json_data[currentImage].image
+
+		}
+
+		$("#imageToShow").html(
+			"<img src = \"images/" + 
+			imageToShow + 
+			"\">"
+			);
+
+		updateStateForCurrentImage();
+
+	}
+
+	function loadPreviousImage(){
+
+		var checkedRadio = $("input[name='response']:checked");
+		checkedRadio.prop('checked', false);
+
+		if(currentImage <= 0 ){
+			imageToShow = beginImage;
+			// $("#responseForm").hide("slide");
+			// $("#nextButton").show();
+			// $("#prevButton").hide();
+			currentImage-=1;
+			// $("#imagePanel>.panel-heading").html("Images to Compare");
+		}
+		else {
+			currentImage -= 1;
+			// $("#responseForm").show("slide");
+			// $("#imagePanel>.panel-heading").html("Images to Compare");
+			console.log('currentImage : ' + currentImage);
+			imageToShow =  json_data[currentImage].image;
+			// $("#nextButton").show();
+		}
+
+		$("#imageToShow").html(
+			"<img src = \"images/" + 
+			imageToShow + 
+			"\">"
+			);
+
+		updateStateForCurrentImage();
+
+	}
+
+	function updateStateForCurrentImage(){
+
+		$("#successAlert").hide();
+		$("#errorAlert").hide();
+		$("#tags").val("");
+		var tagArray = [];
+		tagArray = tagArray.concat(tags[0].concat(tags[1].concat(tags[2])));
+		// $(".autocomplete").autocomplete({
+		// 		    source: tagArray
+		// 		});
+		$("#comments").val("");
+		$("#imageHeading>strong").html("Images to Compare");
+		$("#imageHeading>dummy").html('');
+		$("#currentImageNumber").html('');
+
+		if(currentImage == json_data.length ){
+			$("#responseForm").hide("slide");
+			//$("#saveJson").show();
+			$("#nextButton").hide();
+			$("#prevButton").show();
+			return;
+		}
+		else if(currentImage < 0 ){
+			$("#responseForm").hide("slide");
+			$("#nextButton").show();
+			$("#prevButton").hide();
+			return;
+		}
+		else {
+			$("#responseForm").show("slide");
+			$("#prevButton").show();
+			$("#nextButton").show();
+			$("#currentImageNumber").html((currentImage + 1).toString());
+		}
+
+
+		if(json_data[currentImage].response !=-1){
+			var previouslyCheckedRadio = $("input[name='response'][responseId='" + json_data[currentImage].response + "']");
+			//json_data[currentImage].response = checkedRadio.attr('responseId')
+			previouslyCheckedRadio.prop('checked', true);
+			$("#tags").val((json_data[currentImage].tags).toString());
+			$("#comments").val(json_data[currentImage].comments);
+
+			$("#imageHeading>strong").html("Response Recorded : ");
+			if(json_data[currentImage].response == 0){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + "clone" +"</span>");
+
+			}
+			if(json_data[currentImage].response == 1){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + "near-duplicate" +"</span>");
+
+			}
+			if(json_data[currentImage].response == 2){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + "different" +"</span>");
+			}
+
+			for(tag in json_data[currentImage].tags){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + json_data[currentImage].tags[tag] +"</span>");
+			}
+			// $(".autocomplete").autocomplete({
+			// 	    source: tags[json_data[currentImage].response]
+			// 	});
+		}
+
+		imageZoom = 1;
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+		updateAutocompleteTagsForCategory();
+
+	}
+
+	function updateAutocompleteTagsForCategory(){
+		var checkedRadio = $("input[name='response']:checked");
+		tagsDisplayed = [];
+		$("#tagSugs").html('');
+		var tagsToDisplay = [];	
+		if(checkedRadio.length != 0){
+			var responseId = checkedRadio.attr('responseId');
+			tagsToDisplay = tags[responseId];
+			tagsToDisplay = [...new Set(tagsToDisplay)];
+		}
+		else{
+			tagsToDisplay= tagsToDisplay.concat(tags[0].concat(tags[1].concat(tags[2])));
+			tagsToDisplay = [...new Set(tagsToDisplay)];
+		}
+
+		var tagSugHtml = $("#tagSugs").html(); 
+
+		for(tag in tagsToDisplay){
+			if(!tagsDisplayed.includes(tagsToDisplay[tag])){
+				tagsDisplayed.push(tagsToDisplay[tag]);
+				tagSugHtml =  tagSugHtml + "<li class='tagSug' onclick='addSuggestedTag(this)'>"+ tagsToDisplay[tag]+ "</li>";
+			}
+		}
+		$("#tagSugs").html(tagSugHtml);
+		
+	}
+
+	function updateTags(){
+		var tagText = $("#tags").val();
+		json_data[currentImage].tags = tagText.split(",").map(Function.prototype.call, String.prototype.trim);
+		json_data[currentImage].tags = [...new Set(json_data[currentImage].tags)];
+	}
+
+	function addSuggestedTag(tag){
+		$(tag).remove();
+		delete tagsDisplayed[tagsDisplayed.indexOf(tagText)];
+		var tagText = $(tag).text();
+		if(!json_data[currentImage].tags.includes(tagText)){
+			$("#tags").val($("#tags").val() + ", " + tagText);
+			updateTags();
+		}
+		console.log(tagText);
+	}
+
+
+	function updateProgressBar(){
+		var percent = (submitted/json_data.length)*100;
+		$('.progress-bar').css('width', percent+'%');
+		if(percent <= 33)
+			$('.progress-bar').addClass('progress-bar-danger');
+		if(percent >= 33 && percent <=66)
+			$('.progress-bar').removeClass('progress-bar-danger');
+			$('.progress-bar').addClass('progress-bar-warning');
+		if(percent >= 66 && percent <= 100)
+			$('.progress-bar').removeClass('progress-bar-warning');
+			$('.progress-bar').addClass('progress-bar-info');
+		if(percent == 100)
+			$('.progress-bar').removeClass('progress-bar-info');
+			$('.progress-bar').addClass('progress-bar-success');
+
+		$('.progress-bar').html(submitted + "Reponses_submitted_out_of_" + json_data.length);
+		$("#saveJson").html("Save Reponses as JSON <span class='badge'>" + (submitted-saved).toString()  + "</span>");
+
+	}
+
+	function recordResponse(){
+		var previousValue = json_data[currentImage].response;
+		var checkedRadio = $("input[name='response']:checked");
+		var tagText = $("#tags").val();
+		var comments = $("#comments").val();
+		if(checkedRadio.length == 0){
+			$("#errorAlert").show();
+			return;
+		}
+
+		$("#successAlert").show();
+		
+		if(previousValue == -1 ){
+			window.onbeforeunload = beforeUnload;
+			submitted += 1;
+			updateProgressBar();
+		}
+
+		json_data[currentImage].response = checkedRadio.attr('responseId');
+		json_data[currentImage].tags = tagText.split(",").map(Function.prototype.call, String.prototype.trim);
+		for(tag in json_data[currentImage].tags){
+			if (!tags[json_data[currentImage].response].includes(json_data[currentImage].tags[tag])){
+				tags[json_data[currentImage].response].push(json_data[currentImage].tags[tag]);
+			}
+		}
+		json_data[currentImage].comments = comments;
+		updateStateForCurrentImage();
+		if(autoNextEnabled){
+			loadNextImage();
+		}
+	}
+
+	function on() {
+	document.getElementById("overlay").style.display = "block";
+	}
+
+	function off() {
+	document.getElementById("overlay").style.display = "none";
+	}
+
+	function zoomOutImage(){
+		if(imageZoom >= 0.2){
+			imageZoom -= 0.1;
+		}
+		else{
+			return;
+		}
+
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+
+	}
+
+	function zoomInImage(){
+		if(imageZoom <= 5.0){
+			imageZoom += 0.1;
+		}
+		else{
+			return;
+		}
+
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+	}
+
+	function setZoomValue(){
+		zoomValueInput = $("#zoomValueField").val();
+		if(zoomValueInput >10 && zoomValueInput < 500){
+			imageZoom = zoomValueInput/100;
+		}
+		else{
+			imageZoom = 1;
+		}
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+
+	}
+
+	function beforeUnload() {
+		if(saved != submitted){
+			saveJson();
+
+		}
+		return true;
+	}
+
+	function toggleAutoNext(){
+		autoNextEnabled = !autoNextEnabled;
+		if(autoNextEnabled){
+			$("#autoNextLabel").html("AutoNext Enabled");
+		}
+		else{
+			$("#autoNextLabel").html("AutoNext Disabled");
+		}
+	}
+
+	function bs_input_file() {
+	$(".input-file").before(
+		function() {
+			if ( ! $(this).prev().hasClass('input-ghost') ) {
+				var element = $("<input type='file' class='input-ghost' id='chosenJsonFile' style='visibility:hidden; height:0'>");
+				element.attr("name",$(this).attr("name"));
+				element.change(function(event){
+					var uploadedFile = event.target.files[0]; 
+				//element.change(function(){
+					element.next(element).find('input').val((element.val()).split('\\').pop());
+
+					if(uploadedFile.type !== "text/javascript" && uploadedFile.type !== "application/json") { 
+					        alert("Wrong file type == " + uploadedFile.type); 
+					        return false;
+					    }
+
+					    if (uploadedFile) {
+					        var readFile = new FileReader();
+					        readFile.onload = function(e) { 
+					            var contents = e.target.result;
+					            json_uploaded = JSON.parse(contents);
+					            console.log("JSON from file parsed");
+					        };
+							readFile.readAsText(uploadedFile);
+					    } else { 
+					        console.log("Failed to load file");
+					    }
+					});
+
+				$(this).find("button.btn-choose").click(function(){
+					element.click();
+				});
+				$(this).find("button.btn-reset").click(function(){
+					element.val(null);
+					$(this).parents(".input-file").find('input').val('');
+				});
+				$(this).find('input').css("cursor","pointer");
+				$(this).find('input').mousedown(function() {
+					$(this).parents('.input-file').prev().click();
+					return false;
+				});
+				return element;
+			}
+		}
+	);
+	}
+	// $(function() {
+		
+	// 	//$('.input-group').css('position', 'absolute');
+	// });
+
+	$(document).ready(
+		function(){
+			console.log("ready");
+			json_data = json_data_original;
+
+			doneTakingResponses = false;
+			$("#responseForm").hide("slide")
+			//$("#saveJson").hide()
+			$("#prevButton").hide()
+			$("#nextButton").click(loadNextImage);
+			$("#prevButton").click(loadPreviousImage);
+			$("#saveJson").click(saveJson);
+			$("#responseSubmit").click(recordResponse);
+			$("#infoButton").click(on);
+			$('.progress-bar').html(submitted + "_Reponses_submitted_out_of_" + json_data.length);
+			$("#zoomInButton").click(zoomInImage);
+			$("#zoomOutButton").click(zoomOutImage);
+			$("#zoomValueField").on("keypress", function(e){
+			    if (e.keyCode == 13) {
+				// Cancel the default action on keypress event
+					e.preventDefault(); 
+			        setZoomValue();
+			    }
+			});
+			$("#tags").on("keypress", function(e){
+				if(e.keyCode == 13){
+					e.preventDefault();
+					updateTags();
+				}
+			});
+
+			$(".tagSug").click(function(e){addSuggestedTag(e.target);});
+
+			$("#successAlert").hide();
+			$("#errorAlert").hide();
+			window.onbeforeunload = null;
+			$('#autoNextToggle').click(toggleAutoNext);
+			$('#autoNextToggle').click();
+
+			$('#zoomValueField').val(100);
+
+			bs_input_file();
+			$("#loadJsonButton").on("click", function(){  	
+				ezBSAlert({
+					type: "confirm",
+					messageText: "Do you Want to load this JSON?",
+					alertType: "info"
+				}).done(function(e){loadJson(e);});
+			});
+
+			$(".radio-inline").click(updateAutocompleteTagsForCategory);
+			$('.input-file').css('position', 'absolute');
+
+			$("#imageToShow").click(function(){
+				if(currentImage<0){
+					loadNextImage();
+				}
+			});
+		}
+	);
+		
+
+	function ezBSAlert (options) {
+		var deferredObject = $.Deferred();
+		var defaults = {
+			type: "alert", //alert, prompt,confirm 
+			modalSize: 'modal-sm', //modal-sm, modal-lg
+			okButtonText: 'Ok',
+			cancelButtonText: 'Cancel',
+			yesButtonText: 'Yes',
+			noButtonText: 'No',
+			headerText: 'Attention',
+			messageText: 'Message',
+			alertType: 'default', //default, primary, success, info, warning, danger
+			inputFieldType: 'text', //could ask for number,email,etc
+		}
+		$.extend(defaults, options);
+	  
+		var _show = function(){
+			var headClass = "navbar-default";
+			switch (defaults.alertType) {
+				case "primary":
+					headClass = "alert-primary";
+					break;
+				case "success":
+					headClass = "alert-success";
+					break;
+				case "info":
+					headClass = "alert-info";
+					break;
+				case "warning":
+					headClass = "alert-warning";
+					break;
+				case "danger":
+					headClass = "alert-danger";
+					break;
+	        }
+			$('BODY').append(
+				'<div id="ezAlerts" class="modal fade">' +
+				'<div class="modal-dialog" class="' + defaults.modalSize + '">' +
+				'<div class="modal-content">' +
+				'<div id="ezAlerts-header" class="modal-header ' + headClass + '">' +
+				'<button id="close-button" type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>' +
+				'<h4 id="ezAlerts-title" class="modal-title">Modal title</h4>' +
+				'</div>' +
+				'<div id="ezAlerts-body" class="modal-body">' +
+				'<div id="ezAlerts-message" ></div>' +
+				'</div>' +
+				'<div id="ezAlerts-footer" class="modal-footer">' +
+				'</div>' +
+				'</div>' +
+				'</div>' +
+				'</div>'
+			);
+
+			$('.modal-header').css({
+				'padding': '15px 15px',
+				'-webkit-border-top-left-radius': '5px',
+				'-webkit-border-top-right-radius': '5px',
+				'-moz-border-radius-topleft': '5px',
+				'-moz-border-radius-topright': '5px',
+				'border-top-left-radius': '5px',
+				'border-top-right-radius': '5px'
+			});
+	    
+			$('#ezAlerts-title').text(defaults.headerText);
+			$('#ezAlerts-message').html(defaults.messageText);
+
+			var keyb = "false", backd = "static";
+			var calbackParam = "";
+			switch (defaults.type) {
+				case 'alert':
+					keyb = "true";
+					backd = "true";
+					$('#ezAlerts-footer').html('<button class="btn btn-' + defaults.alertType + '">' + defaults.okButtonText + '</button>').on('click', ".btn", function () {
+						calbackParam = true;
+						$('#ezAlerts').modal('hide');
+					});
+					break;
+				case 'confirm':
+					var btnhtml = '<button id="ezok-btn" class="btn btn-primary">' + defaults.yesButtonText + '</button>';
+					if (defaults.noButtonText && defaults.noButtonText.length > 0) {
+						btnhtml += '<button id="ezclose-btn" class="btn btn-default">' + defaults.noButtonText + '</button>';
+					}
+					$('#ezAlerts-footer').html(btnhtml).on('click', 'button', function (e) {
+							if (e.target.id === 'ezok-btn') {
+								calbackParam = true;
+								$('#ezAlerts').modal('hide');
+							} else if (e.target.id === 'ezclose-btn') {
+								calbackParam = false;
+								$('#ezAlerts').modal('hide');
+							}
+						});
+					break;
+				case 'prompt':
+					$('#ezAlerts-message').html(defaults.messageText + '<br /><br /><div class="form-group"><input type="' + defaults.inputFieldType + '" class="form-control" id="prompt" /></div>');
+					$('#ezAlerts-footer').html('<button class="btn btn-primary">' + defaults.okButtonText + '</button>').on('click', ".btn", function () {
+						calbackParam = $('#prompt').val();
+						$('#ezAlerts').modal('hide');
+					});
+					break;
+			}
+	   
+			$('#ezAlerts').modal({ 
+	          show: false, 
+	          backdrop: backd, 
+	          keyboard: keyb 
+	        }).on('hidden.bs.modal', function (e) {
+				$('#ezAlerts').remove();
+				deferredObject.resolve(calbackParam);
+			}).on('shown.bs.modal', function (e) {
+				if ($('#prompt').length > 0) {
+					$('#prompt').focus();
+				}
+			}).modal('show');
+		}
+	    
+	  _show();  
+	  return deferredObject.promise();    
+	}
+
+
+
+
+
+// $(document).ready(function(){
+//   $("#btnAlert").on("click", function(){  	
+//     var prom = ezBSAlert({
+//       messageText: "hello world",
+//       alertType: "danger"
+//     }).done(function (e) {
+//       $("body").append('<div>Callback from alert</div>');
+//     });
+//   });   
+  
+//   $("#btnConfirm").on("click", function(){  	
+//     ezBSAlert({
+//       type: "confirm",
+//       messageText: "hello world",
+//       alertType: "info"
+//     }).done(function (e) {
+//       $("body").append('<div>Callback from confirm ' + e + '</div>');
+//     });
+//   });   
+
+//   $("#btnPrompt").on("click", function(){  	
+//     ezBSAlert({
+//       type: "prompt",
+//       messageText: "Enter Something",
+//       alertType: "primary"
+//     }).done(function (e) {
+//       ezBSAlert({
+//         messageText: "You entered: " + e,
+//         alertType: "success"
+//       });
+//     });
+//   });   
+  
+// });
+
+// var obj = {a: "Hello", b: "World"};
+// saveText( JSON.stringify(obj));
+</script>
+</head>
+<body>
+
+	<nav class="navbar navbar-default navbar-fixed-top" >
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Near Duplicate Detection</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+		<li class="nav-item active" >
+			<a class="nav-link active" href="#" id = "nextButton">Load Next</a>
+		</li>
+		
+		<li class="nav-item active">
+			<a class="nav-link active" href="#" id = "prevButton">Previous</a>
+		</li>
+		
+
+		<li class="nav-item active">
+			<a class="nav-link active" href="#" id = "infoButton">Instructions</a>
+		</li>
+
+		</ul>
+
+		 <ul class="nav navbar-nav navbar-center">
+		<li>
+
+	    <button id = "saveJson" class="btn btn-danger navbar-btn">Save responses as JSON</button>
+
+	    </li>
+	    </ul>
+<!-- 
+		<li class = "nav-item active">
+			<a class="nav-link active" href="#">Load Json
+<input type = "file" id="loadJsonButton"/>
+			</a>
+ -->	
+  		<ul class="nav navbar-nav navbar-right">
+	 		<!-- <li class="nav-item active">
+			<div class="form-group">
+			    <label for="loadJsonButton">Load Json with previous Responses</label>
+			    <input type="file" class="form-control-file" id="loadJsonButton">
+			</div>
+		   		
+			</li> -->
+			<li>
+				<!-- COMPONENT START -->
+				<div class="form-group">
+					<div class="input-group input-file" name="Fichier1">
+						<span class="input-group-btn">
+			        		<button class="btn btn-default btn-choose" type="button">Choose</button>
+			    		</span>
+			    		<input type="text" class="form-control" placeholder='Choose a file...' />
+			    		<span class="input-group-btn">
+			       			 <button class="btn btn-default btn-info" type="button" id="loadJsonButton">Load</button>
+			    		</span>
+					</div>
+				 </div> 
+	<!-- COMPONENT END -->
+			</li>
+		</ul>
+
+
+
+	  </div>
+
+	
+	</nav>
+
+
+	<div class="panel panel-default">
+	  <div class="panel-heading">Progress Bar</div>
+	  <div class="panel-body" >
+	  	
+	 <div class="progress" >
+		<div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+		</div>
+	</div>
+
+	  </div>
+	</div>
+	 
+
+	<div class="panel panel-default" id="imagePanel">
+	  <div class="panel-heading form-group-row">
+		
+	  	<div id = "imageHeading">
+	  		<span id="currentImageNumber" class='badge'></span>
+	  		<strong>Images to Compare </strong>
+	  		<dummy></dummy>
+	  	</div>
+	  	<div >
+			<button id = "zoomInButton" class="glyphicon glyphicon-zoom-in"> </button>
+		  	<button id = "zoomOutButton" class = "glyphicon glyphicon-zoom-out"></button>
+		  	<input id = "zoomValueField" class = "text"> 
+			
+				<input type="checkbox" class="form-check-input" id="autoNextToggle">
+				<label id="autoNextLabel" class="form-check-label" for="autoNextToggle">Toggle AutoNext</label>
+	  	 </div>
+	  	</div>
+	  <div class="panel-body" style="height:60%;overflow:auto">
+	  	
+		<div id = "imageToShow"> 
+			<img src = "images/beginImage.png">
+		</div>
+	  </div>
+	</div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading"> Please Submit your Response Here</div>
+	  <div class="panel-body" style="height:250px">
+
+
+
+
+	  	<div id = "responseForm" >
+
+			
+			<form>
+				<div class = "form-group">
+					<label class="radio-inline"><input type="radio" name="response" responseId=0>Clone</label>
+					<label class="radio-inline"><input type="radio" name="response" responseId=1>Near Duplicate</label>
+					<label class="radio-inline"><input type="radio" name="response" responseId=2>Different</label>
+				    <button class="btn btn-info" type="button" id ="responseSubmit">Submit Response</button>
+					<div id="successAlert" class="alert alert-success">
+					  	<strong>Success!</strong> Your response has been recorded.
+					</div>
+
+					<div id="errorAlert" class="alert alert-danger">
+						<strong>Error!</strong> Please select a category.
+					</div>
+
+				</div>
+			    <div class = "form-group" id="tagGroup">
+			    	<!-- <label for="tags">Add Custom Tags separated by commas :</label> -->
+  					<!-- <input type="text" class="form-control" id="tags" placeholder="Add Custom Tags separated by commas"> -->
+			   
+					<div class="input-group">
+					    <div class="input-group-btn">
+					    	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Available Tags <span class="caret"></span></button>
+					    	<ul id="tagSugs" class="dropdown-menu">
+					    		<li class='tagSug' onclick='addSuggestedTag(this)'>dummy</li>
+							</ul>
+					    </div><!-- /btn-group -->
+	  					<input type="text" class="form-control" id="tags" placeholder="Add Custom Tags separated by commas">
+					</div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group" id="commentGroup">
+			      <label for="comment">Comments :</label>
+			      <textarea class="form-control" rows="5" id="comments"></textarea>
+			    </div>
+			  </form>
+		</div>
+		
+
+	  </div>
+	</div>
+	
+	<div id="overlay" onclick="off()">
+
+	
+
+	<div class="overlay">
+	<div style="padding:10%">
+	<div class="panel panel-default">
+	  <div class="panel-heading"> Instructions </div>
+	  <div class="panel-body" style="height:250px;overflow:auto">
+	  	<p>	Responses are only recorded if Submit Response Button is clicked after chosing one of the provided Categories </p>
+	  	<p> You May also chose any custom tag you think may be helpful in categorizing these images.<p>
+	  	<p> Comments may include why you decided to classify the pair the way you did. <p> 
+
+	  	<h4> Deciding how to classify given two images</h4>
+	<ul>
+		<li>
+		CLONE : If the pages have no perceptible changes in functionality or appearance, they are considered Clones
+		</li>
+		<li>
+		NEAR-DUPLICATES : If the changes between the pages are subtle and do not probably affect the functionality offered 
+			<ul>
+				<li>
+					Advertisements 
+				</li>
+
+				<li>
+					Background Images 
+				</li>
+
+				<li>
+					Minor Elements that were shown vs hidden because of user actions like hovering for example navigation lists that appears vs not  
+				</li>
+			</ul>
+		</li>
+
+		<li>
+		DIFFERENT : 	If the pages are very different and represent completely different functionality
+		</li>
+	</ul>
+
+	  </div>
+	</div>
+
+	</div>
+	</div>
+
+
+	
+</body>
+</html>
+

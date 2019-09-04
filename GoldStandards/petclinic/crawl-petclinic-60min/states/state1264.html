@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Crawl overview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="CrawlJax">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+<link href="../css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="../css/shCoreDefault.css" rel="stylesheet" type="text/css" />
+<style>
+.tooltip-inner {
+	max-width: 300px;
+	word-wrap: break-word;
+}
+
+body {
+	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+							<a class="brand" href="../index.html#graph">Crawl overview</a>
+						<ul class="nav">
+									<li class="active"><a href="#">State inspector</a></li>
+							</ul>
+			<div class="nav pull-right">
+				<a href="#" class="btn graphBtn" id='pauseButton' data-toggle="tooltip" data-placement="bottom" title="Pause the graph movement"><i class="icon-pause"></i></a>
+				<a href="#" class="btn graphBtn" rel="popover" data-placement="bottom"  data-original-title="What to do"><i class='icon-question-sign'></i></a>
+				<a href="#" class="btn graphBtn" id="toggleND" data-placement="bottom"  data-original-title="Show or Hide Near Duplicates"><i class='icon-remove-sign'></i></a>
+				<a href="#" class="btn graphBtn" id="clusterBtn" data-placement="bottom"  data-original-title="Show clusters"><i class='icon-asterisk'></i></a>
+				<div style="display: none" id='popup-content'>
+					<p>You can double click a state to inspect it further.</p>
+					<p>Clicking an edge gives more details on the state transition.</p>
+					<p>Use your mouse to zoom in and out by scrolling, or drag the states and view around.</p>
+				</div>
+				<a href="result.json" class="btn" data-toggle="tooltip" data-placement="bottom" title="Download result as JSON"><i class='icon-download'></i></a>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+</nav>	<div class='container' >
+		<h1>Summary of state1264</h1>
+		<table class="table table-bordered table-striped">
+			<colgroup>
+				<col class="span1">
+				<col class="span7">
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>URL</th>
+					<td><a href='http://localhost:9966/petclinic/owners/6/pets/8/visits/new'>http://localhost:9966/petclinic/owners/6/pets/8/visits/new</a></td>
+				</tr>
+				<tr>
+					<th>Fan in</th>
+					<td>1</td>
+				</tr>
+				<tr>
+					<th>Fan out</th>
+					<td>1</td>
+				</tr>
+				<tr>
+					<th>Interaction elements</th>
+					<td>5</td>
+				</tr>
+				<tr>
+					<th>Nearest State</th>
+					<td>state1257</td>
+				</tr>
+				<tr>
+					<th>Distance to nearest State</th>
+					<td>-1.0</td>
+				</tr>
+				<tr>
+					<th>Has Near Duplicate</th>
+					<td>false</td>
+				</tr>
+				<tr>
+					<th>Cluster</th>
+					<td>-1</td>
+				</tr>
+				<tr>
+					<th>Failed events</th>
+					<td>-</td>
+			</tbody>
+		</table>
+		<ul id='tabs' class="nav nav-tabs">
+			<li class="active">
+				<a href="#screenshot">Screenshot</a>
+			</li>
+			<li>
+				<a href="#dom">Captured DOM</a>
+			</li>	
+			<li>
+				<a href="#interactions">Interactions</a>
+			</li>			
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" style="position: relative;" id='screenshot'>			
+				<img style='max-width: none;' border='0' src='../screenshots/state1264.png' /> 
+								<div rel="tooltip" data-original-title="/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[1]/A[1]" class='hovers'
+				style="position: absolute; z-index: 20; left: 351px; top: 83px; width: 122px; height: 42px; border: 2px solid #00FFFF;  cursor: pointer;" onclick="location.href='state1.html'"></div>
+								<div rel="tooltip" data-original-title="/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[2]/A[1]" class='hovers'
+				style="position: absolute; z-index: 10; left: 471px; top: 83px; width: 152px; height: 42px; border: 2px solid orange;  " ></div>
+								<div rel="tooltip" data-original-title="/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[3]/A[1]" class='hovers'
+				style="position: absolute; z-index: 10; left: 621px; top: 83px; width: 162px; height: 42px; border: 2px solid orange;  " ></div>
+								<div rel="tooltip" data-original-title="/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[4]/A[1]" class='hovers'
+				style="position: absolute; z-index: 10; left: 781px; top: 83px; width: 112px; height: 42px; border: 2px solid orange;  " ></div>
+								<div rel="tooltip" data-original-title="//FORM[@id = 'visit']/DIV[3]/BUTTON[1]" class='hovers'
+				style="position: absolute; z-index: 10; left: 350px; top: 497px; width: 68px; height: 28px; border: 2px solid orange;  " ></div>
+							</div>
+			<div class="tab-pane" id='dom'>
+				<h2>Captured DOM</h2>
+				<pre class='brush: html'>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;!--
+PetClinic :: a Spring Framework demonstration
+--&gt;&lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+    &lt;title&gt;PetClinic :: a Spring Framework demonstration&lt;/title&gt;
+
+
+    
+    &lt;link href=&quot;/petclinic/webjars/bootstrap/2.3.0/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+
+    
+    &lt;link href=&quot;/petclinic/resources/css/petclinic.css&quot; rel=&quot;stylesheet&quot;&gt;
+
+    
+    &lt;script src=&quot;/petclinic/webjars/jquery/2.0.3/jquery.js&quot;&gt;&lt;/script&gt;
+
+	&lt;!-- jquery-ui.js file is really big so we only load what we need instead of loading everything --&gt;
+    
+    &lt;script src=&quot;/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.core.js&quot;&gt;&lt;/script&gt;
+
+	
+    &lt;script src=&quot;/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.datepicker.js&quot;&gt;&lt;/script&gt;
+    
+    &lt;!-- jquery-ui.css file is not that big so we can afford to load it --&gt;
+    
+    &lt;link href=&quot;/petclinic/webjars/jquery-ui/1.10.3/themes/base/jquery-ui.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+
+
+
+
+
+&lt;body style=&quot;&quot;&gt;
+&lt;script&gt;
+    $(function () {
+        $(&quot;#date&quot;).datepicker({ dateFormat: 'yy/mm/dd'});
+    });
+&lt;/script&gt;
+&lt;div class=&quot;container&quot;&gt;
+    
+
+
+
+&lt;img src=&quot;/petclinic/resources/images/banner-graphic.png&quot;&gt;
+
+&lt;div class=&quot;navbar&quot; style=&quot;width: 601px;&quot;&gt;
+    &lt;div class=&quot;navbar-inner&quot;&gt;
+        &lt;ul class=&quot;nav&quot;&gt;
+            &lt;li style=&quot;width: 120px;&quot;&gt;&lt;a href=&quot;/petclinic/&quot;&gt;&lt;i class=&quot;icon-home&quot;&gt;&lt;/i&gt;
+                Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li style=&quot;width: 150px;&quot;&gt;&lt;a href=&quot;/petclinic/owners/find.html&quot;&gt;&lt;i class=&quot;icon-search&quot;&gt;&lt;/i&gt; Find owners&lt;/a&gt;&lt;/li&gt;
+            &lt;li style=&quot;width: 160px;&quot;&gt;&lt;a href=&quot;/petclinic/vets.html&quot;&gt;&lt;i class=&quot;icon-th-list&quot;&gt;&lt;/i&gt; Veterinarians&lt;/a&gt;&lt;/li&gt;
+            &lt;li style=&quot;width: 110px;&quot;&gt;&lt;a href=&quot;/petclinic/oups.html&quot; title=&quot;trigger a RuntimeException to see how it is handled&quot;&gt;&lt;i class=&quot;icon-warning-sign&quot;&gt;&lt;/i&gt; Error&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+	
+
+    &lt;h2&gt;New Visit&lt;/h2&gt;
+
+    &lt;b&gt;Pet&lt;/b&gt;
+    &lt;table class=&quot;table table-striped&quot;&gt;
+        &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Birth Date&lt;/th&gt;
+            &lt;th&gt;Type&lt;/th&gt;
+            &lt;th&gt;Owner&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;&lt;tr&gt;
+            &lt;td&gt;Max&lt;/td&gt;
+            &lt;td&gt;2012/08/26&lt;/td&gt;
+            &lt;td&gt;cat&lt;/td&gt;
+            &lt;td&gt;Jean Coleman&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;&lt;/table&gt;
+
+    &lt;form id=&quot;visit&quot; action=&quot;/petclinic/owners/6/pets/8/visits/new&quot; method=&quot;post&quot;&gt;
+    
+        
+
+
+
+
+
+
+    
+    &lt;div class=&quot;control-group &quot;&gt;
+        &lt;label class=&quot;control-label&quot;&gt;date&lt;/label&gt;
+
+        &lt;div class=&quot;controls&quot;&gt;
+            &lt;input id=&quot;date&quot; name=&quot;date&quot; type=&quot;text&quot; value=&quot;2018/10/10&quot; class=&quot;hasDatepicker&quot;&gt;
+            &lt;span class=&quot;help-inline&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        
+
+
+
+
+
+
+    
+    &lt;div class=&quot;control-group &quot;&gt;
+        &lt;label class=&quot;control-label&quot;&gt;description&lt;/label&gt;
+
+        &lt;div class=&quot;controls&quot;&gt;
+            &lt;input id=&quot;description&quot; name=&quot;description&quot; type=&quot;text&quot; value=&quot;&quot;&gt;
+            &lt;span class=&quot;help-inline&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        
+        &lt;div class=&quot;form-actions&quot;&gt;
+            &lt;input type=&quot;hidden&quot; name=&quot;petId&quot; value=&quot;8&quot;&gt;
+            &lt;button type=&quot;submit&quot;&gt;Add Visit&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+
+    &lt;br&gt;
+    &lt;b&gt;Previous Visits&lt;/b&gt;
+    &lt;table style=&quot;width: 333px;&quot;&gt;
+        &lt;tbody&gt;&lt;tr&gt;
+            &lt;th&gt;Date&lt;/th&gt;
+            &lt;th&gt;Description&lt;/th&gt;
+        &lt;/tr&gt;
+        
+            
+        
+            
+                &lt;tr&gt;
+                    &lt;td&gt;2013/01/02&lt;/td&gt;
+                    &lt;td&gt;neutered&lt;/td&gt;
+                &lt;/tr&gt;
+            
+        
+            
+                &lt;tr&gt;
+                    &lt;td&gt;2013/01/01&lt;/td&gt;
+                    &lt;td&gt;rabies shot&lt;/td&gt;
+                &lt;/tr&gt;
+            
+        
+    &lt;/tbody&gt;&lt;/table&gt;
+
+&lt;/div&gt;
+
+
+&lt;table class=&quot;footer&quot;&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+        &lt;td width=&quot;70%&quot;&gt;&lt;/td&gt;
+        &lt;td align=&quot;right&quot;&gt;&lt;img src=&quot;/petclinic/resources/images/spring-pivotal-logo.png&quot; alt=&quot;Sponsored by Pivotal&quot;&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+
+
+
+
+
+&lt;div id=&quot;ui-datepicker-div&quot; class=&quot;ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all&quot;&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+			</div>
+			<div class="tab-pane" id='interactions'>
+				<h2>Interactions</h2>
+				<table class="table table-bordered table-striped">
+					<tbody>
+						<tr>
+							<th>Xpath</th>
+							<th>Destination</tg>
+						</tr>
+												<tr>
+							<td>/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[1]/A[1]</td>
+							<td><a href="state1.html">state1</a></td>
+						</tr>
+												<tr>
+							<td>/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[2]/A[1]</td>
+							<td><a href=".html"></a></td>
+						</tr>
+												<tr>
+							<td>/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[3]/A[1]</td>
+							<td><a href=".html"></a></td>
+						</tr>
+												<tr>
+							<td>/HTML[1]/BODY[1]/DIV[1]/DIV[1]/DIV[1]/UL[1]/LI[4]/A[1]</td>
+							<td><a href=".html"></a></td>
+						</tr>
+												<tr>
+							<td>//FORM[@id = 'visit']/DIV[3]/BUTTON[1]</td>
+							<td><a href=".html"></a></td>
+						</tr>
+											</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../lib/shCore.js"></script>
+	<script type="text/javascript" src="../lib/shBrushXml.js"></script>
+	<script type="text/javascript" src="../lib/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="../lib/bootstrap.min.js"></script>
+	<script type="text/javascript">
+    	$(document).ready(function() {
+			SyntaxHighlighter.all()
+
+			$('#tabs a').click(function (e) {
+		  		e.preventDefault();
+		  		$(this).tab('show');
+			})
+		});
+    	
+    	$('.hovers').tooltip({
+    	    placement: function(a, element) {
+    	        var position = $(element).position();
+    	        if (position.left > 515) {
+    	            return "left";
+    	        }
+    	        if (position.left < 515) {
+    	            return "right";
+    	        }
+    	        if (position.top < 110){
+    	            return "bottom";
+    	        }
+    	        return "top";
+    	    }
+    	});
+	</script>
+</body>
+</html>

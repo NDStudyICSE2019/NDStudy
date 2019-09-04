@@ -1,0 +1,21 @@
+Application,SAF,Threshold,crawlTime,reason,numStates,numCrawledStates,numClones,numNearDuplicates,numUniqueStates,coverage
+petclinic,DOM_CONTENTHASH,4,7 seconds,EXHAUSTED,1,1,0,0,1,0.071428571
+petclinic,DOM_CONTENTHASH,4,7 seconds,EXHAUSTED,1,1,0,0,1,0.071428571
+petclinic,DOM_SIMHASH,23,7 seconds,EXHAUSTED,1,1,0,0,1,0.071428571
+petclinic,VISUAL_HYST,3.8881,5 minutes 21 seconds,MAX_TIME,14,88,1,5,8,0.571428571
+petclinic,DOM_SIMHASH,0,5 minutes 10 seconds,MAX_TIME,148,148,147,0,1,0.071428571
+petclinic,VISUAL_PHASH,7,33 seconds,EXHAUSTED,2,4,0,0,2,0.142857143
+petclinic,VISUAL_PDIFF,0,5 minutes 21 seconds,MAX_TIME,5,16,0,0,5,0.357142857
+petclinic,VISUAL_PDIFF,0,5 minutes 43 seconds,MAX_TIME,9,20,2,0,7,0.5
+petclinic,DOM_LEVENSHTEIN,0.0018,7 seconds,EXHAUSTED,1,1,0,0,1,0.071428571
+petclinic,VISUAL_SSIM,0.9999,5 minutes 10 seconds,MAX_TIME,7,40,0,0,7,0.5
+petclinic,DOM_RTED,0,5 minutes 7 seconds,MAX_TIME,13,91,0,2,11,0.785714286
+petclinic,DOM_LEVENSHTEIN,0.002,7 seconds,EXHAUSTED,1,1,0,0,1,0.071428571
+petclinic,VISUAL_BLOCKHASH,0,5 minutes 8 seconds,MAX_TIME,16,89,6,2,8,0.571428571
+petclinic,VISUAL_HYST,15070.3853,1 minute 24 seconds,EXHAUSTED,4,19,0,0,4,0.285714286
+petclinic,VISUAL_PHASH,0,5 minutes 8 seconds,MAX_TIME,17,95,7,3,7,0.5
+petclinic,DEFAULT,-1,5 minutes 41 seconds,EXHAUSTED,66,118,16,36,14,1
+petclinic,VISUAL_SSIM,0.9879,5 minutes 6 seconds,MAX_TIME,9,44,2,0,7,0.5
+petclinic,VISUAL_BLOCKHASH,7,4 minutes 54 seconds,MAX_TIME,13,61,4,1,8,0.571428571
+petclinic,VISUAL_PDIFF,0.009,5 minutes 11 seconds,MAX_TIME,6,25,0,0,6,0.428571429
+petclinic,DOM_RTED,0.0045,5 minutes 10 seconds,MAX_TIME,13,91,0,2,11,0.785714286

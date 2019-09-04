@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="en"><!--
+PetClinic :: a Spring Framework demonstration
+--><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>PetClinic :: a Spring Framework demonstration</title>
+
+
+    
+    <link href="/petclinic/webjars/bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="/petclinic/resources/css/petclinic.css" rel="stylesheet">
+
+    
+    <script src="/petclinic/webjars/jquery/2.0.3/jquery.js"></script>
+
+	<!-- jquery-ui.js file is really big so we only load what we need instead of loading everything -->
+    
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.core.js"></script>
+
+	
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.datepicker.js"></script>
+    
+    <!-- jquery-ui.css file is not that big so we can afford to load it -->
+    
+    <link href="/petclinic/webjars/jquery-ui/1.10.3/themes/base/jquery-ui.css" rel="stylesheet">
+</head>
+
+
+
+<body style="">
+
+<script>
+    $(function () {
+        $("#birthDate").datepicker({ dateFormat: 'yy/mm/dd'});
+    });
+</script>
+<div class="container">
+    
+
+
+
+<img src="/petclinic/resources/images/banner-graphic.png">
+
+<div class="navbar" style="width: 601px;">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li style="width: 120px;"><a href="/petclinic/"><i class="icon-home"></i>
+                Home</a></li>
+            <li style="width: 150px;"><a href="/petclinic/owners/find.html"><i class="icon-search"></i> Find owners</a></li>
+            <li style="width: 160px;"><a href="/petclinic/vets.html"><i class="icon-th-list"></i> Veterinarians</a></li>
+            <li style="width: 110px;"><a href="/petclinic/oups.html" title="trigger a RuntimeException to see how it is handled"><i class="icon-warning-sign"></i> Error</a></li>
+        </ul>
+    </div>
+</div>
+	
+
+    
+        
+            
+        
+        
+    
+
+    <h2>
+        New 
+        Pet
+    </h2>
+
+    <form id="pet" class="form-horizontal" action="/petclinic/owners/9/pets/new.html" method="post">
+        <div class="control-group" id="owner">
+            <label class="control-label">Owner </label>
+
+            David Schroeder
+        </div>
+        
+
+
+
+
+
+
+    
+    <div class="control-group error">
+        <label class="control-label">Name</label>
+
+        <div class="controls">
+            <input id="name" name="name" type="text" value="">
+            <span class="help-inline">is required</span>
+        </div>
+    </div>
+
+        
+
+
+
+
+
+
+    
+    <div class="control-group error">
+        <label class="control-label">Birth Date</label>
+
+        <div class="controls">
+            <input id="birthDate" name="birthDate" type="text" value="" class="hasDatepicker">
+            <span class="help-inline">is required</span>
+        </div>
+    </div>
+
+        <div class="control-group">
+            
+
+
+
+
+
+
+
+
+    
+    <div class="control-group error">
+        <label class="control-label">Type </label>
+
+        <div class="controls">
+            <select id="type" name="type" size="5"><option value="bird">bird</option><option value="cat">cat</option><option value="dog">dog</option><option value="hamster">hamster</option><option value="lizard">lizard</option><option value="snake">snake</option></select>
+            <span class="help-inline">is required</span>
+        </div>
+    </div>
+
+        </div>
+        <div class="form-actions">
+            
+                
+                    <button type="submit">Add Pet</button>
+                
+                
+            
+        </div>
+    </form>
+    
+    
+
+<table class="footer">
+    <tbody><tr>
+        <td width="70%"></td>
+        <td align="right"><img src="/petclinic/resources/images/spring-pivotal-logo.png" alt="Sponsored by Pivotal"></td>
+    </tr>
+</tbody></table>
+
+
+
+</div>
+
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>

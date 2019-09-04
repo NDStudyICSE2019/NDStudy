@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: bankim
+Implementation-Version: 1.5.6.RELEASE
+Archiver-Version: Plexus Archiver
+Built-By: Yourname
+Implementation-Vendor-Id: com.bankim
+Spring-Boot-Version: 1.5.6.RELEASE
+Implementation-Vendor: Pivotal Software, Inc.
+Main-Class: runner.Main
+Build-Jdk: 1.8.0_131
+Implementation-URL: http://projects.spring.io/spring-boot/bankim/

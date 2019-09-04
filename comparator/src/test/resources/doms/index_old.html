@@ -1,0 +1,73 @@
+<html class="tm-background uk-height-viewport uk-notouch"><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/pagekit/app/system/modules/theme/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <link href="/pagekit/app/system/modules/theme/apple_touch_icon.png" rel="apple-touch-icon-precomposed">
+                <meta name="generator" content="Pagekit">
+        <link href="/pagekit/app/system/modules/theme/favicon.ico" rel="shortcut icon" type="image/x-icon">
+        <link href="/pagekit/app/system/modules/theme/apple_touch_icon.png" rel="apple-touch-icon-precomposed">
+        <title>Login | Testing</title>
+        <link href="/pagekit/app/system/modules/theme/css/theme.css?v=d10d" rel="stylesheet">
+        <script>var $pagekit = {"url":"\/pagekit\/index.php","csrf":"78335ad0b50351ad9f04a911c40e2e1127fbe9e0"};</script>
+        <script src="/pagekit/app/assets/jquery/dist/jquery.min.js?v=d10d"></script>
+        <script src="/pagekit/app/assets/uikit/js/uikit.min.js?v=d10d"></script>
+        <script src="/pagekit/app/system/modules/theme/js/login.js?v=d10d"></script>
+                    </head>
+    <body>
+
+        <div class="uk-height-viewport uk-flex uk-flex-center uk-flex-middle uk-text-center">
+            <div class="tm-container tm-container-small">
+
+                <img class="uk-margin-large-bottom" src="/pagekit/app/system/assets/images/pagekit-logo-text.svg" alt="Pagekit">
+
+                <div class="pk-system-messages"></div>
+                <form class="js-login js-toggle uk-form tm-form" action="/pagekit/index.php/user/authenticate" method="post" aria-hidden="false">
+
+                    <div class="uk-panel uk-panel-box">
+
+                        <div class="uk-form-row">
+                            <input class="uk-form-large uk-width-1-1" type="text" name="credentials[username]" value="" placeholder="Username" autofocus="">
+                        </div>
+
+                        <div class="uk-form-row">
+                            <input class="uk-form-large uk-width-1-1" type="password" name="credentials[password]" value="" placeholder="Password">
+                        </div>
+
+                        <p class="uk-form-row tm-panel-marginless-bottom">
+                            <button class="uk-button uk-button-primary uk-button-large uk-width-1-1">Login</button>
+                        </p>
+
+                        <input type="hidden" name="_csrf" value="78335ad0b50351ad9f04a911c40e2e1127fbe9e0">                        <input type="hidden" name="redirect" value="/pagekit/index.php/admin">
+
+                    </div>
+
+                    <ul class="uk-list uk-contrast">
+                        <li><label class="uk-form"><input type="checkbox" name="remember_me"> Remember Me</label></li>
+                        <li class="uk-margin-small-top"> Forgot Password? <a class="uk-link" data-uk-toggle="{ target: '.js-toggle' }">Request Password</a></li>
+                    </ul>
+
+                </form>
+
+                <form class="js-toggle uk-form tm-form uk-hidden" action="/pagekit/index.php/user/resetpassword/request" method="post" aria-hidden="true">
+
+                    <div class="uk-panel uk-panel-box">
+
+                        <div class="uk-form-row">
+                            <input class="uk-form-large uk-width-1-1" type="text" name="email" value="" placeholder="Email" required="">
+                        </div>
+
+                        <p class="uk-form-row tm-panel-marginless-bottom">
+                            <button class="uk-button uk-button-primary uk-button-large uk-width-1-1">Reset Password</button>
+                        </p>
+
+                        <input type="hidden" name="_csrf" value="78335ad0b50351ad9f04a911c40e2e1127fbe9e0">                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    
+
+</body></html>

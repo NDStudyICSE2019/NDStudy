@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><!--
+PetClinic :: a Spring Framework demonstration
+--><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>PetClinic :: a Spring Framework demonstration</title>
+
+
+    
+    <link href="/petclinic/webjars/bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="/petclinic/resources/css/petclinic.css" rel="stylesheet">
+
+    
+    <script src="/petclinic/webjars/jquery/2.0.3/jquery.js"></script>
+
+	<!-- jquery-ui.js file is really big so we only load what we need instead of loading everything -->
+    
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.core.js"></script>
+
+	
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.datepicker.js"></script>
+    
+    <!-- jquery-ui.css file is not that big so we can afford to load it -->
+    
+    <link href="/petclinic/webjars/jquery-ui/1.10.3/themes/base/jquery-ui.css" rel="stylesheet">
+<link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/2/dataTables.bootstrap.css">
+
+</head>
+
+
+
+
+<body style="">
+<div class="container">
+    
+
+
+
+<img src="/petclinic/resources/images/banner-graphic.png">
+
+<div class="navbar" style="width: 601px;">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li style="width: 120px;"><a href="/petclinic/"><i class="icon-home"></i>
+                Home</a></li>
+            <li style="width: 150px;"><a href="/petclinic/owners/find.html"><i class="icon-search"></i> Find owners</a></li>
+            <li style="width: 160px;"><a href="/petclinic/vets.html"><i class="icon-th-list"></i> Veterinarians</a></li>
+            <li style="width: 110px;"><a href="/petclinic/oups.html" title="trigger a RuntimeException to see how it is handled"><i class="icon-warning-sign"></i> Error</a></li>
+        </ul>
+    </div>
+</div>
+	
+
+
+    <h2>Veterinarians</h2>
+
+    <div id="vets_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row-fluid"><div class="span6"></div><div class="span6"><div class="dataTables_filter" id="vets_filter"><label>Search: <input type="text" aria-controls="vets"></label></div></div></div><table id="vets" class="table table-striped dataTable"><thead><tr role="row"><th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="vets" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 310px;">Name</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="vets" rowspan="1" colspan="1" aria-label="Specialties: activate to sort column ascending" style="width: 334px;">Specialties</th></tr></thead><tbody role="alert" aria-live="polite" aria-relevant="all"><tr><td class="  sorting_1">Helen Leary</td><td class=" ">radiology</td></tr><tr><td class="  sorting_1">Henry Stevens</td><td class=" ">radiology</td></tr><tr><td class="  sorting_1">James Carter</td><td class=" ">none</td></tr><tr><td class="  sorting_1">Linda Douglas</td><td class=" ">dentistry                            surgery</td></tr><tr><td class="  sorting_1">Rafael Ortega</td><td class=" ">surgery</td></tr><tr><td class="  sorting_1">Sharon Jenkins</td><td class=" ">none</td></tr></tbody></table><div class="row-fluid"><div class="span6"></div><div class="span6"></div></div></div>
+
+    
+    <!--
+    <table class="table-buttons">
+        <tr>
+            <td>
+                <a href="/petclinic/vets.xml">View as XML</a>
+            </td>
+            <td>
+                <a href="/petclinic/vets.json">View as JSon</a>
+            </td>
+        </tr>
+    </table>
+    -->
+
+    
+
+<table class="footer">
+    <tbody><tr>
+        <td width="70%"></td>
+        <td align="right"><img src="/petclinic/resources/images/spring-pivotal-logo.png" alt="Sponsored by Pivotal"></td>
+    </tr>
+</tbody></table>
+
+
+
+</div>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js"></script>
+<script src="//cdn.datatables.net/plug-ins/e9421181788/integration/bootstrap/2/dataTables.bootstrap.js"></script>
+<script src="/petclinic/dandelion-assets/21fb641416e8aac52a52d2b9297ba8a6078157de/dandelion-datatables-0.10.0.js"></script>
+
+
+
+</body></html>

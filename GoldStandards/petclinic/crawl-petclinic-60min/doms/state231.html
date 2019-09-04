@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en"><!--
+PetClinic :: a Spring Framework demonstration
+--><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>PetClinic :: a Spring Framework demonstration</title>
+
+
+    
+    <link href="/petclinic/webjars/bootstrap/2.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="/petclinic/resources/css/petclinic.css" rel="stylesheet">
+
+    
+    <script src="/petclinic/webjars/jquery/2.0.3/jquery.js"></script>
+
+	<!-- jquery-ui.js file is really big so we only load what we need instead of loading everything -->
+    
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.core.js"></script>
+
+	
+    <script src="/petclinic/webjars/jquery-ui/1.10.3/ui/jquery.ui.datepicker.js"></script>
+    
+    <!-- jquery-ui.css file is not that big so we can afford to load it -->
+    
+    <link href="/petclinic/webjars/jquery-ui/1.10.3/themes/base/jquery-ui.css" rel="stylesheet">
+</head>
+
+
+
+
+
+<body style="">
+<script>
+    $(function () {
+        $("#date").datepicker({ dateFormat: 'yy/mm/dd'});
+    });
+</script>
+<div class="container">
+    
+
+
+
+<img src="/petclinic/resources/images/banner-graphic.png">
+
+<div class="navbar" style="width: 601px;">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li style="width: 120px;"><a href="/petclinic/"><i class="icon-home"></i>
+                Home</a></li>
+            <li style="width: 150px;"><a href="/petclinic/owners/find.html"><i class="icon-search"></i> Find owners</a></li>
+            <li style="width: 160px;"><a href="/petclinic/vets.html"><i class="icon-th-list"></i> Veterinarians</a></li>
+            <li style="width: 110px;"><a href="/petclinic/oups.html" title="trigger a RuntimeException to see how it is handled"><i class="icon-warning-sign"></i> Error</a></li>
+        </ul>
+    </div>
+</div>
+	
+
+    <h2>New Visit</h2>
+
+    <b>Pet</b>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Birth Date</th>
+            <th>Type</th>
+            <th>Owner</th>
+        </tr>
+        </thead>
+        <tbody><tr>
+            <td>Freddy</td>
+            <td>2010/03/08</td>
+            <td>bird</td>
+            <td>David Schroeder</td>
+        </tr>
+    </tbody></table>
+
+    <form id="visit" action="/petclinic/owners/9/pets/11/visits/new" method="post">
+    
+        
+
+
+
+
+
+
+    
+    <div class="control-group ">
+        <label class="control-label">date</label>
+
+        <div class="controls">
+            <input id="date" name="date" type="text" value="2018/10/10" class="hasDatepicker">
+            <span class="help-inline"></span>
+        </div>
+    </div>
+
+        
+
+
+
+
+
+
+    
+    <div class="control-group ">
+        <label class="control-label">description</label>
+
+        <div class="controls">
+            <input id="description" name="description" type="text" value="">
+            <span class="help-inline"></span>
+        </div>
+    </div>
+
+        
+        <div class="form-actions">
+            <input type="hidden" name="petId" value="11">
+            <button type="submit">Add Visit</button>
+        </div>
+    </form>
+
+    <br>
+    <b>Previous Visits</b>
+    <table style="width: 333px;">
+        <tbody><tr>
+            <th>Date</th>
+            <th>Description</th>
+        </tr>
+        
+            
+        
+    </tbody></table>
+
+</div>
+
+
+<table class="footer">
+    <tbody><tr>
+        <td width="70%"></td>
+        <td align="right"><img src="/petclinic/resources/images/spring-pivotal-logo.png" alt="Sponsored by Pivotal"></td>
+    </tr>
+</tbody></table>
+
+
+
+
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>

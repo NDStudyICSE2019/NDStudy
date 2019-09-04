@@ -1,0 +1,328 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>Desktop @ Collabtive</title>
+<link rel="shortcut icon" href="templates/standard/images/favicon.ico" type="image/x-icon">
+<link rel="search" type="application/opensearchdescription+xml" title="Collabtive Search" href="manageajax.php?action=addfx-all">
+<link rel="alternate" type="application/rss+xml" title="My messages" href="managerss.php?action=mymsgs-rss&amp;user=1">
+<link rel="alternate" type="application/rss+xml" title="My tasks" href="managerss.php?action=rss-tasks&amp;user=1">
+
+
+<script type="text/javascript">
+//endcolor for close element flashing
+closeEndcolor = '#377814';
+//endcolor for delete element flashing
+deleteEndcolor = '#c62424';
+</script>
+<script type="text/javascript" src="include/js/prototype.php"></script>
+<script type="text/javascript" src="include/js/ajax.php"></script>
+<script type="text/javascript" src="include/js/jsval.php"></script>
+<script type="text/javascript" src="include/js/chat.js"></script>
+     <script type="text/javascript">
+        function _jsVal_Language() {
+            this.err_enter = "Please enter a valid value for \"%FIELDNAME%\".";
+            this.err_form = "Please enter valid values for:\n\n";
+            this.err_select = "Please select a valid value in \"%FIELDNAME%\".";
+        }
+</script>
+
+<script type="text/javascript" src="include/js/mycalendar.js"></script>
+
+
+<link rel="stylesheet" href="templates/standard/css/lytebox.css" type="text/css">
+<script type="text/javascript" src="include/js/lytebox.php"></script>
+<link rel="stylesheet" type="text/css" href="templates/standard/css/style_main.css">
+
+
+
+<script type="text/javascript" src="include/js/tiny_mce/tiny_mce.js"></script>
+
+<script type="text/javascript">
+//	theme_advanced_statusbar_location : "bottom",
+tinyMCE.init({
+	mode : "textareas",
+	theme : "advanced",
+	language: "en",
+	width: "400px",
+	height: "250px",
+	plugins : "inlinepopups,style,advimage,advlink,xhtmlxtras,safari,template",
+	theme_advanced_buttons1 : "bold,italic,underline,|,fontsizeselect,forecolor,|,bullist,numlist,|,link,unlink,image",
+	theme_advanced_buttons2 : "",
+	theme_advanced_buttons3 : "",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_toolbar_align : "left",
+	theme_advanced_path : false,
+	extended_valid_elements : "a[name|href|target|title],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|name],font[face|size|color|style],span[class|align|style]",
+    theme_advanced_statusbar_location: "bottom",
+    theme_advanced_resizing : true,
+	theme_advanced_resizing_use_cookie : false,
+	theme_advanced_resizing_min_width : "400px",
+	theme_advanced_resizing_max_width : "600px",
+	theme_advanced_resize_horizontal : false,
+	force_br_newlines : true,
+	cleanup: true,
+	cleanup_on_startup: true,
+	force_p_newlines : false,
+	convert_newlines_to_brs : false,
+	forced_root_block : false,
+	external_image_list_url: 'manageajax.php?action=jsonfiles&id='
+
+});
+
+</script>
+
+<link rel="stylesheet" href="http://localhost:3000/collabtive/include/js/tiny_mce/themes/advanced/skins/default/ui.css"><link rel="stylesheet" href="http://localhost:3000/collabtive/include/js/tiny_mce/plugins/inlinepopups/skins/clearlooks2/window.css"></head>
+<body>
+
+<!--<div id = "jslog" style = "color:red;position:absolute;top:60%;right:5%;width:300px;border:1px solid;background-color:grey;"></div>-->
+
+	<div id="sitebody">
+
+	<div id="header-wrapper">
+		<div id="header">
+			<div class="header-in">
+
+				<div class="left">
+					<div class="logo">
+						<h1>
+							<a href="index.php" title="Desktop"><img src="./templates/standard/images/logo-b.png" alt=""></a>
+							<span class="title">Collabtive<span class="subtitle">/ Projectmanagement </span></span>
+						</h1>
+					</div>
+
+				</div> 
+				<div class="right">
+											<ul id="mainmenue">
+							<li class="desktop"><a class="active" href="index.php"><span>Desktop</span></a></li>
+
+														<li class="profil-male"><a class="" href="manageuser.php?action=profile&amp;id=1"><span>My account</span></a></li>
+							
+							 							<li class="admin"><a class="" href="admin.php?action=projects"><span>Administration</span><span class="submenarrow"></span></a>
+								<div class="submen">
+									<ul>
+										<li class="project-settings"><a class="" href="admin.php?action=projects"><span>Project administration</span></a></li>
+										<li class="user-settings"><a class="" href="admin.php?action=users"><span>User administration</span></a></li>
+										<li class="system-settings"><a class="" href="admin.php?action=system"><span>System administration</span></a></li>
+									</ul>
+								</div>
+							</li>
+							
+
+							<li class="logout"><a href="manageuser.php?action=logout"><span>Logout</span></a></li>
+						</ul>
+									</div> <!-- Right End -->
+
+
+
+			</div> <!-- Header-In End -->
+		</div> <!-- Header End -->
+	</div> <!-- Header-Wrapper End -->
+
+
+	<div id="contentwrapper">
+<div class="tabswrapper">
+
+<ul class="tabs">
+		<li class="desk"><a class="active" href="index.php"><span>Desktop</span></a></li>
+	</ul>
+</div>
+<div id="content-left">
+	<div id="content-left-in">
+
+				<div class="infowin_left" style="opacity: 0.938531;" id="systemmsg">
+									<span id="closed" style="display:none;" class="info_in_green"><img src="templates/standard/images/symbols/projects.png" alt="">Project was closed</span>
+			<span id="deleted" style="display:none;" class="info_in_red"><img src="templates/standard/images/symbols/projects.png" alt="">Project was deleted</span>
+		</div>
+
+		
+			<script type="text/javascript">
+				systemMsg('systemmsg');
+			</script>
+		
+		
+				
+		<h1>Desktop</h1>
+
+							<div class="projects">
+				<div class="headline">
+					<a href="javascript:void(0);" id="projecthead_toggle" class="win_block" onclick="toggleBlock('projecthead');"></a>
+													<div class="wintools">
+								<a class="add" href="javascript:blindtoggle('form_addmyproject');" id="add_myprojects" onclick="toggleClass(this,'add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');"><span>Add project</span></a>
+							</div>
+											<h2>
+						<a href="myprojects.php" title="My projects"><img src="./templates/standard/images/symbols/projects.png" alt="">My projects</a>
+					</h2>
+				</div>
+
+				<div class="block" id="projecthead" style="">					<div id="form_addmyproject" class="addmenue" style="display:none;">
+						<div class="block_in_wrapper">
+<h2>Add project</h2>
+
+	<form novalidate="" class="main" method="post" action="admin.php?action=addpro" onsubmit="return validateCompleteForm(this);">
+	<fieldset>
+		<div class="row"><label for="name">Name:</label><input type="text" class="text" name="name" id="name" required="1" realname="Name"></div>
+		<div class="row"><label for="desc">Description:</label><div class="editor"><textarea name="desc" id="desc" rows="3" cols="1" aria-hidden="true" style="display: none;"></textarea><span role="application" aria-labelledby="desc_voice" id="desc_parent" class="mceEditor defaultSkin"><span class="mceVoiceLabel" style="display:none;" id="desc_voice">Rich Text Area</span><table role="presentation" id="desc_tbl" class="mceLayout" cellspacing="0" cellpadding="0" style="width: 400px; height: 250px;"><tbody><tr role="presentation" class="mceFirst"><td class="mceToolbar mceLeft mceFirst mceLast" role="presentation"><div id="desc_toolbargroup" role="group" aria-labelledby="desc_toolbargroup_voice" tabindex="-1"><span role="application"><span id="desc_toolbargroup_voice" class="mceVoiceLabel" style="display:none;">Toolbar</span><table id="desc_toolbar1" class="mceToolbar mceToolbarRow1 Enabled" cellpadding="0" cellspacing="0" align="" role="presentation" tabindex="-1" aria-disabled="false" aria-pressed="false"><tbody><tr><td class="mceToolbarStart mceToolbarStartButton mceFirst"><span><!-- IE --></span></td><td style="position: relative"><a role="button" id="desc_bold" href="javascript:;" class="mceButton mceButtonEnabled mce_bold" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_bold_voice" title="Bold (Ctrl+B)" tabindex="-1" aria-pressed="false"><span class="mceIcon mce_bold"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_bold_voice">Bold (Ctrl+B)</span></a></td><td style="position: relative"><a role="button" id="desc_italic" href="javascript:;" class="mceButton mceButtonEnabled mce_italic" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_italic_voice" title="Italic (Ctrl+I)" tabindex="-1" aria-pressed="false"><span class="mceIcon mce_italic"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_italic_voice">Italic (Ctrl+I)</span></a></td><td style="position: relative"><a role="button" id="desc_underline" href="javascript:;" class="mceButton mceButtonEnabled mce_underline" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_underline_voice" title="Underline (Ctrl+U)" tabindex="-1" aria-pressed="false"><span class="mceIcon mce_underline"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_underline_voice">Underline (Ctrl+U)</span></a></td><td style="position: relative"><span class="mceSeparator" role="separator" aria-orientation="vertical" tabindex="-1"></span></td><td style="position: relative"><span role="button" aria-haspopup="true" aria-labelledby="desc_fontsizeselect_text" aria-describedby="desc_fontsizeselect_voiceDesc"><table role="presentation" tabindex="-1" id="desc_fontsizeselect" cellpadding="0" cellspacing="0" class="mceListBox mceListBoxEnabled mce_fontsizeselect" aria-valuenow="Font size"><tbody><tr><td class="mceFirst"><span id="desc_fontsizeselect_voiceDesc" class="voiceLabel" style="display:none;">Font size</span><a id="desc_fontsizeselect_text" tabindex="-1" href="javascript:;" class="mceText mceTitle" onclick="return false;" onmousedown="return false;">Font size</a></td><td class="mceLast"><a id="desc_fontsizeselect_open" tabindex="-1" href="javascript:;" class="mceOpen" onclick="return false;" onmousedown="return false;"><span><span style="display:none;" class="mceIconOnly" aria-hidden="true">▼</span></span></a></td></tr></tbody></table></span></td><td class="mceToolbarStart"><span><!-- IE --></span></td><td style="position: relative"><span role="button" aria-labelledby="desc_forecolor_voice" aria-haspopup="true"><table id="desc_forecolor" role="presentation" tabindex="-1" class="mceSplitButton mceSplitButtonEnabled mce_forecolor" cellpadding="0" cellspacing="0" title="Select text color"><tbody><tr><td class="mceFirst"><a role="button" id="desc_forecolor_action" tabindex="-1" href="javascript:;" class="mceAction mce_forecolor" onclick="return false;" onmousedown="return false;" title="Select text color"><span class="mceAction mce_forecolor"></span><span class="mceVoiceLabel mceIconOnly" id="desc_forecolor_voice" style="display:none;">Select text color</span><div id="desc_forecolor_preview" class="mceColorPreview" style="background-color: rgb(136, 136, 136);"></div></a></td><td class="mceLast"><a role="button" id="desc_forecolor_open" tabindex="-1" href="javascript:;" class="mceOpen mce_forecolor" onclick="return false;" onmousedown="return false;" title="Select text color"><span class="mceOpen mce_forecolor"><span style="display:none;" class="mceIconOnly" aria-hidden="true">▼</span></span></a></td></tr></tbody></table></span></td><td style="position: relative"><span class="mceSeparator" role="separator" aria-orientation="vertical" tabindex="-1"></span></td><td style="position: relative"><a role="button" id="desc_bullist" href="javascript:;" class="mceButton mceButtonEnabled mce_bullist" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_bullist_voice" title="Unordered list" tabindex="-1" aria-pressed="false"><span class="mceIcon mce_bullist"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_bullist_voice">Unordered list</span></a></td><td style="position: relative"><a role="button" id="desc_numlist" href="javascript:;" class="mceButton mceButtonEnabled mce_numlist" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_numlist_voice" title="Ordered list" tabindex="-1" aria-pressed="false"><span class="mceIcon mce_numlist"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_numlist_voice">Ordered list</span></a></td><td style="position: relative"><span class="mceSeparator" role="separator" aria-orientation="vertical" tabindex="-1"></span></td><td style="position: relative"><a role="button" id="desc_link" href="javascript:;" class="mceButton mce_link mceButtonDisabled" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_link_voice" title="Insert/edit link" tabindex="-1" aria-disabled="true"><span class="mceIcon mce_link"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_link_voice">Insert/edit link</span></a></td><td style="position: relative"><a role="button" id="desc_unlink" href="javascript:;" class="mceButton mce_unlink mceButtonDisabled" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_unlink_voice" title="Unlink" tabindex="-1" aria-disabled="true"><span class="mceIcon mce_unlink"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_unlink_voice">Unlink</span></a></td><td style="position: relative"><a role="button" id="desc_image" href="javascript:;" class="mceButton mceButtonEnabled mce_image" onmousedown="return false;" onclick="return false;" aria-labelledby="desc_image_voice" title="Insert/edit image" tabindex="-1"><span class="mceIcon mce_image"></span><span class="mceVoiceLabel mceIconOnly" style="display: none;" id="desc_image_voice">Insert/edit image</span></a></td><td class="mceToolbarEnd mceToolbarEndButton mceLast"><span><!-- IE --></span></td></tr></tbody></table></span></div><a href="#" accesskey="z" title="Jump to tool buttons - Alt+Q, Jump to editor - Alt-Z, Jump to element path - Alt-X" onfocus="tinyMCE.getInstanceById('desc').focus();"><!-- IE --></a></td></tr><tr><td class="mceIframeContainer mceFirst mceLast"><iframe id="desc_ifr" src="javascript:&quot;&quot;" frameborder="0" title="Rich Text Area. Press ALT F10 for toolbar. Press ALT 0 for help." style="width: 100%; height: 206px;" cd_frame_id_="183465b3001fe6498ea640e22b0a3805"></iframe></td></tr><tr class="mceLast"><td class="mceStatusbar mceFirst mceLast"><div id="desc_path_row" role="group" aria-labelledby="desc_path_voice"><span>&nbsp;</span></div><a id="desc_resize" href="javascript:;" onclick="return false;" class="mceResize"></a></td></tr></tbody></table></span></div></div>
+
+	    <div class="clear_both_b"></div>
+
+		<div class="row">
+		<label for="end">Due:</label>
+				<input type="text" class="text" name="end" id="endP" realname="Due">
+		<br><br>
+		<label for="neverdue"></label><input type="checkbox" class="checkbox" value="neverdue" name="neverdue" id="neverdue" onclick="$('endP').value='';$('endP').disabled='disabled';">Never due
+		</div>
+
+		<div class="datepick">
+			<div id="add_project" class="picker" style="display:none;"><table class="cal" cellpadding="0" cellspacing="1" border="0"><tbody><tr class="head"><td class="back"><a href="javascript:void(0);"></a></td><td colspan="5">August 2019</td><td class="next"><a href="javascript:void(0);"></a></td></tr><tr class="weekday"><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td><td>Sun</td></tr><tr><td class="wrong">29</td><td class="wrong">30</td><td class="wrong">31</td><td class="normalday" onclick="$('endP').value='01.08.2019';new Effect.Fade('add_project');">1</td><td class="normalday" onclick="$('endP').value='02.08.2019';new Effect.Fade('add_project');">2</td><td class="normalday" onclick="$('endP').value='03.08.2019';new Effect.Fade('add_project');">3</td><td class="normalday" onclick="$('endP').value='04.08.2019';new Effect.Fade('add_project');">4</td></tr><tr><td class="normalday" onclick="$('endP').value='05.08.2019';new Effect.Fade('add_project');">5</td><td class="normalday" onclick="$('endP').value='06.08.2019';new Effect.Fade('add_project');">6</td><td class="normalday" onclick="$('endP').value='07.08.2019';new Effect.Fade('add_project');">7</td><td class="normalday" onclick="$('endP').value='08.08.2019';new Effect.Fade('add_project');">8</td><td class="normalday" onclick="$('endP').value='09.08.2019';new Effect.Fade('add_project');">9</td><td class="normalday" onclick="$('endP').value='10.08.2019';new Effect.Fade('add_project');">10</td><td class="normalday" onclick="$('endP').value='11.08.2019';new Effect.Fade('add_project');">11</td></tr><tr><td class="normalday" onclick="$('endP').value='12.08.2019';new Effect.Fade('add_project');">12</td><td class="normalday" onclick="$('endP').value='13.08.2019';new Effect.Fade('add_project');">13</td><td class="normalday" onclick="$('endP').value='14.08.2019';new Effect.Fade('add_project');">14</td><td class="normalday" onclick="$('endP').value='15.08.2019';new Effect.Fade('add_project');">15</td><td class="normalday" onclick="$('endP').value='16.08.2019';new Effect.Fade('add_project');">16</td><td class="normalday" onclick="$('endP').value='17.08.2019';new Effect.Fade('add_project');">17</td><td class="normalday" onclick="$('endP').value='18.08.2019';new Effect.Fade('add_project');">18</td></tr><tr><td class="normalday" onclick="$('endP').value='19.08.2019';new Effect.Fade('add_project');">19</td><td class="today" onclick="$('endP').value='20.08.2019';new Effect.Fade('add_project');">20</td><td class="normalday" onclick="$('endP').value='21.08.2019';new Effect.Fade('add_project');">21</td><td class="normalday" onclick="$('endP').value='22.08.2019';new Effect.Fade('add_project');">22</td><td class="normalday" onclick="$('endP').value='23.08.2019';new Effect.Fade('add_project');">23</td><td class="normalday" onclick="$('endP').value='24.08.2019';new Effect.Fade('add_project');">24</td><td class="normalday" onclick="$('endP').value='25.08.2019';new Effect.Fade('add_project');">25</td></tr><tr><td class="normalday" onclick="$('endP').value='26.08.2019';new Effect.Fade('add_project');">26</td><td class="normalday" onclick="$('endP').value='27.08.2019';new Effect.Fade('add_project');">27</td><td class="normalday" onclick="$('endP').value='28.08.2019';new Effect.Fade('add_project');">28</td><td class="normalday" onclick="$('endP').value='29.08.2019';new Effect.Fade('add_project');">29</td><td class="normalday" onclick="$('endP').value='30.08.2019';new Effect.Fade('add_project');">30</td><td class="normalday" onclick="$('endP').value='31.08.2019';new Effect.Fade('add_project');">31</td><td class="wrong">1</td></tr><tr><td colspan="7" class="dpfoot"><a href="javascript:void(0);" onclick="javascript:new Effect.Fade('add_project','{duration:0.8}');">Close</a></td></tr></tbody></table></div>
+		</div>
+
+		<script type="text/javascript">
+		  	theCal = new calendar(8,2019);
+			theCal.dayNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+			theCal.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+			theCal.relateTo = "endP";
+			theCal.dateFormat = "d.m.Y";
+			theCal.getDatepicker("add_project");
+		</script>
+
+		<div class="row">
+		<label for="budget">Budget:</label>
+		<input type="text" class="text" name="budget" id="budget">
+		</div>
+
+		<div class="row"><label>People:</label>
+		<div style="float:left;">
+        	        <div class="row">
+	        <input type="checkbox" class="checkbox" value="1" name="assignto[]" id="1" checked="checked"><label for="1">admin</label><br>
+	      	</div>
+	    	    </div>
+		</div>
+
+		<input type="hidden" name="assignme" value="1">
+
+	    <div class="clear_both_b"></div>
+
+		<div class="row-butn-bottom">
+		<label>&nbsp;</label>
+		<button type="submit" onfocus="this.blur();">Add</button>
+				<button type="reset" onclick="blindtoggle('form_addmyproject');toggleClass('add_myprojects','add-active','add');toggleClass('add_butn_myprojects','butn_link_active','butn_link');toggleClass('sm_myprojects','smooth','nosmooth');return false;" onfocus="this.blur();">Cancel</button>
+				</div>
+
+
+	</fieldset>
+	</form>
+
+</div> 					</div>
+
+				<div class="nosmooth" id="sm_deskprojects">
+					<table id="desktopprojects" cellpadding="0" cellspacing="0" border="0">
+						<thead>
+							<tr>
+								<th class="a"></th>
+								<th class="b" style="cursor:pointer;" onclick="sortBlock('desktopprojects','');">Project</th>
+								<th class="c" style="cursor:pointer" onclick="sortBlock('desktopprojects','done');">Done</th>
+								<th class="d" style="text-align:right" onclick="sortBlock('desktopprojects','daysleft');">Days&nbsp;&nbsp;</th>
+								<th class="tools"></th>
+							</tr>
+						</thead>
+
+						<tfoot>
+							<tr>
+								<td colspan="5"></td>
+							</tr>
+						</tfoot>
+
+											</table>
+
+					<div class="tablemenue">
+						<div class="tablemenue-in">
+															<a class="butn_link" href="javascript:blindtoggle('form_addmyproject');" id="add_butn_myprojects" onclick="toggleClass('add_myprojects','add-active','add');toggleClass(this,'butn_link_active','butn_link');toggleClass('sm_deskprojects','smooth','nosmooth');">Add project</a>
+													</div>
+					</div>
+				</div> 			   </div> 			</div> 			<div class="content-spacer"></div>
+										
+				
+		
+			<script type="text/javascript">
+			try{
+			var accord_projects = new accordion('projecthead');
+			}
+			catch(e)
+			{}
+			try{
+			var accord_tasks = new accordion('taskhead');
+			}
+			catch(e)
+			{}
+			try{
+			var accord_msgs = new accordion('activityhead');
+			}
+			catch(e)
+			{}
+			changeshow('manageajax.php?action=newcal','thecal','progress');
+			</script>
+		
+
+	</div> </div> 
+<div id="content-right">
+
+
+		<div class="content-right-in">
+			<h2><a id="searchtoggle" class="win-up" href="javascript:blindtoggle('search');toggleClass('searchtoggle','win-up','win-down');">Search</a></h2>
+
+			<form id="search" method="get" action="managesearch.php" onsubmit="return validateStandard(this,'input_error');">
+			<fieldset>
+				<div class="row">
+					<input type="text" class="text" id="query" name="query" autocomplete="off">
+				</div>
+
+				<div id="choices" style="display: none;"></div>
+				<input type="hidden" name="action" value="search">
+
+				<div id="indicator1" style="display:none;"><img src="templates/standard/images/symbols/indicator_arrows.gif" alt="Searching..."></div>
+
+				<button type="submit" title="Go!"></button>
+			</fieldset>
+
+			</form>
+	</div>
+	
+
+		
+
+			
+		
+		<div class="content-right-in">
+			<h2><a id="onlinelisttoggle" class="win-up" href="javascript:blindtoggle('onlinelist');toggleClass('onlinelisttoggle','win-up','win-down');">Online</a></h2>
+
+			<div id="onlinelist"><ul><li><a class="user" href="manageuser.php?action=profile&amp;id=1">admin<div><img src="thumb.php?pic=templates/standard/images/no-avatar-male.jpg&amp;width=90"></div> </a> <a class="chat-user"></a></li></ul></div>
+	</div>
+
+
+		
+			  <script type="text/javascript">
+			  new Ajax.Autocompleter('query', 'choices', 'managesearch.php?action=ajaxsearch', {paramName:'query',minChars: 2,indicator: 'indicator1'});
+				 var on = new Ajax.PeriodicalUpdater("onlinelist","manageuser.php?action=onlinelist",{method:'get',evalScripts:true,frequency:35,decay:1.5});
+
+
+			</script>
+		
+
+</div>
+			</div> 		</div> 
+
+ <div id="msgchk" style="display:none;"></div>
+<script type="text/javascript">
+		chkChat();
+</script>
+
+
+	<div id="footer-wrapper">
+		<div class="footer">
+			<div class="footer-in">
+				<a href="http://collabtive.o-dyn.de">Collabtive 1.0</a>
+			</div>
+		</div>
+	</div>
+
+
+<div id="modal_overlay" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 9998; display: none;"></div><div id="modal_container" style="display: none;"></div><div id="modal_loading" style="display: none;"></div><div id="lbOverlay" class="grey" style="display: none;"></div><div id="lbMain" style="display: none;"><div id="lbOuterContainer" class="grey"><div id="lbIframeContainer" style="display: none;"><iframe id="lbIframe" name="lbIframe" style="display: none;" cd_frame_id_="4daf36c710a01428d23dd3b55d65319e"></iframe></div><div id="lbImageContainer"><img id="lbImage"><div id="lbHoverNav"><a id="lbPrev" class="grey" href="#"></a><a id="lbNext" class="grey" href="#"></a></div></div><div id="lbLoading"></div></div><div id="lbDetailsContainer" class="grey"><div id="lbDetailsData" class="grey"><div id="lbDetails"><span id="lbCaption"></span><span id="lbNumberDisplay"></span><span id="lbNavDisplay" style="display: none;"></span></div><div id="lbBottomNav"><a id="lbClose" class="grey" href="#"></a><a id="lbPause" class="grey" href="#" style="display: none;"></a><a id="lbPlay" class="grey" href="#" style="display: none;"></a></div></div></div></div></body></html>

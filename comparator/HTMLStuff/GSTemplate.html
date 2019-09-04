@@ -1,0 +1,2053 @@
+<html>
+<head>
+<title> {{title}}</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-v3.3.7.min.css" />
+<style>
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 99;
+  cursor: pointer;
+}
+
+</style>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap-v3.3.7.min.js">></script> 
+<script>
+	json_data = '';
+	json_data_original = {{jsonData}};
+	pairs = [];
+	states= [];
+	json_uploaded = '';
+	submitted = 0;
+	saved = 0;
+	inferred = 0;
+	autoNextEnabled = false;
+	skipAssigned = false;
+	transitiveAssign = false;
+	tags = {0:['visually same'], 1:['dynamic content', 'advertisements'], 2:['different pages', 'different content', 'advertisements']};
+	tagsDisplayed = [];
+	preloadedBins = [];
+	availableBins = [];
+	newBins = {};
+
+	function saveJson() {
+		var fileName = "{{saveJsonName}}"; 
+		if(Object.entries(newBins) != 0){
+			json_data['newBins'] = newBins;
+		}
+		var a = document.createElement("a");
+		var file = new Blob([JSON.stringify(json_data)], {type: 'text/plain'});
+		a.href = URL.createObjectURL(file);
+		a.download = fileName;
+		a.click();
+		saved = submitted;
+		window.onbeforeunload = null;
+		$("#saveJson").html("Save Reponses as JSON <span class='badge'>" + (submitted-saved).toString()  + "</span>");
+	}
+
+	function checkDataFromJSON(json){
+		console.log(json)
+		if(!json.hasOwnProperty('pairs') || !json.hasOwnProperty('states')){
+			return false;
+		}
+		if((json['pairs'].length ==0) ||(Object.keys(json['states']).length==0)){
+			return false;
+		}
+		
+		return true;
+		
+	}
+
+	function updateStateForJson(){
+		submitted = 0;
+		saved = 0;
+		var min = -1;
+		for(jsonId in pairs){
+			if(pairs[jsonId].response != -1){
+				pair = pairs[jsonId];
+				// console.log("Setting max : " + jsonId + " : " + pairs[jsonId]);
+				submitted +=1;
+				var state1 = states[pair.state1];
+				var state2 = states[pair.state2];
+				if(min== -1 && state1.bin!=="" && state2.bin!==""){
+					min=parseInt(jsonId);
+				}
+			}
+		}
+		saved = submitted;
+		loadTagsFromJson();
+		loadBinsFromJson();
+		updateProgressBar();
+		currentImage = min;
+		loadNextImage();
+	}
+
+	function loadJsonConfirm(){
+
+			console.log("Loading JSON from file.");
+			var isValid = checkDataFromJSON(json_uploaded);
+			if(isValid){
+				json_data = json_uploaded;
+
+				pairs = json_data['pairs'];
+				states=json_data['states'];
+				ezBSAlert({
+					messageText: "Successfully loaded the JSON",
+					alertType: "success"
+				}).done(function (e) {console.log("Alert shown and done.")});
+				
+				updateStateForJson();
+			}
+	}
+
+	function loadBinsFromJson(){
+		availableBins=preloadedBins;
+		for(i in states){
+			if(states[i]["bin"]!==""){
+				availableBins.push(states[i]["bin"]);
+			}
+		}
+		availableBins = [...new Set(availableBins)];
+		resetBinHTML();
+	}
+
+	function loadTagsFromJson(){
+		for(i in pairs){
+			var response = pairs[i].response;
+			var jsontags = pairs[i].tags;
+			if(response != -1){
+				// console.log('jsontags : ' + jsontags);
+				if(jsontags.length > 0){
+					tags[response] = tags[response].concat(jsontags);
+				}
+			}
+		}
+		tags[0] = [...new Set(tags[0])];
+		tags[1] = [...new Set(tags[1])];
+		tags[2] = [...new Set(tags[2])];
+	}
+
+	function loadJson(e) {
+		if(e){
+			console.log(e);
+			if(saved != submitted){
+				ezBSAlert({
+					type: "confirm",
+					messageText: "Do you Want to save your current changes?",
+					alertType: "danger"
+				}).done(function(e){
+					if(e){
+						saveJson();
+						console.log("saving current changes.")
+						loadJsonConfirm();
+					}
+					else{
+						console.log("Purging current changes.")
+						loadJsonConfirm();
+					}
+				});
+			}
+			else{
+				loadJsonConfirm()
+			}
+			
+		}
+		else{
+			console.log(e);
+			console.log("Ignoring the file.");
+		}
+	}
+
+
+	doneImage = "doneImage.png"
+	beginImage = "beginImage.png"
+	currentImage = -1;
+	doneTakingResponses = false;
+	imageZoom = 1;
+
+	function showImage(imageToShow){
+		if(imageToShow == null){
+
+			$("#imageToShow").html($("#imagesToCompare").html());
+			var limageSrc = "../screenshots/" + pairs[currentImage]["state1"] + ".png";
+			var rimageSrc = "../screenshots/" + pairs[currentImage]["state2"] + ".png";
+			limg = $(".Limage>img");
+			rimg = $(".Rimage>img");
+			limg.attr("src", limageSrc);
+			rimg.attr("src", rimageSrc);
+
+// 			var pic_real_width_L, pic_real_height_L;
+			$("<img/>") // Make in memory copy of image to avoid css issues
+				.attr("src", limg.attr("src"))
+				.on('load',function() {
+					// console.log("here");
+					var pic_real_width_L = this.width;   // Note: $(this).width() will not
+					var pic_real_height_L = this.height; // work for in memory images.
+					 
+					currentMaxWidth = $("#imageToShow>.container").css('max-width');
+					if(currentMaxWidth == "none"){
+						currentMaxWidth = $("#imageToShow>.container").css('max-width', pic_real_width_L*2);
+					}
+					else{
+						if( currentMaxWidth < pic_real_width_L*2){
+							currentMaxWidth = $("#imageToShow>.container").css('max-width', pic_real_width_L*2);	
+						}
+					}
+				});
+
+// 			var pic_real_width_R, pic_real_height_R;
+			$("<img/>") // Make in memory copy of image to avoid css issues
+				.attr("src", rimg.attr("src"))
+				.on('load', function() {
+					var pic_real_width_R = this.width; 
+					currentMaxWidth = $("#imageToShow>.container").css('max-width');
+					if(currentMaxWidth == "none"){
+						currentMaxWidth = $("#imageToShow>.container").css('max-width', pic_real_width_R*2);
+					}
+					else{
+						if( currentMaxWidth < pic_real_width_R*2){
+							currentMaxWidth = $("#imageToShow>.container").css('max-width', pic_real_width_R*2);	
+						}
+					}
+					
+// 					console.log(this.width);  // Note: $(this).width() will not
+					var pic_real_height_R = this.height; // work for in memory images.
+				});
+			
+
+// 			$("#Limage").html(
+// 				"<img src = \"screenshots/" + 
+// 				pairs[currentImage]["state1"] + ".png" +
+// 				"\">"
+// 			);
+// 			$("#Rimage").html(
+// 				"<img src = \"screenshots/" + 
+// 				pairs[currentImage]["state2"] + ".png" +
+// 				"\">"
+// 			);
+				$("#imageToShow").html($("#imagesToCompare").html());
+				$("#imageToShow>.container").width(window.innerWidth - 50);
+// 				$("#imageToShow>.container").css('max-width', pic_real_width_R+pic_real_width_L)
+		}
+		else{
+			$("#imageToShow").html(
+				"<img src = \"images/" + 
+				imageToShow + 
+				"\">"
+			);
+		}
+	}
+
+	function checkIfAssigned(imageIndex){
+		if(imageIndex >= pairs.length){
+			return false;
+		}
+
+		var pair = pairs[imageIndex];
+		if(pair.response == -1){
+			return false;
+		}
+		var state1 = states[pair.state1];
+		var state2 = states[pair.state2];
+		if(state1.bin=="" || state2.bin==""){
+			return false;
+		}
+		return true;
+	}
+
+	function getNextUnassigned(){
+		var nextUnassigned = currentImage;
+		var assigned = true;
+		while(assigned){
+			nextUnassigned +=1;
+			assigned = checkIfAssigned(nextUnassigned);
+		}
+		return nextUnassigned;
+	}
+
+	function loadNextImage(){
+		var imageToShow = null;
+
+		if(skipAssigned){
+			currentImage = getNextUnassigned();
+		}
+		else{
+			currentImage += 1;
+		}
+
+		if(currentImage == pairs.length){
+			imageToShow = doneImage;
+			doneTakingResponses = true;
+		}
+		
+			
+		console.log('currentImage : ' + currentImage)
+
+
+// 		$("#imageToShow").html(
+// 			"<img src = \"images/" + 
+// 			imageToShow + 
+// 			"\">"
+// 			);
+
+		updateStateForCurrentImage();
+		showImage(imageToShow)
+	}
+
+	function loadPreviousImage(){
+
+		var imageToShow =null;
+		if(currentImage <= 0 ){
+			imageToShow = beginImage;
+			// $("#responseForm").hide("slide");
+			// $("#nextButton").show();
+			// $("#prevButton").hide();
+			currentImage-=1;
+			// $("#imagePanel>.panel-heading").html("Images to Compare");
+		}
+		else {
+			currentImage -= 1;
+			// $("#responseForm").show("slide");
+			// $("#imagePanel>.panel-heading").html("Images to Compare");
+			console.log('currentImage : ' + currentImage);
+			// imageToShow =  pairs[currentImage].image;
+			// $("#nextButton").show();
+		}
+
+		// $("#imageToShow").html(
+		// 	"<img src = \"images/" + 
+		// 	imageToShow + 
+		// 	"\">"
+		// 	);
+
+		updateStateForCurrentImage();
+		showImage(imageToShow)
+
+	}
+
+	function updateStateForCurrentImage(){
+
+		$("#tags").val("");
+		var tagArray = [];
+		tagArray = tagArray.concat(tags[0].concat(tags[1].concat(tags[2])));
+		// $(".autocomplete").autocomplete({
+		// 		    source: tagArray
+		// 		});
+
+		var checkedRadio = $("input[name='response']:checked");
+		if(checkedRadio.length != 0){
+			checkedRadio.prop('checked', false);
+		}
+
+		$("#comments").val("");
+		$("#imageHeading>strong").html("Images to Compare");
+		$("#imageHeading>dummy").html('');
+		$("#currentImageNumber").html('');
+
+		if(currentImage == pairs.length ){
+			$("#responseForm").hide("slide");
+			//$("#saveJson").show();
+			$("#nextButton").hide();
+			$("#prevButton").show();
+			return;
+		}
+		else if(currentImage < 0 ){
+			$("#responseForm").hide("slide");
+			$("#nextButton").show();
+			$("#prevButton").hide();
+			return;
+		}
+		else {
+			$("#responseForm").show("slide");
+			$("#prevButton").show();
+			$("#nextButton").show();
+			$("#currentImageNumber").html((currentImage + 1).toString());
+		}
+
+		$("#successAlert").hide();
+		$("#errorAlert").hide();
+		$("#binErrorAlert").hide();
+		$("#binErrorAlert_Inconsistent").hide();
+
+
+		////////////////////////////////////////////////////////////////////////////////
+		// Bin Management
+
+		
+		var state1 = pairs[currentImage]["state1"]
+		var state2 = pairs[currentImage]["state2"]
+		var lBinText = states[state1]["bin"]
+		var rBinText = states[state2]["bin"]
+		$("#LbinSelected").val(lBinText);
+		$("#RbinSelected").val(rBinText);
+		
+		$('.LimageLabel>strong').html(state1)
+		if(lBinText ==""){
+			$("#LbinGroup").show();
+			$('.LimageLabel>.binBadge').html('');
+		}
+		else{
+			$("#LbinGroup").hide();
+			$('.LimageLabel>.binBadge').html(lBinText);
+		}
+		if('url' in states[state1]){
+			$('.LimageLabel>a').html(states[state1].url);
+			$('.LimageLabel>a').attr('href',states[state1].url);
+		}
+		else{
+			$('.LimageLabel>a').html('');
+			$('.LimageLabel>a').attr('href','');
+		}
+		
+		$('.RimageLabel>strong').html(state2);
+		if(rBinText!==""){
+			$('.RimageLabel>.binBadge').html(rBinText);
+		}
+		else{
+			$('.RimageLabel>.binBadge').html('');
+		}
+		if('url' in states[state2]){
+			$('.RimageLabel>a').html(states[state2].url);
+			$('.RimageLabel>a').attr('href',states[state2].url);
+		}
+		else{
+			$('.RimageLabel>a').html('');
+			$('.RimageLabel>a').attr('href','');
+		}
+		$("#RbinGroup").hide();
+		
+		
+		if(lBinText!=="" && rBinText!=="" && lBinText==rBinText){
+			$($('.radio-inline>input[responseid=2]')[0]).attr('disabled', true);
+		}
+		else{
+			$($('.radio-inline>input[responseid=2]')[0]).attr('disabled', false);
+		}
+
+
+		///////////////////////////////////////////////////////////////////////////////
+		
+
+	
+
+
+		if(pairs[currentImage].response !=-1){
+			var previouslyCheckedRadio = $("input[name='response'][responseId='" + pairs[currentImage].response + "']");
+			//pairs[currentImage].response = checkedRadio.attr('responseId')
+			previouslyCheckedRadio.prop('checked', true);
+			$("#tags").val((pairs[currentImage].tags).toString());
+			$("#comments").val(pairs[currentImage].comments);
+
+			$("#imageHeading>strong").html("Response Recorded : ");
+			if(pairs[currentImage].response == 0){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + "clone" +"</span>");
+
+			}
+			if(pairs[currentImage].response == 1){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + "near-duplicate" +"</span>");
+
+			}
+			if(pairs[currentImage].response == 2){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + "different" +"</span>");
+			}
+
+			if(pairs[currentImage].inferred == 1){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + "inferred(AUTO)" +"</span>");
+
+			}
+
+			for(tag in pairs[currentImage].tags){
+				$("#imageHeading>dummy").html( $("#imageHeading>dummy").html() + " <span class='badge'>" + pairs[currentImage].tags[tag] +"</span>");
+			}
+			// $(".autocomplete").autocomplete({
+			// 	    source: tags[pairs[currentImage].response]
+			// 	});
+		}
+		
+
+		
+		imageZoom = 1;
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+		updateAutocompleteTagsForCategory();
+
+	}
+
+	function updateAutocompleteTagsForCategory(){
+		var checkedRadio = $("input[name='response']:checked");
+		tagsDisplayed = [];
+		$("#tagSugs").html('');
+		var tagsToDisplay = [];	
+		if(checkedRadio.length != 0){
+			var responseId = checkedRadio.attr('responseId');
+			tagsToDisplay = tags[responseId];
+			tagsToDisplay = [...new Set(tagsToDisplay)];
+		}
+		else{
+			tagsToDisplay= tagsToDisplay.concat(tags[0].concat(tags[1].concat(tags[2])));
+			tagsToDisplay = [...new Set(tagsToDisplay)];
+		}
+
+		var tagSugHtml = $("#tagSugs").html(); 
+
+		for(tag in tagsToDisplay){
+			if(!tagsDisplayed.includes(tagsToDisplay[tag])){
+				tagsDisplayed.push(tagsToDisplay[tag]);
+				tagSugHtml =  tagSugHtml + "<li class='tagSug' onclick='addSuggestedTag(this)'>"+ tagsToDisplay[tag]+ "</li>";
+			}
+		}
+		$("#tagSugs").html(tagSugHtml);
+		
+	}
+
+	function updateTags(){
+		var tagText = $("#tags").val();
+		pairs[currentImage].tags = tagText.split(",").map(Function.prototype.call, String.prototype.trim);
+		pairs[currentImage].tags = [...new Set(pairs[currentImage].tags)];
+	}
+
+	function addSuggestedTag(tag){
+		$(tag).remove();
+		delete tagsDisplayed[tagsDisplayed.indexOf(tagText)];
+		var tagText = $(tag).text();
+		if(!pairs[currentImage].tags.includes(tagText)){
+			$("#tags").val($("#tags").val() + ", " + tagText);
+			updateTags();
+		}
+		console.log(tagText);
+	}
+
+	function addToBin(bin){
+		binText = $(bin).text().trim();
+		LR = $(bin).parent().parent().parent().attr('id');
+		if(LR=='LbinGroup'){
+			$("#LbinSelected").val(binText);
+			// states[pairs[currentImage].state1].bin = binText;
+		}
+		if(LR=='RbinGroup'){
+			$("#RbinSelected").val(binText);
+			// states[pairs[currentImage].state2].bin = binText;
+		}
+	}
+
+	function resetBinHTML(){
+		$("#LbinGroup>div>ul#availableBins").html('');
+
+		$("#RbinGroup>div>ul#availableBins").html('');
+
+		for(i in availableBins){
+			updateBinHTML(availableBins[i]);
+		}
+
+	}
+
+	function updateBinHTML(binToAdd){
+		var oldHtml = $("#LbinGroup>div>ul#availableBins").html();
+		var updateHTML = oldHtml + "<li class='availableBin' onclick='addToBin(this)'>"+ binToAdd+ "</li>"
+		$("#LbinGroup>div>ul#availableBins").html(updateHTML);
+		$("#RbinGroup>div>ul#availableBins").html(updateHTML);
+	}
+
+	function updateProgressBar(){
+		var percent = (submitted/pairs.length)*100;
+		$('.progress-bar').css('width', percent+'%');
+
+		$('.progress-bar').removeClass('progress-bar-danger');
+		$('.progress-bar').removeClass('progress-bar-warning');
+		$('.progress-bar').removeClass('progress-bar-info');
+		$('.progress-bar').removeClass('progress-bar-success');
+		if(percent <= 33){
+			$('.progress-bar').addClass('progress-bar-danger');
+		}
+		if(percent >= 33 && percent <=66){
+			$('.progress-bar').addClass('progress-bar-warning');
+		}
+		if(percent >= 66 && percent < 100){
+			$('.progress-bar').addClass('progress-bar-info');
+		}
+		if(percent == 100){
+			$('.progress-bar').addClass('progress-bar-success');
+		}
+		$('.progress-bar').html(submitted + "Reponses_submitted_out_of_" + pairs.length);
+		$("#saveJson").html("Save Reponses as JSON <span class='badge'>" + (submitted-saved).toString()  + "</span>");
+
+	}
+	STATUS_ERROR=-1;
+	STATUS_SUCCESS = 1;
+	ERROR_NOCATEGORY_SELECTED = "Please select how you want to classify the given pair of Images!!";
+	ERROR_ASSIGNMENT_MISSING = "Assignment Missing";
+	ERROR_D_SAME="You Selected Different, but Both have been placed in same Bin!!";
+	ERROR_CND_DIFFERENT = "You Selected Clone/NearDuplicate. But the States belong to different Bins!!";
+
+
+	function checkBinAssignments(lBinText, rBinText){
+		var checkedRadio = $("input[name='response']:checked");
+		// var lBinText = states[pairs[currentImage]["state1"]]["bin"];
+		// var rBinText = states[pairs[currentImage]["state2"]]["bin"];
+		if(checkedRadio.length != 0){
+			var responseId = checkedRadio.attr('responseId');
+
+			if(lBinText == "" || rBinText == ""){
+				$("#binErrorAlert_Inconsistent>.errorMessage").html(ERROR_ASSIGNMENT_MISSING);
+				$("#binErrorAlert_Inconsistent").show();
+				$("#LbinGroup").show();
+				$("#RbinGroup").show();
+				return {'code':ERROR_ASSIGNMENT_MISSING, 'status':ERROR, 'returnVal':false };;
+			}
+			
+
+			if(responseId ==0 || responseId ==1){
+				// Clones and Near Duplicates have to be in the same bin 
+				if(lBinText !== rBinText){
+					$("#binErrorAlert_Inconsistent>.errorMessage").html(ERROR_CND_DIFFERENT);
+
+					$("#binErrorAlert_Inconsistent").show();
+					$("#RbinGroup").show();
+					$("#LbinGroup").show();
+					console.log("Clones and Near-Duplicates must be in the same bin")
+					return {'code':ERROR_CND_DIFFERENT, 'status':STATUS_ERROR, 'returnVal':false };
+				}
+
+			}
+			if(responseId ==2){
+				
+				if(lBinText==rBinText){
+					$("#binErrorAlert_Inconsistent>.errorMessage").html(ERROR_D_SAME);
+					$("#binErrorAlert_Inconsistent").show();
+					$("#RbinGroup").show();
+					$("#LbinGroup").show();
+					return {'code':ERROR_D_SAME, 'status':STATUS_ERROR, 'returnVal':false };
+				}
+			}
+		}
+		else{
+			$("#errorAlert").show();
+			return{'code':ERROR_NOCATEGORY_SELECTED,'status':STATUS_ERROR, 'returnVal':false};
+		}
+		return{'status':STATUS_SUCCESS, 'returnVal':true};
+	}
+
+	function handleCategorySelect(){
+		updateAutocompleteTagsForCategory();
+				
+		// Bin Management
+		var checkedRadio = $("input[name='response']:checked");
+		if(checkedRadio.length != 0){
+			var responseId = checkedRadio.attr('responseId');
+
+			if(responseId ==2){
+// 				if(states[pairs[currentImage]["state2"]]["bin"] == ""){
+					$("#RbinGroup").show();
+// 				}
+// 				else{
+// 					if(states[pairs[currentImage]["state2"]]["bin"] == states[pairs[currentImage]["state1"]]["bin"]){
+// 						$("#RbinGroup").show();
+// 					}
+// 					else{
+// 						$("#RbinGroup").hide();
+// 					}
+// 				}
+			}
+			else{
+				$("#RbinGroup").hide();
+			}
+		}
+	}
+
+	function getStatesinBin(binText){
+		var statesListTemp = Object.entries(states);
+		var statesFiltered = statesListTemp.filter(function(obj){return obj[1].bin ==binText}).map(function(obj){return obj[1]});
+		return statesFiltered;
+	}
+
+	function getStateNamesinBin(binText){
+		var statesListTemp = Object.entries(states);
+		var stateNamesTemp = statesListTemp.filter(function(obj){return obj[1].bin ==binText}).map(function(obj){return obj[0]});
+		return stateNamesTemp;
+	}
+
+	/**
+		** Dont Use Unless you want to remove all assignments for states of a particular bin. 
+	**/
+	function removeResponse(binText){
+		var stateNamesTemp = getStateNamesinBin(binText);
+		var pairsToInfer = pairs.filter(function(obj){return stateNamesTemp.includes(obj.state1) && stateNamesTemp.includes(obj.state2) && obj.response>=0});
+		var submittedTemp = pairsToInfer.length;
+
+		// Remove assignments 
+		pairsToInfer.map(function(obj){obj.response=-1});
+		submitted -= submittedTemp;
+		updateProgressBar();
+	}
+
+	/**
+		Tags will be removed for all pairs that have both states in the given array
+	**/
+	function removeTags(stateNamesArray){
+		pairs.map(
+			function(obj){
+				if((stateNamesArray.includes(obj.state1)) && (stateNamesArray.includes(obj.state2))) 
+					obj.tags=[];
+			}
+		);
+	}
+
+	/**
+		Tags will be set for all pairs that have both states in the given array.
+		Previously assigned tags will be replaced
+	**/
+	function setTags(stateNamesArray, tagsArray){
+		pairs.map(
+			function(obj){
+				if((stateNamesArray.includes(obj.state1)) && (stateNamesArray.includes(obj.state2))) 
+					obj.tags=tagsArray;
+			}
+		);
+	}
+
+
+	/**
+		** Dont Use Unless you are sure all states within bin are NearDuplicates for sure. 
+		** You also will not be able to assign tags to particular pairs.
+	**/
+	function inferBinNearDuplicates(binText){
+		var stateNamesTemp = getStateNamesinBin(binText);
+		var pairsToInfer = pairs.filter(function(obj){return stateNamesTemp.includes(obj.state1) && stateNamesTemp.includes(obj.state2) && obj.response==-1});
+		var submittedTemp = pairsToInfer.length;
+
+		// Assign Near Duplicate
+		pairsToInfer.map(function(obj){obj.response=1});
+		submitted += submittedTemp;
+		updateProgressBar();
+	}
+
+
+	/**
+		All unclassified pairs of a bin(both states of a pair belong to the bin) will be classified as near-duplicates.
+		These near-duplicates will be assigned the given tags. Please provide an array. Previous tags(if any) will be lost.
+	*/
+	function inferBinNearDuplicates(binText, tagsArray){
+		if(tagsArray == null){
+			tagsArray = [];
+		}
+		var stateNamesTemp = getStateNamesinBin(binText);
+		var pairsToInfer = pairs.filter(function(obj){return stateNamesTemp.includes(obj.state1) && stateNamesTemp.includes(obj.state2) && obj.response==-1});
+		var submittedTemp = pairsToInfer.length;
+
+		// Assign Near Duplicate
+		pairsToInfer.map(function(obj){obj.response=1; obj.tags=tagsArray; });
+		submitted += submittedTemp;
+		updateProgressBar();
+	}
+
+	/**
+		All unclassified pairs of a bin(both states of a pair belong to the bin) will be classified as clones.
+	*/
+	function inferBinClones(binText){
+		var stateNamesTemp = getStateNamesinBin(binText);
+		var pairsToInfer = pairs.filter(function(obj){return stateNamesTemp.includes(obj.state1) && stateNamesTemp.includes(obj.state2) && obj.response==-1});
+		var submittedTemp = pairsToInfer.length;
+
+		// Assign Clones
+		pairsToInfer.map(function(obj){obj.response=0});
+		submitted += submittedTemp;
+		updateProgressBar();
+	}
+	
+	/**
+		** The deleted state will not appear in saved json.
+		** Submitted Pairs are not handled properly so Progress bar will not make sense after using this function.
+		** Save json asap and load it back to show proper progress. 
+	**/
+	function deleteInvalidState(stateToRemove){
+		pairs.filter(function(obj){return obj.state1==stateToRemove || obj.state2==stateToRemove});
+		delete json_data.states['state1284'];
+		states = json_data["states"];
+		json_data['pairs'] = pairs.filter(function(obj){return obj.state1!=stateToRemoveTemp && obj.state2!=stateToRemoveTemp})
+		pairs = json_data['pairs'];
+	}
+
+
+	/**
+		** Assigns "Dynamic Content" tag for nearduplicates taht are not assigned any tag. 
+	**/
+	function assignDefaultTagForNearDuplicates(){
+		 pairs.filter(function(obj){return obj.response ==1 && obj.tags.length==0 && inferred==0}).map(function(obj){obj.tags = obj.tags.concat('dynamic content')});
+	}
+
+
+	function inferDifferentPairsFromBinValues(binText, state){
+		var pairsPropagated = [], pairsVerified=[], pairsErrored=[]
+		var stateList = Object.values(states);
+		var statesToPropagate = stateList.filter(function(obj){
+			return obj.bin!==binText && obj.bin!=="";
+		}).map(function(obj) { return obj.name; });
+
+		var statesToCheck = stateList.filter(function(obj){
+			return obj.bin==binText && obj.bin!=="";
+		}).map(function(obj) { return obj.name; });
+
+		// console.log(statesToPropagate);
+
+		var pairsToPropagate1= pairs.filter(function(obj) {
+			return (obj.state1==state && statesToPropagate.includes(obj.state2)) ||
+					(obj.state2==state && statesToPropagate.includes(obj.state1));
+		});
+
+		var pairsToCheck= pairs.filter(function(obj) {
+			return (obj.state1==state && statesToCheck.includes(obj.state2)) ||
+					(obj.state2==state && statesToCheck.includes(obj.state1));
+		});
+// 		var pairsToPropagate2 = pairs.filter(function(obj) {
+// 			return obj.state2==state && statesToPropagate.includes(obj.state1);
+// 		});
+
+		// console.log(pairsToPropagate1);
+// 		console.log(pairsToPropagate2);
+// 		console.log(responsesToPropagateFrom);
+// 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate1);
+// 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate2);
+
+		for(id in pairsToPropagate1){
+			propagatePair = pairsToPropagate1[id];
+
+			if(propagatePair.response == -1){
+				propagatePair.response = 2;
+				propagatePair.inferred = 1;
+				pairsPropagated = pairsPropagated.concat(propagatePair);
+				// console.log(propagatePair);
+
+			}
+			else{
+				if(propagatePair.response!==2){
+					pairsErrored = pairsErrored.concat(propagatePair)
+					console.log("ERROR!! TransitiveAssignment Error.");
+					console.log("Propagate Pair is : ");
+					console.log(propagatePair);
+				}
+				else{
+					pairsVerified = pairsVerified.concat(propagatePair);
+				}
+			}
+		}
+		
+		for(id in pairsToCheck){
+			// These pairs must be assigned clone or near duplicate since they are the same bin as state.
+			checkPair = pairsToCheck[id];
+
+			if(checkPair.response == -1){
+				pairsVerified = pairsVerified.concat(checkPair);
+			}
+			else{
+				if(checkPair.response==2){
+					pairsErrored = pairsErrored.concat(checkPair)
+					console.log("ERROR!! TransitiveAssignment Error.");
+					console.log("Check Pair is : ");
+					console.log(checkPair);
+				}
+				else{
+					pairsVerified = pairsVerified.concat(checkPair);
+				}
+			}
+		}
+		return {"pairsPropagated":pairsPropagated, "pairsVerified":pairsVerified, "pairsErrored":pairsErrored};
+		
+	}
+
+		function reassignBin(stateName, binText){
+		var assignments_updated = [];
+		var assignments_removed = [];
+		var assignments_verified = [];
+		var oldBinText = states[stateName].bin;
+		if(oldBinText==binText.trim()){
+			console.log("Same as already assigned.");
+			return [assignments_updated, assignments_removed, assignments_verified];
+		}
+		cloneNDPairsAffected = pairs.filter(function(obj){return (obj.response==0||obj.response==1)&&(obj.state1==stateName||obj.state2==stateName)});
+		diffPairsAffected = pairs.filter(function(obj){return (obj.response==2)&&(states[obj.state1].bin==binText||states[obj.state2].bin==binText)&&(obj.state1==stateName||obj.state2==stateName)});
+		console.log("affected clones and nearduplicates : " + cloneNDPairsAffected);
+		console.log("affected Different pairs :" + diffPairsAffected);
+		
+		if(!availableBins.includes(binText)){
+			availableBins.push(binText);
+			updateBinHTML(binText);
+			if(!(binText in newBins)){
+				newBins[binText] = stateName;
+			}
+		}
+		
+		states[stateName]["bin"] = binText;
+		for(pairId in cloneNDPairsAffected){
+			var pair = cloneNDPairsAffected[pairId];
+			if(states[pair.state1].bin!=states[pair.state2].bin){
+				pair.response = 2;
+				pair.inferred = 1;
+				assignments_updated = assignments_updated.concat(pair);
+			}
+			else{
+				pair.response = -1;
+				pair.inferred = 0;
+				submitted-=1;
+				assignments_removed = assignments_removed.concat(pair);
+			}
+		}
+		
+		for(pairId in diffPairsAffected){
+			var pair = diffPairsAffected[pairId];
+			pair.response = -1;
+			pair.inferred = 0;
+			submitted-=1;
+			assignments_removed = assignments_removed.concat(pair);
+		}
+		updateProgressBar();
+		
+		return [assignments_updated, assignments_removed, assignments_verified];	
+	}
+
+
+	function recordResponse(){
+		var previousValue = pairs[currentImage].response;
+		var checkedRadio = $("input[name='response']:checked");
+		var tagText = $("#tags").val();
+		var comments = $("#comments").val();
+		if(checkedRadio.length == 0){
+			$("#errorAlert").show();
+			return;
+		}
+
+		//////////////////////////////////////////
+		var responseRecorded = checkedRadio.attr('responseId');
+		var lBinText=states[pairs[currentImage].state1].bin;
+		var lBinTextRecorded = '';
+		var rBinText=states[pairs[currentImage].state2].bin;
+		var rBinTextRecorded = '';
+		var lBinTextUpdated = false;
+		var rBinTextUpdated = false;
+		
+		if($("#LbinGroup").is(":visible")){ 
+			lBinTextRecorded = $("#LbinSelected").val().trim();
+			if(lBinText !== lBinTextRecorded){
+				lBinTextUpdated = true;
+			}
+			// states[pairs[currentImage].state1].bin = lBinText;
+		}
+		else{
+			lBinTextRecorded = lBinText;
+		}
+
+		if($("#RbinGroup").is(":visible")){
+			rBinTextRecorded = $("#RbinSelected").val().trim();
+			if(rBinText !== rBinTextRecorded){
+				rBinTextUpdated = true;
+			}
+			// states[pairs[currentImage].state2].bin = rBinText;
+		}
+		else{
+			
+			if((responseRecorded==0 || responseRecorded==1)&&(states[pairs[currentImage].state2].bin == "")) {
+				rBinTextRecorded = lBinTextRecorded;
+				rBinTextUpdated = true;
+			}
+			else{
+				rBinTextRecorded = rBinText;
+			}
+		}
+
+		var binConsistent = checkBinAssignments(lBinTextRecorded, rBinTextRecorded);
+		if(! binConsistent.returnVal){
+			console.log("Bin Assignment is Inconsistent : ");
+			console.log(binConsistent.code);
+			return;
+		}
+
+		pairs[currentImage].response = parseInt(checkedRadio.attr('responseId'));
+
+
+		if(lBinTextUpdated){
+			states[pairs[currentImage].state1].bin = lBinTextRecorded;
+			lBinText=states[pairs[currentImage].state1].bin;
+		}
+		if(rBinTextUpdated){
+			states[pairs[currentImage].state2].bin = rBinTextRecorded;
+			rBinText=states[pairs[currentImage].state2].bin;
+		}
+		
+		
+		// When bin is consistent update bin html
+		if(!availableBins.includes(lBinText)){
+			availableBins.push(lBinText);
+			updateBinHTML(lBinText);
+			if(!(lBinText in newBins)){
+				newBins[lBinText] = pairs[currentImage].state1;
+			}
+			
+		}
+		if(!availableBins.includes(rBinText)){
+			availableBins.push(rBinText);
+			updateBinHTML(rBinText);
+			if(!(rBinText in newBins)){
+				newBins[rBinText] = pairs[currentImage].state2;
+			}
+		}
+
+		if(responseRecorded == 0){
+			var state2 = states[pairs[currentImage].state2];
+			var state1 = states[pairs[currentImage].state1];
+			if(!state1.clones.includes(state2.name)){
+				state1.clones.push(state2.name);
+			}
+			if(!state2.clones.includes(state1.name)){
+				state2.clones.push(state1.name);
+			}
+// 			states[pairs[currentImage].state2].clones.push(pairs[currentImage].state1);
+// 			states[pairs[currentImage].state1].clones.push(pairs[currentImage].state2);
+// 			states[pairs[currentImage].state1].clones = [...new Set(states[pairs[currentImage].state1].clones)];
+// 			states[pairs[currentImage].state2].clones = [...new Set(states[pairs[currentImage].state2].clones)];
+		}
+		
+		
+// 		if(responseRecorded == 2){
+			
+// 		}
+		
+		if(transitiveAssign){
+			// Transfer Pair Classification across Clones and Near Duplicates
+			
+			
+			
+			var state1 = pairs[currentImage].state1;
+
+			var state2 = pairs[currentImage].state2;
+			
+			var pairsPropagated = [];
+			var pairsErrored = [];
+			var pairsVerified = [];
+			var pairsSkipped = [];
+
+
+			if(responseRecorded ==0 ){
+				// If Clone Transfer CLONE=>CLONE,ND=>ND and DIFFERENT=>DIFFERENT
+				var pairsToPropagateFrom=pairs.filter(function(obj) {
+					return obj.state1==state1 && obj.response>=0;
+				});
+
+				var statesToPropagate = pairsToPropagateFrom.map(function(obj) { return obj.state2; });
+				var responsesToPropagateFrom = new Map();
+				pairsToPropagateFrom.map(function(obj){responsesToPropagateFrom.set(obj.state2, obj)});
+
+
+				console.log(state2 + " : " + responseRecorded);
+				console.log(statesToPropagate);
+
+				var pairsToPropagate1= pairs.filter(function(obj) {
+					return obj.state1==state2 && statesToPropagate.includes(obj.state2);
+				});
+				var pairsToPropagate2 = pairs.filter(function(obj) {
+					return obj.state2==state2 && statesToPropagate.includes(obj.state1);
+				});
+
+				// console.log(pairsToPropagate1);
+				// console.log(pairsToPropagate2);
+// 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate1);
+// 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate2);
+				
+				for(id in pairsToPropagate1){
+					var propagatePair = pairsToPropagate1[id];
+					var correspondingResponsePair = responsesToPropagateFrom.get(propagatePair.state2);
+
+					if(propagatePair.response == -1){
+						console.log(correspondingResponsePair);
+						// Transfer all original assignments to new pairs
+						propagatePair.response =  correspondingResponsePair.response;
+						propagatePair.inferred = 1;
+						pairsPropagated = pairsPropagated.concat(propagatePair);
+						
+						console.log("transitiveAssign succeeded : ");
+						console.log(propagatePair);
+					}
+					else{
+						if(propagatePair.response !== correspondingResponsePair.response){
+							pairsErrored = pairsErrored.concat(propagatePair)
+							console.log("ERROR!! TransitiveAssignment Error.");
+							console.log("Propagate Pair is : ");
+							console.log(propagatePair);
+							console.log(correspondingResponsePair);
+						}
+						else{
+							pairsVerified = pairsVerified.concat(propagatePair);
+						}
+					}
+					
+				}
+
+				for(id in pairsToPropagate2){
+					var propagatePair = pairsToPropagate2[id];
+					var correspondingResponsePair = responsesToPropagateFrom.get(propagatePair.state1);
+
+					if(propagatePair.response == -1){
+						console.log(correspondingResponsePair);
+						// Transfer all original assignments to new pairs
+						propagatePair.response =  correspondingResponsePair.response;
+						propagatePair.inferred = 1;
+						pairsPropagated = pairsPropagated.concat(propagatePair);
+					
+						console.log("transitiveAssign succeeded : ");
+						console.log(propagatePair);
+					}
+					else{
+						if(propagatePair.response !== correspondingResponsePair.response){
+							pairsErrored = pairsErrored.concat(propagatePair)
+							console.log("ERROR!! TransitiveAssignment Error.");
+							console.log("Propagate Pair is : ");
+							console.log(propagatePair);
+							console.log(correspondingResponsePair);
+						}
+						else{
+							pairsVerified = pairsVerified.concat(propagatePair);
+						}
+					}
+				}
+			}
+
+			if(responseRecorded ==1){
+				// If ND, Transfer CLONE=>ND and DIFFERENT=>DIFFERENT
+				var pairsToPropagateFrom=pairs.filter(function(obj) {
+					return obj.state1==state1 && obj.response>=0;
+				});
+
+				var statesToPropagate = pairsToPropagateFrom.map(function(obj) { return obj.state2; });
+				var responsesToPropagateFrom = new Map();
+				pairsToPropagateFrom.map(function(obj){responsesToPropagateFrom.set(obj.state2, obj)});
+				
+				// console.log(state2);
+				// console.log(statesToPropagate);
+
+				
+				var pairsToPropagate1= pairs.filter(function(obj) {
+					return obj.state1==state2 && statesToPropagate.includes(obj.state2);
+				});
+				var pairsToPropagate2 = pairs.filter(function(obj) {
+					return obj.state2==state2 && statesToPropagate.includes(obj.state1);
+				});
+
+// 				console.log(pairsToPropagate1);
+// 				console.log(pairsToPropagate2);
+// 				console.log(responsesToPropagateFrom);
+// // 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate1);
+// 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate2);
+				
+				for(id in pairsToPropagate1){
+					propagatePair = pairsToPropagate1[id];
+					var correspondingResponsePair = responsesToPropagateFrom.get(propagatePair.state2);
+
+					if(propagatePair.response == -1){
+						console.log(propagatePair);
+						console.log(correspondingResponsePair);
+						if(correspondingResponsePair.response == 0){
+							// Assign ND to clone of original since this is a ND
+							propagatePair.response = 1;
+							propagatePair.inferred = 1;
+							pairsPropagated = pairsPropagated.concat(propagatePair);
+
+						}
+						else if(correspondingResponsePair.response == 1){
+							// Skip this because we cant be sure this pair is not a clone. 
+							pairsSkipped = pairsSkipped.concat(propagatePair);
+						}
+						else{
+							// Propagate different classification
+							propagatePair.response =  correspondingResponsePair.response;
+							propagatePair.inferred = 1;
+							pairsPropagated = pairsPropagated.concat(propagatePair);
+						}
+						
+						console.log("transitiveAssign succeeded : ");
+						console.log(propagatePair);
+					}
+					else{
+						
+						if((propagatePair.response==2 && correspondingResponsePair.response!==2)
+						 ||(propagatePair.response==0 && correspondingResponsePair.response==0)){
+							pairsErrored = pairsErrored.concat(propagatePair)
+							console.log("ERROR!! TransitiveAssignment Error.");
+							console.log("Propagate Pair is : ");
+							console.log(propagatePair);
+							console.log(correspondingResponsePair);
+						}
+						else{
+							pairsVerified = pairsVerified.concat(propagatePair);
+						}
+					}
+				}
+
+				for(id in pairsToPropagate2){
+					propagatePair = pairsToPropagate2[id];
+					correspondingResponsePair = responsesToPropagateFrom.get(propagatePair.state1);
+					if(propagatePair.response == -1){
+						console.log(propagatePair);
+						console.log(correspondingResponsePair);
+						if(correspondingResponsePair.response == 0){
+							// Assign ND to clone of original since this is a ND
+							propagatePair.response = 1;
+							propagatePair.inferred = 1;	
+							pairsPropagated = pairsPropagated.concat(propagatePair);
+
+						}
+						else if(correspondingResponsePair.response == 1){
+							// Skip this because we cant be sure this pair is not a clone. 
+							pairsSkipped = pairsSkipped.concat(propagatePair);
+						}
+						else{
+							// Propagate different classification
+							propagatePair.response =  correspondingResponsePair.response;
+							propagatePair.inferred = 1;
+							pairsPropagated = pairsPropagated.concat(propagatePair);
+						}
+						
+						console.log("transitiveAssign succeeded : ");
+						console.log(propagatePair);
+					}
+					else{
+						
+						if((propagatePair.response==2 && correspondingResponsePair.response!==2)
+						 ||(propagatePair.response==0 && correspondingResponsePair.response==0)){
+							pairsErrored = pairsErrored.concat(propagatePair)
+							console.log("ERROR!! TransitiveAssignment Error.");
+							console.log("Propagate Pair is : ");
+							console.log(propagatePair);
+							console.log(correspondingResponsePair);
+						}
+						else{
+							pairsVerified = pairsVerified.concat(propagatePair);
+						}
+					}
+				}
+			}
+
+			if(responseRecorded ==2){
+				// If DIFFERENT, Transfer CLONE=>DIFFERENT and ND=>DIFFERENT
+				var pairsToPropagateFrom=pairs.filter(function(obj) {
+					return obj.state1==state1 && (obj.response==0 || obj.response==1);
+				});
+
+				var statesToPropagate = pairsToPropagateFrom.map(function(obj) { return obj.state2; });
+				var responsesToPropagateFrom = new Map();
+				pairsToPropagateFrom.map(function(obj){responsesToPropagateFrom.set(obj.state2, obj)});
+				
+				// console.log(state2);
+				// console.log(statesToPropagate);
+
+				
+				var pairsToPropagate1= pairs.filter(function(obj) {
+					return obj.state1==state2 && statesToPropagate.includes(obj.state2);
+				});
+				var pairsToPropagate2 = pairs.filter(function(obj) {
+					return obj.state2==state2 && statesToPropagate.includes(obj.state1);
+				});
+
+// 				console.log(pairsToPropagate1);
+// 				console.log(pairsToPropagate2);
+// 				console.log(responsesToPropagateFrom);
+// // 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate1);
+// 				pairsToPropagate = pairsToPropagate.concat(pairsToPropagate2);
+				
+				for(id in pairsToPropagate1){
+					propagatePair = pairsToPropagate1[id];
+					var correspondingResponsePair = responsesToPropagateFrom.get(propagatePair.state2);
+
+					if(propagatePair.response == -1){
+						console.log(propagatePair);
+						console.log(correspondingResponsePair);
+						if(correspondingResponsePair.response !== 2){
+							// Since the original pairs belong to the same bin as state1, corresponding states are different from this state.
+							propagatePair.response = 2;
+							propagatePair.inferred = 1;
+							pairsPropagated = pairsPropagated.concat(propagatePair);
+
+							console.log("transitiveAssign succeeded : ");
+							console.log(propagatePair);
+
+						}
+						else{
+							console.log("WARNING!! Detected something unusual. Filter not working?");	
+							pairsErrored=pairsErrored.concat(propagatePair);
+						}
+						
+					}
+					else{
+						if(propagatePair.response!==2 && correspondingResponsePair.response!==2){
+							pairsErrored = pairsErrored.concat(propagatePair)
+							console.log("ERROR!! TransitiveAssignment Error.");
+							console.log("Propagate Pair is : ");
+							console.log(propagatePair);
+							console.log(correspondingResponsePair);
+						}
+						else{
+							pairsVerified = pairsVerified.concat(propagatePair);
+						}
+					}
+				}
+
+				for(id in pairsToPropagate2){
+					propagatePair = pairsToPropagate2[id];
+					var correspondingResponsePair = responsesToPropagateFrom.get(propagatePair.state1);
+
+					if(propagatePair.response == -1){
+						console.log(propagatePair)
+						console.log(correspondingResponsePair);
+						if(correspondingResponsePair.response !== 2){
+							// Assign ND to clone of original since this is a ND
+							propagatePair.response = 2;
+							propagatePair.inferred = 1;
+							pairsPropagated = pairsPropagated.concat(propagatePair);
+
+						}
+						else{
+							console.log("WARNING!! Detected something unusual. Filter not working?");	
+						}
+						
+						console.log("transitiveAssign succeeded : ");
+						console.log(propagatePair);
+					}
+					else{
+						if(propagatePair.response!==2 && correspondingResponsePair.response!==2){
+							pairsErrored = pairsErrored.concat(propagatePair)
+							console.log("ERROR!! TransitiveAssignment Error.");
+							console.log("Propagate Pair is : ");
+							console.log(propagatePair);
+							console.log(correspondingResponsePair);
+						}
+						else{
+							pairsVerified = pairsVerified.concat(propagatePair);
+						}
+					}
+				}
+			}
+			
+		
+			if(lBinTextUpdated){
+				var returnPairs = inferDifferentPairsFromBinValues(lBinText, state1);
+				submitted += returnPairs.pairsPropagated.length;
+				
+				console.log("Diff Pairs Propagated from lBin: " + returnPairs.pairsPropagated.length);
+				console.log(returnPairs.pairsPropagated);
+
+				console.log("Diff Pairs Verified from lBin: " + returnPairs.pairsVerified.length);
+				console.log(returnPairs.pairsVerified);
+
+				console.log("Diff Pairs Errored from lBin: " + returnPairs.pairsErrored.length);
+				console.log(returnPairs.pairsErrored);
+
+			}
+
+			if(rBinTextUpdated){
+				var returnPairs = inferDifferentPairsFromBinValues(rBinText,state2);
+				submitted += returnPairs.pairsPropagated.length;
+				console.log("Diff Pairs Propagated from rBin: " + returnPairs.pairsPropagated.length);
+				console.log(returnPairs.pairsPropagated);
+
+				console.log("Diff Pairs Verified from rBin: " + returnPairs.pairsVerified.length);
+				console.log(returnPairs.pairsVerified);
+
+				console.log("Diff Pairs Errored from rBin: " + returnPairs.pairsErrored.length);
+				console.log(returnPairs.pairsErrored);
+
+			}
+
+			console.log("Pairs Propagated : " + pairsPropagated.length);
+			console.log(pairsPropagated);
+
+			console.log("Pairs Verified : " + pairsVerified.length);
+			console.log(pairsVerified);
+
+			console.log("Pairs skipped : " + pairsSkipped.length);
+			console.log(pairsSkipped);
+
+			console.log("Pairs Errored : " + pairsErrored.length);
+			console.log(pairsErrored);
+
+			submitted+=pairsPropagated.length;
+			inferred+=pairsPropagated.length;
+
+		}
+
+		/////////////////////////////////////////
+		$("#successAlert").show();
+		
+		if(previousValue == -1 ){
+			window.onbeforeunload = beforeUnload;
+			submitted += 1;
+			updateProgressBar();
+		}
+
+		pairs[currentImage].tags = tagText.split(",").map(Function.prototype.call, String.prototype.trim);
+		for(tag in pairs[currentImage].tags){
+			if (!tags[pairs[currentImage].response].includes(pairs[currentImage].tags[tag])){
+				tags[pairs[currentImage].response].push(pairs[currentImage].tags[tag]);
+			}
+		}
+		pairs[currentImage].comments = comments;
+		updateStateForCurrentImage();
+		if(autoNextEnabled){
+			loadNextImage();
+		}
+
+		
+	}
+
+	function on() {
+	document.getElementById("overlay").style.display = "block";
+	}
+
+	function off() {
+	document.getElementById("overlay").style.display = "none";
+	}
+
+	function zoomOutImage(){
+		if(imageZoom >= 0.2){
+			imageZoom -= 0.1;
+		}
+		else{
+			return;
+		}
+
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+
+	}
+
+	function zoomInImage(){
+		if(imageZoom <= 5.0){
+			imageZoom += 0.1;
+		}
+		else{
+			return;
+		}
+
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+	}
+
+	function setZoomValue(){
+		zoomValueInput = $("#zoomValueField").val();
+		if(zoomValueInput >10 && zoomValueInput < 500){
+			imageZoom = zoomValueInput/100;
+		}
+		else{
+			imageZoom = 1;
+		}
+		$("#imageToShow").css('zoom', imageZoom);
+		$("#zoomValueField").val(Math.trunc(imageZoom*100));
+
+	}
+
+	function beforeUnload() {
+		if(saved != submitted){
+			saveJson();
+
+		}
+		return true;
+	}
+
+	function toggleTransitiveAssign(){
+		transitiveAssign = !transitiveAssign;
+		if(transitiveAssign){
+			$("#transitiveAssignLabel").html("TransitiveAssignment Enabled");
+		}
+		else{
+			$("#transitiveAssignLabel").html("TransitiveAssignment Disabled");
+		}
+	}
+
+	function toggleSkipAssigned(){
+		skipAssigned = !skipAssigned;
+		if(skipAssigned){
+			$("#skipAssignedLabel").html("SkipAssigned Enabled");
+		}
+		else{
+			$("#skipAssignedLabel").html("SkipAssigned Disabled");
+		}
+	}
+
+	function toggleAutoNext(){
+		autoNextEnabled = !autoNextEnabled;
+		if(autoNextEnabled){
+			$("#autoNextLabel").html("AutoNext Enabled");
+		}
+		else{
+			$("#autoNextLabel").html("AutoNext Disabled");
+		}
+	}
+
+	function bs_input_file() {
+	$(".input-file").before(
+		function() {
+			if ( ! $(this).prev().hasClass('input-ghost') ) {
+				var element = $("<input type='file' class='input-ghost' id='chosenJsonFile' style='visibility:hidden; height:0'>");
+				element.attr("name",$(this).attr("name"));
+				element.change(function(event){
+					var uploadedFile = event.target.files[0]; 
+				//element.change(function(){
+					element.next(element).find('input').val((element.val()).split('\\').pop());
+
+					if(uploadedFile.type !== "text/javascript" && uploadedFile.type !== "application/json") { 
+					        alert("Wrong file type == " + uploadedFile.type); 
+					        return false;
+					    }
+
+					    if (uploadedFile) {
+					        var readFile = new FileReader();
+					        readFile.onload = function(e) { 
+					            var contents = e.target.result;
+					            json_uploaded = JSON.parse(contents);
+					            console.log("JSON from file parsed");
+					        };
+							readFile.readAsText(uploadedFile);
+					    } else { 
+					        console.log("Failed to load file");
+					    }
+					});
+
+				$(this).find("button.btn-choose").click(function(){
+					element.click();
+				});
+				$(this).find("button.btn-reset").click(function(){
+					element.val(null);
+					$(this).parents(".input-file").find('input').val('');
+				});
+				$(this).find('input').css("cursor","pointer");
+				$(this).find('input').mousedown(function() {
+					$(this).parents('.input-file').prev().click();
+					return false;
+				});
+				return element;
+			}
+		}
+	);
+	}
+	// $(function() {
+		
+	// 	//$('.input-group').css('position', 'absolute');
+	// });
+
+	$(document).ready(
+		function(){
+			console.log("ready");
+			json_data = json_data_original;
+			pairs = json_data['pairs'];
+			states=json_data['states'];
+			preloadedBins = preloadedBins.concat({{preLoadedBins}});
+			loadBinsFromJson();
+
+			doneTakingResponses = false;
+			$("#responseForm").hide("slide")
+			//$("#saveJson").hide()
+			$("#prevButton").hide()
+			$("#nextButton").click(loadNextImage);
+			$("#prevButton").click(loadPreviousImage);
+			$("#saveJson").click(saveJson);
+			$("#responseSubmit").click(recordResponse);
+			$("#infoButton").click(on);
+			$('.progress-bar').html(submitted + "_Reponses_submitted_out_of_" + pairs.length);
+			$("#zoomInButton").click(zoomInImage);
+			$("#zoomOutButton").click(zoomOutImage);
+			$("#zoomValueField").on("keypress", function(e){
+			    if (e.keyCode == 13) {
+				// Cancel the default action on keypress event
+					e.preventDefault(); 
+			        setZoomValue();
+			    }
+			});
+			$("#tags").on("keypress", function(e){
+				if(e.keyCode == 13){
+					e.preventDefault();
+					updateTags();
+				}
+			});
+
+			$(".tagSug").click(function(e){addSuggestedTag(e.target);});
+
+			$("#successAlert").hide();
+			$("#errorAlert").hide();
+			$("#binErrorAlert").hide();
+			$("#binErrorAlert_Inconsistent").hide();
+			window.onbeforeunload = null;
+			$('#autoNextToggle').click(toggleAutoNext);
+			$('#autoNextToggle').click();
+
+			$('#skipAssigned').click(toggleSkipAssigned);
+			$("#skipAssigned").click();
+
+
+			
+			$('#transitiveAssignToggle').click(toggleTransitiveAssign);
+			$("#transitiveAssignToggle").click();
+			
+
+			$('#zoomValueField').val(100);
+
+			bs_input_file();
+			$("#loadJsonButton").on("click", function(){  	
+				ezBSAlert({
+					type: "confirm",
+					messageText: "Do you Want to load this JSON?",
+					alertType: "info"
+				}).done(function(e){loadJson(e);});
+			});
+
+			$(".radio-inline").click(handleCategorySelect);
+			$('.input-file').css('position', 'absolute');
+
+			$("#imageToShow").click(function(){
+				if(currentImage<0){
+					loadNextImage();
+				}
+			});
+
+			$("#LbinGroup").hide();
+			$("#RbinGroup").hide();
+			$("#imagesToCompare").hide();
+			updateStateForJson();
+		}
+	);
+		
+
+	function ezBSAlert (options) {
+		var deferredObject = $.Deferred();
+		var defaults = {
+			type: "alert", //alert, prompt,confirm 
+			modalSize: 'modal-sm', //modal-sm, modal-lg
+			okButtonText: 'Ok',
+			cancelButtonText: 'Cancel',
+			yesButtonText: 'Yes',
+			noButtonText: 'No',
+			headerText: 'Attention',
+			messageText: 'Message',
+			alertType: 'default', //default, primary, success, info, warning, danger
+			inputFieldType: 'text', //could ask for number,email,etc
+		}
+		$.extend(defaults, options);
+	  
+		var _show = function(){
+			var headClass = "navbar-default";
+			switch (defaults.alertType) {
+				case "primary":
+					headClass = "alert-primary";
+					break;
+				case "success":
+					headClass = "alert-success";
+					break;
+				case "info":
+					headClass = "alert-info";
+					break;
+				case "warning":
+					headClass = "alert-warning";
+					break;
+				case "danger":
+					headClass = "alert-danger";
+					break;
+	        }
+			$('BODY').append(
+				'<div id="ezAlerts" class="modal fade">' +
+				'<div class="modal-dialog" class="' + defaults.modalSize + '">' +
+				'<div class="modal-content">' +
+				'<div id="ezAlerts-header" class="modal-header ' + headClass + '">' +
+				'<button id="close-button" type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>' +
+				'<h4 id="ezAlerts-title" class="modal-title">Modal title</h4>' +
+				'</div>' +
+				'<div id="ezAlerts-body" class="modal-body">' +
+				'<div id="ezAlerts-message" ></div>' +
+				'</div>' +
+				'<div id="ezAlerts-footer" class="modal-footer">' +
+				'</div>' +
+				'</div>' +
+				'</div>' +
+				'</div>'
+			);
+
+			$('.modal-header').css({
+				'padding': '15px 15px',
+				'-webkit-border-top-left-radius': '5px',
+				'-webkit-border-top-right-radius': '5px',
+				'-moz-border-radius-topleft': '5px',
+				'-moz-border-radius-topright': '5px',
+				'border-top-left-radius': '5px',
+				'border-top-right-radius': '5px'
+			});
+	    
+			$('#ezAlerts-title').text(defaults.headerText);
+			$('#ezAlerts-message').html(defaults.messageText);
+
+			var keyb = "false", backd = "static";
+			var calbackParam = "";
+			switch (defaults.type) {
+				case 'alert':
+					keyb = "true";
+					backd = "true";
+					$('#ezAlerts-footer').html('<button class="btn btn-' + defaults.alertType + '">' + defaults.okButtonText + '</button>').on('click', ".btn", function () {
+						calbackParam = true;
+						$('#ezAlerts').modal('hide');
+					});
+					break;
+				case 'confirm':
+					var btnhtml = '<button id="ezok-btn" class="btn btn-primary">' + defaults.yesButtonText + '</button>';
+					if (defaults.noButtonText && defaults.noButtonText.length > 0) {
+						btnhtml += '<button id="ezclose-btn" class="btn btn-default">' + defaults.noButtonText + '</button>';
+					}
+					$('#ezAlerts-footer').html(btnhtml).on('click', 'button', function (e) {
+							if (e.target.id === 'ezok-btn') {
+								calbackParam = true;
+								$('#ezAlerts').modal('hide');
+							} else if (e.target.id === 'ezclose-btn') {
+								calbackParam = false;
+								$('#ezAlerts').modal('hide');
+							}
+						});
+					break;
+				case 'prompt':
+					$('#ezAlerts-message').html(defaults.messageText + '<br /><br /><div class="form-group"><input type="' + defaults.inputFieldType + '" class="form-control" id="prompt" /></div>');
+					$('#ezAlerts-footer').html('<button class="btn btn-primary">' + defaults.okButtonText + '</button>').on('click', ".btn", function () {
+						calbackParam = $('#prompt').val();
+						$('#ezAlerts').modal('hide');
+					});
+					break;
+			}
+	   
+			$('#ezAlerts').modal({ 
+	          show: false, 
+	          backdrop: backd, 
+	          keyboard: keyb 
+	        }).on('hidden.bs.modal', function (e) {
+				$('#ezAlerts').remove();
+				deferredObject.resolve(calbackParam);
+			}).on('shown.bs.modal', function (e) {
+				if ($('#prompt').length > 0) {
+					$('#prompt').focus();
+				}
+			}).modal('show');
+		}
+	    
+	  _show();  
+	  return deferredObject.promise();    
+	}
+
+
+
+
+
+// $(document).ready(function(){
+//   $("#btnAlert").on("click", function(){  	
+//     var prom = ezBSAlert({
+//       messageText: "hello world",
+//       alertType: "danger"
+//     }).done(function (e) {
+//       $("body").append('<div>Callback from alert</div>');
+//     });
+//   });   
+  
+//   $("#btnConfirm").on("click", function(){  	
+//     ezBSAlert({
+//       type: "confirm",
+//       messageText: "hello world",
+//       alertType: "info"
+//     }).done(function (e) {
+//       $("body").append('<div>Callback from confirm ' + e + '</div>');
+//     });
+//   });   
+
+//   $("#btnPrompt").on("click", function(){  	
+//     ezBSAlert({
+//       type: "prompt",
+//       messageText: "Enter Something",
+//       alertType: "primary"
+//     }).done(function (e) {
+//       ezBSAlert({
+//         messageText: "You entered: " + e,
+//         alertType: "success"
+//       });
+//     });
+//   });   
+  
+// });
+
+// var obj = {a: "Hello", b: "World"};
+// saveText( JSON.stringify(obj));
+</script>
+</head>
+<body>
+
+	<nav class="navbar navbar-default navbar-fixed-top" >
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Near Duplicate Detection</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+		<li class="nav-item active" >
+			<a class="nav-link active" href="#" id = "nextButton">Load Next</a>
+		</li>
+		
+		<li class="nav-item active">
+			<a class="nav-link active" href="#" id = "prevButton">Previous</a>
+		</li>
+		
+
+		<li class="nav-item active">
+			<a class="nav-link active" href="#" id = "infoButton">Instructions</a>
+		</li>
+
+		</ul>
+
+		 <ul class="nav navbar-nav navbar-center">
+		<li>
+
+	    <button id = "saveJson" class="btn btn-danger navbar-btn">Save responses as JSON</button>
+
+	    </li>
+	    </ul>
+<!-- 
+		<li class = "nav-item active">
+			<a class="nav-link active" href="#">Load Json
+<input type = "file" id="loadJsonButton"/>
+			</a>
+ -->	
+  		<ul class="nav navbar-nav navbar-right">
+	 		<!-- <li class="nav-item active">
+			<div class="form-group">
+			    <label for="loadJsonButton">Load Json with previous Responses</label>
+			    <input type="file" class="form-control-file" id="loadJsonButton">
+			</div>
+		   		
+			</li> -->
+			<li>
+				<!-- COMPONENT START -->
+				<div class="form-group">
+					<div class="input-group input-file" name="Fichier1">
+						<span class="input-group-btn">
+			        		<button class="btn btn-default btn-choose" type="button">Choose</button>
+			    		</span>
+			    		<input type="text" class="form-control" placeholder='Choose a file...' />
+			    		<span class="input-group-btn">
+			       			 <button class="btn btn-default btn-info" type="button" id="loadJsonButton">Load</button>
+			    		</span>
+					</div>
+				 </div> 
+	<!-- COMPONENT END -->
+			</li>
+		</ul>
+
+
+
+	  </div>
+
+	
+	</nav>
+
+
+	<div class="panel panel-default">
+	  <div class="panel-heading">Progress Bar</div>
+	  <div class="panel-body" >
+	  	
+	 <div class="progress" >
+		<div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+		</div>
+	</div>
+
+	  </div>
+	</div>
+	 
+
+	<div class="panel panel-default" id="imagePanel">
+		<div class="panel-heading form-group-row">
+		
+		  	<div id = "imageHeading">
+		  		<span id="currentImageNumber" class='badge'></span>
+		  		<strong>Images to Compare </strong>
+		  		<dummy></dummy>
+		  	</div>
+		  	<div >
+				<button id = "zoomInButton" class="glyphicon glyphicon-zoom-in"> </button>
+				<button id = "zoomOutButton" class = "glyphicon glyphicon-zoom-out"></button>
+				<input id = "zoomValueField" class = "text"> 
+				
+				<input type="checkbox" class="form-check-input" id="autoNextToggle">
+				<label id="autoNextLabel" class="form-check-label" for="autoNextToggle">Toggle AutoNext</label>
+				
+				<input type="checkbox" class="form-check-input" id="skipAssigned">
+				<label id="skipAssignedLabel" class="form-check-label" for="skipAssigned">Toggle SkipAssigned</label>
+				
+				<input type="checkbox" class="form-check-input" id="transitiveAssignToggle">
+				<label id="transitiveAssignLabel" class="form-check-label" for="transitiveAssignToggle">Toggle TransitiveAssignment</label>
+				
+			</div>
+	  	</div>
+		
+		<div class="panel-body" style="height:60%;overflow:auto">
+		  	
+			<div id = "imageToShow"> 
+				<img src = "images/beginImage.png">
+			</div>
+
+			<div id= "imagesToCompare" >
+				<div class="container">
+					<div class="col-lg-12"></div> 
+					<div class="row">
+						<div class="col-lg-6 Limage">
+							<div class="row text-center LimageLabel"> <strong> Left </strong> <span class='badge binBadge'> </span> <br/> <a href="dummy"> url </a>  </div> 
+							<img src=""  class="img-responsive" alt="state1">
+						</div>
+
+						<div class="col-lg-6 Rimage"> 
+							<div class="row text-center RimageLabel"> <strong> Right </strong> <span class='badge binBadge'>  </span> <br/> <a href="dummy"> url </a> </div>
+							<img src="" class="img-responsive" alt="state2">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading"> Please Submit your Response Here</div>
+	  <div class="panel-body" style="height:250px">
+
+
+
+
+	  	<div id = "responseForm" >
+
+			
+			<form>
+				<div class = "form-group">
+					<label class="radio-inline"><input type="radio" name="response" responseId=0>Clone</label>
+					<label class="radio-inline"><input type="radio" name="response" responseId=1>Near Duplicate</label>
+					<label class="radio-inline"><input type="radio" name="response" responseId=2>Different</label>
+					<div class="input-group" style="display: inline-table; position: relative; width: 20%;" id="LbinGroup">
+					    <div class="input-group-btn">
+					    	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">(Left Image) Pick Bin<span class="caret"></span></button>
+					    	<ul id="availableBins" class="dropdown-menu">
+					    		<li class="availableBin" onclick="addToBin(this)">home</li>
+					    		<li class="availableBin" onclick="addToBin(this)">login</li>
+					    		<li class="availableBin" onclick="addToBin(this)">error</li>
+					    	</ul>
+					    </div><!-- /btn-group -->
+	  					<input type="text" class="form-control" id="LbinSelected" placeholder="Add New Bin">
+					</div>
+
+					<div class="input-group" style="display: inline-table; position: relative; width: 20%;" id="RbinGroup">
+					    <div class="input-group-btn">
+					    	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">(Right Image) Pick Bin<span class="caret"></span></button>
+					    	<ul id="availableBins" class="dropdown-menu"> 
+					    		<li class="availableBin" onclick="addToBin(this)">home</li>
+					    		<li class="availableBin" onclick="addToBin(this)">login</li>
+					    		<li class="availableBin" onclick="addToBin(this)">error</li>
+					    	</ul>
+					    </div><!-- /btn-group -->
+	  					<input type="text" class="form-control" id="RbinSelected" placeholder="Add New Bin">
+					</div>
+				    <button class="btn btn-info" type="button" id ="responseSubmit">Submit Response</button>
+					<div id="successAlert" class="alert alert-success">
+					  	<strong>Success!</strong> Your response has been recorded.
+					</div>
+
+					<div id="errorAlert" class="alert alert-danger">
+						<strong>Error!</strong> Please select a category.
+					</div>
+					<div id="binErrorAlert" class="alert alert-danger">
+						<strong>Error!</strong> Please select a Bin for each Image.
+					</div>
+					<div id="binErrorAlert_Inconsistent" class="alert alert-danger">
+						<strong>Error!</strong> Inconsistent Bin Assignment!!
+						<br/>
+						<strong class='errorMessage'></strong>
+					</div>
+					
+
+				</div>
+			    <div class = "form-group" id="tagGroup">
+			    	<!-- <label for="tags">Add Custom Tags separated by commas :</label> -->
+  					<!-- <input type="text" class="form-control" id="tags" placeholder="Add Custom Tags separated by commas"> -->
+			   
+					<div class="input-group">
+					    <div class="input-group-btn">
+					    	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Available Tags <span class="caret"></span></button>
+					    	<ul id="tagSugs" class="dropdown-menu">
+					    		<li class='tagSug' onclick='addSuggestedTag(this)'>dummy</li>
+							</ul>
+					    </div><!-- /btn-group -->
+	  					<input type="text" class="form-control" id="tags" placeholder="Add Custom Tags separated by commas">
+					</div><!-- /input-group -->
+			    </div>
+
+
+			    <div class="form-group" id="commentGroup">
+			      <label for="comment">Comments :</label>
+			      <textarea class="form-control" rows="5" id="comments"></textarea>
+			    </div>
+			  </form>
+		</div>
+		
+
+	  </div>
+	</div>
+	
+	<div id="overlay" onclick="off()">
+
+	
+
+	<div class="overlay">
+	<div style="padding:10%">
+	<div class="panel panel-default">
+	  <div class="panel-heading"> Instructions </div>
+	  <div class="panel-body" style="height:250px;overflow:auto">
+	  	<p>	Responses are only recorded if Submit Response Button is clicked after chosing one of the provided Categories </p>
+	  	<p> You May also chose any custom tag you think may be helpful in categorizing these images.<p>
+	  	<p> Comments may include why you decided to classify the pair the way you did. <p> 
+
+	  	<h4> Deciding how to classify given two images</h4>
+	<ul>
+		<li>
+		CLONE : If the pages have no perceptible changes in functionality or appearance, they are considered Clones
+		</li>
+		<li>
+		NEAR-DUPLICATES : If the changes between the pages are subtle and do not probably affect the functionality offered 
+			<ul>
+				<li>
+					Advertisements 
+				</li>
+
+				<li>
+					Background Images 
+				</li>
+
+				<li>
+					Minor Elements that were shown vs hidden because of user actions like hovering for example navigation lists that appears vs not  
+				</li>
+			</ul>
+		</li>
+
+		<li>
+		DIFFERENT : 	If the pages are very different and represent completely different functionality
+		</li>
+	</ul>
+
+	  </div>
+	</div>
+
+	</div>
+	</div>
+
+
+	
+</body>
+</html>
+

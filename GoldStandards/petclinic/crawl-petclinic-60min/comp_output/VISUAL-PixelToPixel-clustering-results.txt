@@ -1,0 +1,102 @@
+[1] "crawl-petclinic-60min-VISUAL-PixelToPixel-raw"
+[[1]]
+[1] "index.png"    "state1.png"   "state5.png"   "state7.png"   "state9.png"  
+[6] "state773.png"
+
+[[2]]
+ [1] "state17.png"  "state86.png"  "state98.png"  "state115.png" "state139.png"
+ [6] "state172.png" "state213.png" "state263.png" "state317.png" "state381.png"
+[11] "state448.png"
+
+[[3]]
+[1] "state26.png"
+
+[[4]]
+ [1] "state41.png"   "state101.png"  "state118.png"  "state123.png" 
+ [5] "state142.png"  "state175.png"  "state180.png"  "state216.png" 
+ [9] "state237.png"  "state254.png"  "state266.png"  "state271.png" 
+[13] "state301.png"  "state320.png"  "state325.png"  "state358.png" 
+[17] "state384.png"  "state389.png"  "state419.png"  "state451.png" 
+[21] "state456.png"  "state484.png"  "state523.png"  "state544.png" 
+[25] "state561.png"  "state602.png"  "state632.png"  "state703.png" 
+[29] "state755.png"  "state770.png"  "state838.png"  "state890.png" 
+[33] "state973.png"  "state1025.png" "state1098.png" "state1129.png"
+[37] "state1176.png" "state1260.png" "state1361.png" "state1366.png"
+[41] "state1575.png" "state1664.png" "state1864.png" "state2006.png"
+[45] "state2078.png" "state2204.png" "state2261.png" "state2272.png"
+[49] "state2338.png" "state2477.png"
+
+[[5]]
+ [1] "state45.png"   "state57.png"   "state77.png"   "state89.png"  
+ [5] "state130.png"  "state163.png"  "state204.png"  "state308.png" 
+ [9] "state426.png"  "state566.png"  "state639.png"  "state776.png" 
+[13] "state843.png"  "state912.png"  "state1068.png" "state1218.png"
+[17] "state1386.png" "state1487.png" "state1684.png" "state1793.png"
+[21] "state1905.png" "state2156.png" "state2402.png"
+
+[[6]]
+ [1] "state50.png"   "state66.png"   "state365.png"  "state491.png" 
+ [5] "state505.png"  "state651.png"  "state1144.png" "state1302.png"
+ [9] "state1321.png" "state1328.png" "state1503.png" "state1510.png"
+[13] "state1528.png" "state1724.png" "state2287.png" "state2556.png"
+
+[[7]]
+[1] "state106.png"  "state710.png"  "state857.png"  "state1590.png"
+[5] "state1809.png" "state1816.png" "state2047.png"
+
+[[8]]
+ [1] "state147.png"  "state221.png"  "state341.png"  "state528.png" 
+ [5] "state821.png"  "state955.png"  "state968.png"  "state1108.png"
+ [9] "state1113.png" "state1287.png" "state1351.png" "state1448.png"
+[13] "state1767.png" "state1973.png" "state1994.png" "state2001.png"
+[17] "state2223.png" "state2230.png" "state2235.png" "state2256.png"
+[21] "state2525.png" "state2530.png" "state2541.png"
+
+[[9]]
+ [1] "state154.png"  "state228.png"  "state278.png"  "state332.png" 
+ [5] "state351.png"  "state396.png"  "state535.png"  "state573.png" 
+ [9] "state609.png"  "state660.png"  "state682.png"  "state829.png" 
+[13] "state881.png"  "state958.png"  "state963.png"  "state1032.png"
+[17] "state1103.png" "state1184.png" "state1195.png" "state1200.png"
+[21] "state1203.png" "state1305.png" "state1356.png" "state1389.png"
+[25] "state1404.png" "state1453.png" "state1557.png" "state1613.png"
+[29] "state1618.png" "state1621.png" "state1741.png" "state1777.png"
+[33] "state1838.png" "state1853.png" "state1983.png" "state2085.png"
+[37] "state2090.png" "state2093.png" "state2100.png" "state2212.png"
+[41] "state2242.png" "state2348.png" "state2361.png" "state2368.png"
+[45] "state2377.png" "state2382.png" "state2385.png"
+
+[[10]]
+ [1] "state187.png"  "state247.png"  "state372.png"  "state433.png" 
+ [5] "state498.png"  "state514.png"  "state644.png"  "state677.png" 
+ [9] "state717.png"  "state746.png"  "state812.png"  "state824.png" 
+[13] "state848.png"  "state897.png"  "state917.png"  "state946.png" 
+[17] "state982.png"  "state989.png"  "state1018.png" "state1045.png"
+[21] "state1050.png" "state1053.png" "state1122.png" "state1147.png"
+[25] "state1152.png" "state1167.png" "state1221.png" "state1236.png"
+[29] "state1253.png" "state1280.png" "state1310.png" "state1337.png"
+[33] "state1344.png" "state1375.png" "state1421.png" "state1426.png"
+[37] "state1429.png" "state1492.png" "state1519.png" "state1545.png"
+[41] "state1550.png" "state1568.png" "state1598.png" "state1638.png"
+[45] "state1653.png" "state1673.png" "state1715.png" "state1746.png"
+[49] "state1772.png" "state1782.png" "state1798.png" "state1825.png"
+[53] "state1871.png" "state1876.png" "state1879.png" "state1886.png"
+[57] "state1910.png" "state1952.png" "state1978.png" "state2013.png"
+[61] "state2018.png" "state2027.png" "state2038.png" "state2069.png"
+[65] "state2115.png" "state2122.png" "state2131.png" "state2136.png"
+[69] "state2139.png" "state2165.png" "state2207.png" "state2247.png"
+[73] "state2292.png" "state2297.png" "state2302.png" "state2317.png"
+[77] "state2343.png" "state2407.png" "state2412.png" "state2415.png"
+[81] "state2424.png" "state2427.png" "state2430.png" "state2445.png"
+[85] "state2468.png" "state2516.png"
+
+[[11]]
+ [1] "state463.png"  "state554.png"  "state783.png"  "state866.png" 
+ [5] "state1089.png" "state1179.png" "state1267.png" "state1464.png"
+ [9] "state1469.png" "state1472.png" "state1593.png" "state1687.png"
+[13] "state1702.png" "state1925.png" "state1930.png" "state1933.png"
+[17] "state2064.png" "state2178.png" "state2193.png" "state2484.png"
+[21] "state2489.png" "state2492.png" "state2499.png"
+
+Silhouette:  0.4377 
+

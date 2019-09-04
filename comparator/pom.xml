@@ -1,0 +1,225 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ca.ubc.saltlab</groupId>
+	<artifactId>comparator</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>comparator</name>
+
+	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.5</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.6</version>
+        </dependency>
+		
+
+		<dependency>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+			<version>1.9.21</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>apted</groupId>
+			<artifactId>apted</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/apted.jar</systemPath>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>26.0-jre</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.idealista</groupId>
+			<artifactId>tlsh</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.0.pr4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-guava</artifactId>
+			<version>2.9.0.pr4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+<!-- 
+		<dependency>
+			<groupId>org.bytedeco.javacpp-presets</groupId>
+			<artifactId>opencv-platform</artifactId>
+			<version>3.4.2-1.4.2</version>
+		</dependency>
+ -->
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.4.0</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Rabin Hash local file -->
+		<dependency>
+		    <groupId>com.rabinhash</groupId>
+		    <artifactId>rabinhash</artifactId>
+		    <version>2.0</version>
+		    <!-- <scope>system</scope>
+		    <systemPath>${project.basedir}/src/main/resources/lib/rabin-hash-function-2.0.jar</systemPath> -->
+		</dependency>
+
+		<dependency>
+		    <groupId>org.opencv</groupId>
+		    <artifactId>opencv</artifactId>
+		    <version>3.4.2</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+		<dependency>
+		    <groupId>org.xerial</groupId>
+		    <artifactId>sqlite-jdbc</artifactId>
+		    <version>3.25.2</version>
+		</dependency>
+		
+		<!-- For Crawljax Dependencies -->
+		<!-- https://mvnrepository.com/artifact/com.crawljax/crawljax-core -->
+		<dependency>
+		    <groupId>com.crawljax</groupId>
+		    <artifactId>crawljax-core</artifactId>
+		    <version>4.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.crawljax.plugins/crawloverview-plugin -->
+		<dependency>
+		    <groupId>com.crawljax.plugins</groupId>
+		    <artifactId>crawloverview-plugin</artifactId>
+		    <version>4.1</version>
+		</dependency>
+				
+	</dependencies>
+
+	<build>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.20</version>
+					<configuration>
+						<useSystemClassLoader>false</useSystemClassLoader>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.8.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-install-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.5.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.6</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.4.1</version>
+					<configuration>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<archive>
+							<manifest>
+								<mainClass>runner.Main</mainClass>
+							</manifest>
+						</archive>
+
+					</configuration>
+					<executions>
+						<execution>
+							<id>make-assembly</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					  <groupId>org.codehaus.mojo</groupId>
+					  <artifactId>exec-maven-plugin</artifactId>
+					  <version>1.2.1</version>
+					  <executions>
+					    <execution>
+					      <goals>
+					        <goal>java</goal>
+					      </goals>
+					    </execution>
+					  </executions>
+					  <configuration>
+					    <mainClass>runner.Main</mainClass>
+					    
+					  </configuration>
+					</plugin>
+			</plugins>
+
+
+	</build>
+</project>

@@ -1,0 +1,101 @@
+[1] "crawl-petclinic-60min-DOM-Levenshtein-raw"
+[[1]]
+[1] "index.html"  "state1.html" "state5.html"
+
+[[2]]
+  [1] "state7.html"    "state154.html"  "state187.html"  "state228.html" 
+  [5] "state247.html"  "state278.html"  "state332.html"  "state351.html" 
+  [9] "state372.html"  "state396.html"  "state433.html"  "state498.html" 
+ [13] "state514.html"  "state535.html"  "state573.html"  "state609.html" 
+ [17] "state644.html"  "state660.html"  "state677.html"  "state682.html" 
+ [21] "state717.html"  "state746.html"  "state812.html"  "state824.html" 
+ [25] "state829.html"  "state848.html"  "state881.html"  "state897.html" 
+ [29] "state917.html"  "state946.html"  "state958.html"  "state963.html" 
+ [33] "state982.html"  "state989.html"  "state1018.html" "state1032.html"
+ [37] "state1045.html" "state1050.html" "state1053.html" "state1103.html"
+ [41] "state1122.html" "state1147.html" "state1152.html" "state1167.html"
+ [45] "state1184.html" "state1195.html" "state1200.html" "state1203.html"
+ [49] "state1221.html" "state1236.html" "state1253.html" "state1280.html"
+ [53] "state1305.html" "state1310.html" "state1337.html" "state1344.html"
+ [57] "state1356.html" "state1375.html" "state1389.html" "state1404.html"
+ [61] "state1421.html" "state1426.html" "state1429.html" "state1453.html"
+ [65] "state1492.html" "state1519.html" "state1545.html" "state1550.html"
+ [69] "state1557.html" "state1568.html" "state1598.html" "state1613.html"
+ [73] "state1618.html" "state1621.html" "state1638.html" "state1653.html"
+ [77] "state1673.html" "state1715.html" "state1741.html" "state1746.html"
+ [81] "state1772.html" "state1777.html" "state1782.html" "state1798.html"
+ [85] "state1825.html" "state1838.html" "state1853.html" "state1871.html"
+ [89] "state1876.html" "state1879.html" "state1886.html" "state1910.html"
+ [93] "state1952.html" "state1978.html" "state1983.html" "state2013.html"
+ [97] "state2018.html" "state2027.html" "state2038.html" "state2069.html"
+[101] "state2085.html" "state2090.html" "state2093.html" "state2100.html"
+[105] "state2115.html" "state2122.html" "state2131.html" "state2136.html"
+[109] "state2139.html" "state2165.html" "state2207.html" "state2212.html"
+[113] "state2242.html" "state2247.html" "state2292.html" "state2297.html"
+[117] "state2302.html" "state2317.html" "state2343.html" "state2348.html"
+[121] "state2361.html" "state2368.html" "state2377.html" "state2382.html"
+[125] "state2385.html" "state2407.html" "state2412.html" "state2415.html"
+[129] "state2424.html" "state2427.html" "state2430.html" "state2445.html"
+[133] "state2468.html" "state2516.html"
+
+[[3]]
+[1] "state9.html"   "state773.html"
+
+[[4]]
+ [1] "state17.html"  "state41.html"  "state86.html"  "state98.html" 
+ [5] "state115.html" "state139.html" "state172.html" "state213.html"
+ [9] "state263.html" "state317.html" "state381.html" "state448.html"
+
+[[5]]
+[1] "state26.html"
+
+[[6]]
+ [1] "state45.html"   "state57.html"   "state77.html"   "state89.html"  
+ [5] "state130.html"  "state163.html"  "state204.html"  "state308.html" 
+ [9] "state426.html"  "state566.html"  "state639.html"  "state776.html" 
+[13] "state843.html"  "state912.html"  "state1068.html" "state1218.html"
+[17] "state1386.html" "state1487.html" "state1684.html" "state1793.html"
+[21] "state1905.html" "state2156.html" "state2402.html"
+
+[[7]]
+ [1] "state50.html"   "state66.html"   "state365.html"  "state491.html" 
+ [5] "state505.html"  "state651.html"  "state1144.html" "state1302.html"
+ [9] "state1321.html" "state1328.html" "state1503.html" "state1510.html"
+[13] "state1528.html" "state1724.html" "state2287.html" "state2556.html"
+
+[[8]]
+ [1] "state101.html" "state118.html" "state142.html" "state175.html"
+ [5] "state216.html" "state254.html" "state266.html" "state301.html"
+ [9] "state320.html" "state358.html" "state384.html" "state419.html"
+[13] "state451.html" "state484.html" "state523.html" "state561.html"
+[17] "state632.html" "state703.html" "state770.html" "state838.html"
+
+[[9]]
+[1] "state106.html"  "state710.html"  "state857.html"  "state1590.html"
+[5] "state1809.html" "state1816.html" "state2047.html"
+
+[[10]]
+ [1] "state123.html"  "state147.html"  "state180.html"  "state221.html" 
+ [5] "state237.html"  "state271.html"  "state325.html"  "state341.html" 
+ [9] "state389.html"  "state456.html"  "state528.html"  "state544.html" 
+[13] "state602.html"  "state755.html"  "state821.html"  "state890.html" 
+[17] "state955.html"  "state968.html"  "state973.html"  "state1025.html"
+[21] "state1098.html" "state1108.html" "state1113.html" "state1129.html"
+[25] "state1176.html" "state1260.html" "state1287.html" "state1351.html"
+[29] "state1361.html" "state1366.html" "state1448.html" "state1575.html"
+[33] "state1664.html" "state1767.html" "state1864.html" "state1973.html"
+[37] "state1994.html" "state2001.html" "state2006.html" "state2078.html"
+[41] "state2204.html" "state2223.html" "state2230.html" "state2235.html"
+[45] "state2256.html" "state2261.html" "state2272.html" "state2338.html"
+[49] "state2477.html" "state2525.html" "state2530.html" "state2541.html"
+
+[[11]]
+ [1] "state463.html"  "state554.html"  "state783.html"  "state866.html" 
+ [5] "state1089.html" "state1179.html" "state1267.html" "state1464.html"
+ [9] "state1469.html" "state1472.html" "state1593.html" "state1687.html"
+[13] "state1702.html" "state1925.html" "state1930.html" "state1933.html"
+[17] "state2064.html" "state2178.html" "state2193.html" "state2484.html"
+[21] "state2489.html" "state2492.html" "state2499.html"
+
+Silhouette:  0.8430256 
+
