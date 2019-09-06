@@ -1,8 +1,8 @@
 # NDStudy
 
-Virtual Machine set up with the tools 
-    
-    Download from <>
+Virtual Machine set up with the tools
+
+    Download from https://doi.org/10.5281/zenodo.3387760
 
 Tools Provided
 
