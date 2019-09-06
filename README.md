@@ -1,5 +1,9 @@
 # NDStudy
 
+Virtual Machine set up with the tools 
+    
+    Download from <>
+
 Tools Provided
 
     Comparator
@@ -11,6 +15,14 @@ DataSets Provided
     DS.db (contains 493K state-pairs and 1000 labelled pairs) 
     SS.db (contains 97.5K labelled state-pairs for 9 subjects)
     TS.db (same as DS but 500 labelled pairs (disjoint from 1000 in DS) to validate 
+    
+Complete set of Crawl Models 
+    
+    Download from https://doi.org/10.5281/zenodo.3385377
+    Crawls from web used to build DS.db (DS_Crawls)
+    GroundTruths for Subjects (GroundTruthModels) - manually labelled
+    Crawls used for RQ3 (RQ3Crawls) - manually labelled
+    
     
 Sample Ground Truth Model, Crawl Models Provided for 
 
