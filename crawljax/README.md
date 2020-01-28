@@ -1,3 +1,19 @@
+__New Additions for the submission__ 
+========
+
+1. __core__:
+	
+	contains new StateAbstractions in __com.crawljax.stateAbstractions__ package
+
+2. __examples__:
+	
+	contains the usage of each stateabstraction for each subject application. See __StubMain__ 
+	
+Usage :
+
+	build :	mvn clean package -DskipTests
+	run : comparator/pythonCode/runCrawljaxBatch.py
+
 Crawljax 
 ========
 
