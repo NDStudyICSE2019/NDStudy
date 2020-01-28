@@ -1,7 +1,11 @@
-build Dockerfile inside www/ folder by running "docker build . -t test"
+__Running__
+
+Build Dockerfile inside www/ folder by running "docker build . -t test"
+
 Then from parent folder start by running "docker-compose up" 
 
-Contains two web apps "Addressbook" and "Claroline"
+__Contents__\
+Contains two web apps **Addressbook and Claroline**
 
 1. <h3>Addressbook</h3>
 
@@ -15,7 +19,7 @@ Contains two web apps "Addressbook" and "Claroline"
 
         URL:http://localhost/claroline-1.11.10/claroline/install
 
-        Original experiments were done after installing claroline and creating users with following credentials and addition of a course "SE123" under category "science"  
+        Original experiments were done after installing claroline and creating users with following credentials and addition of a course "SE123" under category "science". The setup is available in the VM.
         
         credentials:
           admin
