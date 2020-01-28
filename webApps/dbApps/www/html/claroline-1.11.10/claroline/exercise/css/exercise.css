@@ -1,0 +1,26 @@
+fieldset dl dt {
+    float: left;
+    width: 20%;
+    padding: 1px;
+}
+
+fieldset dl dd {
+    float: left;
+    padding: 1px;
+    width: 70%;
+    margin: 0;
+}
+
+fieldset dt label {
+    margin: 0;
+    padding: 0;
+}
+
+input.radio,
+input.checkbox {
+    cursor: pointer;
+    height: 1em;
+    margin: 0;
+    vertical-align: middle;
+    width: 1em;
+}

@@ -1,0 +1,67 @@
+/**
+ $Id: rss.css 13024 2011-03-31 16:30:33Z abourguignon $
+ 
+ CSS for RSS feed in claroline
+ **/
+
+rss, channel, item, title, description, link, pubDate
+{
+  display: block;
+}
+
+image, language, managingEditor, webMaster, docs, copyright,
+lastBuildDate, rating, day, hour,
+skipDays, skipHours, textinput, name, creator, subject, rights,
+guid, tsDate, date
+{
+  display: none;
+}
+
+RDF {
+    display:block;
+    font-family : "Trebuchet MS",Trebuchet,Arial,Geneva,Helvetica,sans-serif;
+    min-width:12em;
+    padding : 1em 0.5em;
+    margin : 1em 8%;
+}
+
+channel, item {
+
+    padding:0.5em;
+    margin : 0.5em 0 0 0;
+}
+
+item {
+    border:2px solid #999;
+}
+
+channel>title {
+    font-family: Georgia,Times,"Times New Roman", serif;
+    font-weight: bold;
+    text-align: center;
+    font-size:1.6em;
+    letter-spacing : 0.1em;
+    padding : 0 0 0.5em 0;
+}
+
+channel>description {
+    font-style: italic;
+    font-size:1.2em;
+    padding : 0.2em 0;
+}
+
+item>title {
+    text-align:left;
+    font-size:1.2em;
+    padding : 0 0 0.5em 0;
+}
+
+pubDate {
+    margin: 0 0 0 1em;
+}
+
+link {
+    color : #03c;
+    margin-left: 1em;
+}
+

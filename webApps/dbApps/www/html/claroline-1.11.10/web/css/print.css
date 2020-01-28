@@ -1,0 +1,42 @@
+/**
+ $Id: print.css 13024 2011-03-31 16:30:33Z abourguignon $
+ **/
+
+body 
+{
+    background: white;
+    font-size: 12pt;
+    color: black;
+}
+  
+img { border: none; }
+
+#userBanner { display: none;}
+#breadCrumbLine { display: none; }
+#courseToolList{ display: none; }
+
+
+a:link, a:visited 
+{
+    background: white; 
+    color: black; 
+    text-decoration: underline;
+}
+
+h1, h2, h3 
+{
+    background: white; 
+    color: black; 
+    padding-bottom: 1px;
+    border-bottom: 1px solid gray;
+}
+
+#platformBanner h1 a
+{
+    text-decoration: none;
+}
+
+.claroTable .headerX th
+{
+    font-weight: bold;
+}

@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  webserver:
+    image: test
+      # context: ./www
+    container_name: 'webserver'
+    restart: 'always'
+    ports:
+      - "80:80"
+    #   # - "443:443"
+    links: 
+      - mysql
+    volumes: 
+     - ./www/html:/var/www/html
+    #   - ${PHP_INI-./www/config/php/php.ini}:/usr/local/etc/php/php.ini
+    #   - ${VHOSTS_DIR-./www/config/vhosts}:/etc/apache2/sites-enabled
+      #- ${LOG_DIR-./logs/apache2}:/var/log/apache2
+  mysql:
+    build: ./mysql
+    container_name: 'mysql'
+    restart: 'always'
+    ports:
+      - "3306:3306"
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./mysql/init.sql:/data/application/init.sql
+      - ./data/mysql}:/var/lib/mysql
+    #volumes: 
+    #  - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
+    #  - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: 'sc-phpmyadmin'
+  #   links:
+  #     - mysql
+  #   environment:
+  #     PMA_HOST: mysql
+  #     PMA_PORT: 3306
+  #   ports:
+  #     - '8080:80'
+  #   volumes: 
+  #     - /sessions

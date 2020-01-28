@@ -1,0 +1,102 @@
+PHP Addressbook - 8.1.19
+========================
+- 0000103: Add: Translations for new columns in "index.php" (chatelao) - resolved.
+- 0000102: Fix: Import LDIF if it starts with "dn::" instead of "dn:" (chatelao) - resolved.
+- 0000101: Fix: Search for (phone) numbers without ajax (chatelao) - resolved.
+- 0000100: Fix: vCard empty "amonth" in anniversary date - closed.
+- 0000099: Fix: Set correct relativ z-push path to logs + states - closed.
+- 0000058: Chg: Upgrade z-push from v2.0.3 to v2.0.4 (chatelao) - closed.
+
+PHP Addressbook - 8.1.14
+========================
+
+Fixes only
+
+- 0000098: Fix: "$use_sso" issue (chatelao) - closed.
+
+PHP Addressbook - 8.1.13
+========================
+
+Fixes, upgrade z-push to v2.0.2
+
+- 0000093: Fix: Disable hybridauth if not configured (chatelao) - closed.
+- 0000092: Fix: Upgrade z-push to v2.0.2 - closed.
+
+PHP Addressbook - 8.1.9
+=======================
+
+Guess birthday and anniversary. Fix bugs.
+
+- 0000071: Fix: Human hugarian translation (chatelao) - resolved.
+- 0000049: Chg: Move "widget" to "include" (chatelao) - resolved.
+- 0000012: Add: History- / Domain-Purge scripts (chatelao) - resolved.
+- 0000057: Fix: IP based login does not work (chatelao) - resolved.
+- 0000054: Add: Guess birthday and anniversary (chatelao) - resolved.
+- 0000055: Chg: Lowercase username (chatelao) - resolved.
+
+PHP Addressbook - 8.1.8
+=======================
+- 0000040: Add: Flag "$beta_features" in "config.php" to enable beta-grade features. (chatelao) - closed.
+- 0000047: Fix: cfg.zpush.php extraction errors (chatelao) - closed.
+- 0000046: Add: Extract config for z-push "cfg.zpush.php" (chatelao) - closed.
+
+PHP Addressbook - 8.1.7
+=======================
+
+Fix major z-push defect.
+
+- 0000044: Fix: Correct log dir name for z-push from "log" to "logs" (chatelao) - closed.
+- 0000020: Chg: Autofocus in first field of "Add" page (chatelao) - closed.
+
+PHP Addressbook - 8.1.6
+=======================
+
+Fix some bugs.
+
+- 0000004: Add "nickname" to exchange interface (chatelao) - closed.
+- 0000037: Fix: z-push config.php include path should be relativ (chatelao) - closed.
+
+PHP Addressbook - 8.1.5
+=======================
+
+Add photo upload support
+
+- 0000033: Chg: Rescale images after upload (chatelao) - closed.
+- 0000034: Add: Show the photos in the main view "index.php" (chatelao) - closed.
+- 0000002: Add: Contact photo upload (chatelao) - closed.
+- 0000030: Fix: SQL injection issue (chatelao) - closed.
+
+PHP Addressbook - 8.1.2
+=======================
+
+Fix more Bugs from versions 8.x
+
+- 0000029: Add: Affero License (chatelao) - closed.
+- 0000031: Fix: "$read_only" config option works again (chatelao) - closed.
+
+PHP Addressbook - 8.1.1
+=======================
+
+Fix urgent bugs from 8.x
+
+- 0000028: Fix: Remove spaces from "cfg.user.php" (chatelao) - closed.
+
+PHP Addressbook - 8.1.0
+=======================
+
+Add Exchange/ActiveSync support with a z-push integration
+
+- 0000026: Add: ActiveSync Support over z-Push (chatelao) - closed.
+- 0000027: Fix: "usertable" default value will not override user value. (chatelao) - closed.
+
+PHP Addressbook - 8.0.0
+=======================
+
+Add user management in database.
+
+- 0000001: Fix: Unstable Login on SF demo page (chatelao) - closed.
+- 0000007: Chg: Extend hindi translation (chatelao) - closed.
+- 0000022: Add: Ukrainian translation (chatelao) - closed.
+- 0000023: Fix: Russian translation (chatelao) - closed.
+- 0000024: Add: Company + title guessing (chatelao) - closed.
+- 0000025: Add: Database table for user login (chatelao) - closed.

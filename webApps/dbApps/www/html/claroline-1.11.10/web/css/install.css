@@ -1,0 +1,353 @@
+/**
+ $Id: install.css 13024 2011-03-31 16:30:33Z abourguignon $
+ **/
+
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: 1em;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #444;
+    background: #FFF;
+    text-align: left;
+    font-family: Arial, Verdana, Helvetica, Sans-Serif;
+    font-size: 1em;
+    height: 100%;
+}
+
+#claroPage {
+    margin: 0;
+    padding: 0;
+}
+
+#installHeader {
+    background: url('classic/img/bg_header.gif') repeat-x top left #c5d4e2;
+    border-top: 3px solid #010065;
+    padding: 10px 15px 0px 15px;
+    margin: 0;
+}
+
+h1 {
+    margin: 0;
+    padding: 10px 15px 42px 80px;
+    color: #fff;
+    font-weight: bold;
+       background: url('classic/img/claroline_logo_circle.gif') no-repeat top left;
+    font-size: 1.5em;
+}
+
+h2 {
+    margin: 0;
+    padding: 3px 0;
+}
+
+#installContainer {
+    background: url('classic/img/bg_body.jpg') repeat-x top left #fff;
+}
+
+#installBody {
+    font-size: 0.9em;
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+#panel {
+    font-size: 0.9em;
+    margin: 5px 0 0 275px;
+    padding-left: 5px; 
+    border-left: 1px solid #ccc;
+}
+
+#endPanel {
+    font-size: 0.9em;
+    border: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+}
+
+.progressPanel {
+    width: 250px;
+    float: left;
+    padding: 5px 0 15px 0;
+    margin: 5px;
+}
+
+.progressPanel IMG{
+    padding-left: 5px;
+    padding-top: 1px;
+    padding-bottom: 3px;
+    float: right;
+}
+
+.progress strong
+{
+    font-size: 100%;
+    padding-right: 5px;
+    margin-left: 3px;
+}
+
+.progress{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 90%;
+    background : #fff;
+    padding-top: 3px;
+    border-bottom: 1px solid #ccc;    
+}
+
+.progress.active {
+    font-weight: bold;
+
+}
+
+.progress.success {
+    background : #FFFFFF;
+
+}
+
+.progress.done {
+
+}
+
+.progress.error {
+
+}
+
+.progress.todo {
+    color : #ccc;
+}
+
+/* specific styling for dialog box messages */
+.claroDialogBox {    
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+    padding: 5px 5px 5px 20px; 
+    border: 1px solid #ccc;
+    background: #eee;
+    border-left: 2px solid #ccc;
+}
+
+.boxInfo {    
+    border-left: 2px solid #ccc;
+    background: #eee url('classic/img/bg_info.gif') bottom right no-repeat;
+    padding-right: 83px;
+}
+
+.boxSuccess {    
+    border-left: 2px solid #090;
+    background: #eee url('classic/img/bg_success.gif') bottom right no-repeat;
+    padding-right: 83px;
+}
+
+.boxWarning {    
+    border-left: 2px solid #900;
+    background: #eee url('classic/img/bg_warning.gif') bottom right no-repeat;
+    padding-right: 83px;
+}
+
+.boxError {    
+    border-left: 2px solid #900;
+    background: #eee url('classic/img/bg_error.gif') bottom right no-repeat;
+    padding-right: 83px;
+}
+
+.claroDialogMsg { padding: 2px 5px 1px 20px; }
+.claroDialogBox .msgInfo { } /* I _really_ don't think there is a need for an icon here */
+.claroDialogBox .msgSuccess { background: url('../img/success.png') top left no-repeat; }
+.claroDialogBox .msgWarning { background: url('../img/warning.png') top left no-repeat; }
+.claroDialogBox .msgError { background: url('../img/error.png') top left no-repeat; }
+.claroDialogBox .msgQuestion { background: url('../img/question.png') top left no-repeat; }
+.claroDialogBox .msgForm { padding: 3px 20px; }
+.claroDialogBox .msgTitle { font-weight: bold; }
+
+.ok {
+    color: #693;
+    font-weight: bold;    
+}
+    
+.ko {
+    color: #900;
+    font-weight: bold;    
+}
+
+.warning {
+    padding: 5px;
+    border: 1px solid #999933;
+    background: #E7C7C8;
+    color: #333;
+    margin: 3px;
+}
+
+.noteThis {
+    font-weight: bold;
+}
+
+#license {
+    width: 95%;
+}
+
+#navigation {
+    padding-top: 20px;
+    padding-bottom: 5px;     
+    position: relative;
+}
+
+#navigation #navToNext input[type=submit]{
+    float: right;
+    position: relative;
+}
+
+#navigation #navToPrev input[type=submit]{
+    float: left;
+    position: relative;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    background-color: #eee;
+    padding: 20px;
+    position: relative;
+    margin-top: 20px; 
+    padding-top: 20px;
+}
+
+legend {
+	padding:0px;
+    font-weight: bold;    
+    color: #333;  
+}
+
+div.row {
+     clear: both;
+    padding-top: 10px;
+}
+
+div.row .rowTitle {
+     float: left;
+     width: 200px;
+     text-align: right;
+     padding: 2px 0 0 0 ;
+     border-bottom: 1px solid #ccc;
+    margin: 0 5px 0 0;
+}
+
+div.row .rowField {
+    margin: 0 0 0 202px;
+     padding: 0 3px;
+}
+
+
+div.row .example {
+     text-align: left;
+     font-size: small;
+     display: block;
+}
+
+.required {
+    color: red;
+}
+
+/* requirements */
+table.requirements {
+    width: 100%;
+    margin-bottom: 3px;    
+}
+
+table.requirements td {
+    border-bottom: 1px solid #ccc;    
+}
+
+table.requirements th {
+    border-bottom: 1px solid #333;
+    padding: 3px 0 2px 0;        
+}
+
+/* check list */
+
+table.checkList {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+table.checkList tr {
+}
+
+table.checkList tr .checkTitle {
+     width: 30%;
+     text-align: right;
+     padding-right: 0px;
+     padding-top: 2px;
+    border-bottom: 1px solid #ccc;
+    margin-right: 5px;
+}
+
+table.checkList tr .checkValue {
+    padding: 2px 0 0 15px;
+    font-weight: bold;
+}
+
+#goToCampusLink {
+    text-align: center;
+    padding: 30px;
+}
+
+#goToCampusLink a {
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    color: #333;        
+}
+
+#footer {
+    margin: 0;
+    margin-top : 25px;
+    padding: 5px 15px;
+    font-size: 0.7em;
+    color: #666;
+    background: url('classic/img/bg_footer.jpg') repeat-x top left #fff;
+    clear: both;
+}
+
+#footer a:link,
+#footer a:visited {
+    color: #666;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#footer a:hover,
+#footer a:active {
+    color: #369;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#footer hr {
+    display: none;
+}
+
+#footer #footerRight {
+    float: right;
+    text-align: right;
+    padding: 0;
+}
+
+#footer #footerLeft {
+    float: left;
+    padding: 0;
+}
+
+#footer #footerCenter {
+    clear: both;
+    text-align: center;
+}

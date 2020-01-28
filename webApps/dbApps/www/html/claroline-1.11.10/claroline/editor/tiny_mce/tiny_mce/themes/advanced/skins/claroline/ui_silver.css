@@ -1,0 +1,9 @@
+/**
+ $Id: ui_silver.css 13754 2011-10-26 12:41:11Z abourguignon $
+ **/
+ 
+/* Silver */
+.clarolineSkinSilver .mceToolbar .mceToolbarStart span, .clarolineSkinSilver .mceButton, .clarolineSkinSilver .mceSplitButton, .clarolineSkinSilver .mceSeparator, .clarolineSkinSilver .mceSplitButton a.mceOpen, .clarolineSkinSilver .mceListBox a.mceOpen {background-image:url(img/button_bg_silver.png)}
+.clarolineSkinSilver td.mceToolbar, .clarolineSkinSilver td.mceStatusbar, .clarolineSkinSilver .mceMenuItemTitle a {background:#eee}
+.clarolineSkinSilver .mceListBox .mceText {background:#FFF}
+.clarolineSkinSilver .mceExternalToolbar, .clarolineSkinSilver .mceListBox .mceText, .clarolineSkinSilver div.mceMenu, .clarolineSkinSilver table.mceLayout, .clarolineSkinSilver .mceMenuItemTitle a, .clarolineSkinSilver table.mceLayout tr.mceFirst td, .clarolineSkinSilver table.mceLayout, .clarolineSkinSilver .mceMenuItemTitle a, .clarolineSkinSilver table.mceLayout tr.mceLast td, .clarolineSkinSilver .mceIframeContainer {border-color: #bbb}

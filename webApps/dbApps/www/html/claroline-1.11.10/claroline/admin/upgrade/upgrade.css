@@ -1,0 +1,91 @@
+body {
+ margin: 0px;
+ padding: 0px;
+ color: #000;
+ background-color: #fff;
+ font-family: arial, helvetica, sans-serif;
+}
+
+#header h1 {
+ background-color: #000084;
+ color: #fff;
+ margin: 0px;
+ padding: 5px 10px 5px 10px;
+ font-size: 120%;
+}
+
+#menu p {
+ background: #666;
+ border-top: 1px solid white;
+ border-bottom: 1px solid white;
+ color: #fff;
+ padding: 5px 10px 5px 10px;
+ margin:0;
+}
+
+#menu a, #menu a:hover, #menu:visited {
+ color: #fff;
+ text-decoration: underline;
+}
+
+#content {
+  padding: 0 10px 0 10px;
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+code {
+ border: 1px #ccc solid;
+ background-color: #eee;
+}
+
+.warning, .error {
+ color: red;
+}
+
+.success, .info {
+ color: green;
+}
+
+.help {
+ color: #000;
+ background-color: #eee;
+ padding: 0 5px 0 5px;
+}
+
+.comment {
+ color: #00019B;
+ border: 1px blue solid;
+ background-color: #eee;
+ padding:  2px 5px  2px 5px;
+}
+
+.notimportant, .microtime {
+ font-style: italic;
+}
+
+.right {
+ text-align:right;
+}
+
+span.filename {
+ font-family: monospace;
+ background-color: #eee;
+ color: #151515;
+}
+
+.tt {
+ font-family: monospace;
+ border: 1px #ccc solid;
+ background-color: #eee;
+ }

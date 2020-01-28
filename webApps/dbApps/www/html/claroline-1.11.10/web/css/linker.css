@@ -1,0 +1,46 @@
+/**
+ $Id: linker.css 13024 2011-03-31 16:30:33Z abourguignon $
+ **/
+
+#lnk_panel {
+    
+}
+
+#lnk_selected_resources {
+
+}
+
+#lnk_toggle {
+    padding: 0;
+    margin: 0;
+}
+
+#lnk_browser {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+#lnk_location {
+    border-bottom: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+}
+
+#lnk_ajax_loading {
+    display: none;
+    float: right;
+}
+
+#lnk_browser a {
+    cursor: pointer;
+    cursor: hand;
+}
+#lnk_browser a.navigable {
+    font-decoration: underline;
+    color: #369;
+}
+#lnk_browser a.linkable {
+    font-size: smaller;
+    font-weight: bold;
+    margin-left: 0px;
+}
+

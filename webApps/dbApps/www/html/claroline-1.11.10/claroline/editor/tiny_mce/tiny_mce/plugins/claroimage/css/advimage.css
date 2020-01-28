@@ -1,0 +1,23 @@
+#src_list, #over_list, #out_list {width:280px;}
+.alignPreview {border:1px solid #000; width:140px; height:140px; overflow:hidden; padding:5px;}
+.checkbox {border:0;}
+.panel_wrapper div.current {}
+#prev {margin:0; border:1px solid #000; width:99%; height:150px; overflow:auto;}
+#align, #classlist {width:150px;}
+#width, #height {vertical-align:middle; width:50px; text-align:center;}
+#vspace, #hspace, #border {vertical-align:middle; width:30px; text-align:center;}
+#class_list {width:180px;}
+input[type=text] { width:280px;}
+#constrain, #onmousemovecheck {width:auto;}
+#id, #dir, #lang, #usemap, #longdesc {width:200px;}
+
+/****/
+#image_list { height: 223px; width: 99%; overflow: auto; border: 1px solid #000; }
+.selectedImage { background-color: #ccc; }
+ul#files { margin: 5px; padding: 1px; }
+ul#files li { list-style: none; border-bottom: 1px dashed #ccc; padding: 2px; }
+ul#files li:hover { list-style: none; border-bottom: 1px dashed #333; background-color: #eee; }
+ul#files a { display: block; text-decoration: none; }
+ul#files img { padding-right: 3px; border: 0; vertical-align:text-bottom; }
+ul#files a.selectedImage { background-color: #369; color: #fff; }
+#processing { float:right; margin: 2px 0; padding: 0; }

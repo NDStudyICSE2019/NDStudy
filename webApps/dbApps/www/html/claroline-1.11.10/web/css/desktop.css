@@ -1,0 +1,145 @@
+/**
+ $Id: desktop.css 14162 2012-05-24 13:25:20Z zefredz $
+ **/
+
+@media screen and (min-width: 1200px) {
+
+    #dekstopLeftSidebar {
+        padding: 0;
+        margin: 0;
+        float: left;
+        width: 420px;
+        border-right: #DDDDDD solid 1px;
+    }
+
+    #desktopRightContent {
+        padding: 0;
+        margin-left: 430px;
+
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    #dekstopLeftSidebar .portlet .content .userCourseList {
+        max-height: 40em;
+        overflow: auto;
+        margin-right: 0;
+        padding-right: 0;
+    }
+    
+    #dekstopLeftSidebar .portlet .content .userCourseList dl {
+        margin-right: 0;
+        padding-right: 0;
+    }
+}
+
+/* Portlet right menu  */
+.portletRightMenu {
+    padding: 2px;
+    margin: 10px 0 0 0;
+    float:right;
+    width:200px;
+}
+
+
+/* Portlet messages */
+.portlet table.claroTable tbody tr.unreadMessage td {
+    background: #EDF1E3;
+}
+
+.portlet table.claroTable.emphaseLine tbody tr:hover td {
+    background-color: #d5d5d5;
+}
+
+/* Portlet course list */
+.mycourselist table {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.userCommands ul {
+    margin: 0 0 10px 0;
+    list-style-type: none;
+}
+
+.userCommands li {
+    display: inline-block;
+    margin-right: 2em;
+}
+
+.userCommands li:first-child {
+    margin-left: 1em;
+}
+
+.userCourseList dl {
+    width: 100%;
+    /*max-height: 20em;*/
+    overflow: auto;
+    padding-right: 20px;
+    
+    /* IE hack 
+    _height: expression( Math.min(parseInt(this.offsetHeight), 100) ); */
+}
+
+.userCourseList dl dt {
+    padding-left: 0px;
+}
+
+.userCourseList dl dd {
+    padding-left: 20px;
+}
+
+    /* Portlet calendar */
+    #portletMycalendar .details {
+        padding: 0;
+        text-align: left;
+        overflow: auto;
+        max-height: 20em;
+    }
+
+    #portletMycalendar .calendar {
+        text-align: center;
+    }
+
+    #portletMycalendar .dayWithEvent {
+        background-color: #EDF1E3;
+    }
+
+    dl.calendarDetails dd {
+        margin-left: 20px;
+    }
+
+
+.avatar img {
+    margin:1em;
+}
+
+.config {
+    padding: 0;
+    margin: 15px 240px 15px 0;
+}
+
+.config td {
+    text-align:center;
+}
+
+.hideul {
+    background: transparent url(../../claroline/desktop/img/hide.png) no-repeat top left; 
+}
+
+.showul {
+    background: transparent url(../../claroline/desktop/img/show.png) no-repeat top left; 
+}
+
+#portletMyAnnouncements {
+    max-height: 20em;
+    overflow: auto;
+    
+    /* IE hack 
+    _height: expression( Math.min(parseInt(this.offsetHeight), 100) ); */
+}
+
+#portletMyAnnouncements dd {
+    margin: 0 0 0 20px;
+}

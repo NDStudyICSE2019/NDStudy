@@ -15,10 +15,15 @@ class ALGOS(Enum):
 
 ############### APPS #################
 APPS = ['addressbook', 'petclinic', 'claroline', 'dimeshift', 'pagekit', 'phoenix', 'ppma', 'mrbs', 'mantisbt']
-DOCKERIZED_APPS = ['dimeshift', 'pagekit', 'phoenix', 'retroboard', 'splittypie', 'ppma', 'mrbs', 'mantisbt', 'collabtive']
+DOCKERIZED_APPS = ['dimeshift', 'pagekit', 'phoenix', 'claroline', 'addressbook', 'ppma', 'mrbs', 'mantisbt', 'collabtive']
 ND3_APPS = ['addressbook', 'pagekit', 'phoenix']
-DOCKER_LOCATION = os.path.abspath(os.path.join("..","dockerApps"))
+DOCKER_LOCATION = os.path.abspath(os.path.join("..","..","webApps"))
 
+def getDockerName(appName):
+	if ((appName.strip().lower() == 'addressbook') or (appName.strip().lower() == 'claroline') ):
+		return 'dbApps'
+
+	return appName
 
 def isDockerized(appName):
 	if(appName.strip() in DOCKERIZED_APPS):

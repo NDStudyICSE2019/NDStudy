@@ -1,0 +1,117 @@
+.newLine 
+{
+    display: none;
+}
+
+#clchat_chatarea
+{
+    height: 400px;     
+    border: 1px #CCC solid;
+    overflow: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: small;
+}
+
+#clchat_dialogBox
+{
+}
+
+#clchat_archives
+{
+    margin: 0;
+}
+
+#clchat_archives h3
+{
+    margin: 10px 0 5px 5px;
+}
+
+#clchat_archives h3 span
+{
+    float: right;
+    font-size: small;
+    margin: 0;
+}
+
+#clchat_archives_content
+{
+    height: 400px;     
+    border: 1px #CCC solid;
+    overflow: auto;
+    padding: 10px;
+    margin: 0;
+    font-size: small;
+}
+
+#clchat_loading
+{
+    float: right;
+}
+
+#clchat_chatarea .clchat_userName
+{
+    color: #369;
+}
+
+#clchat_chatarea .clchat_msgDate
+{
+    color: #999;
+}
+
+#clchat_chatarea .clchat_dayLimit
+{
+    color: #999;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+#clchat_chatarea .clchat_msgLine
+{
+    display: block;
+}
+
+#clchat_log
+{
+    display: none;
+}
+
+#clchat_connectTime
+{
+    color: #999;
+    text-align: right;
+    font-size: smaller;
+}
+
+#clchat_user_list .clchat_user
+{
+    display: block;
+    padding: 4px 28px 1px 10px; 
+}
+
+#clchat_user_list .clchat_manager
+{
+    font-weight: bold;
+    background: url('../img/manager.gif') center right no-repeat;
+}
+
+#clchat_user_list .clchat_student
+{
+    background: url('../img/user.gif') center right no-repeat;
+}
+
+#clchat_user_list
+{
+    overflow: auto;
+    height: 400px;
+    padding: 10px;
+    border-top: 1px #CCC solid;
+    border-right: 1px #CCC solid;
+    border-bottom: 1px #CCC solid;
+    overflow: auto;
+    margin-bottom: 10px;
+    font-size: small;
+    width: 200px;
+    float: right;
+    background-color: #E5EDF7;
+}

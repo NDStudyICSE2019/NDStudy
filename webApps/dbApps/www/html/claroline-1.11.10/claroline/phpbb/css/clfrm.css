@@ -1,0 +1,34 @@
+.threadPost
+{
+    border: 1px #ccc solid;
+    margin: 2px 0;
+    background: transparent url('../img/post_bg.png') repeat-y top left;
+}
+
+.threadPostIcon
+{
+    float: right;
+}
+
+.threadPostInfo
+{
+    width: 200px;
+    float: left;
+    padding: 3px;
+}
+
+.threadPosterPicture img
+{
+    border: 1px solid #ccc;
+    margin: 2px;
+    max-height: 100px;
+    max-width: 180px;
+}
+
+.threadPostContent
+{
+    align: top;
+    margin-left: 210px;
+    padding: 3px;
+    min-height: 160px;
+}

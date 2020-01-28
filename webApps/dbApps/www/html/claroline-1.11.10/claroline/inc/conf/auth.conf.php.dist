@@ -1,0 +1,180 @@
+<?php // $Id: auth.conf.php.dist 14469 2013-06-10 08:58:56Z zefredz $
+//----------------------------------------------------------------------
+// CLAROLINE
+//----------------------------------------------------------------------
+// @copyright   (c) 2001-2011, Universite catholique de Louvain (UCL)
+//----------------------------------------------------------------------
+// This program is under the terms of the GENERAL PUBLIC LICENSE (GPL)
+// as published by the FREE SOFTWARE FOUNDATION. The GPL is available
+// through the world-wide-web at http://www.gnu.org/copyleft/gpl.html
+//----------------------------------------------------------------------
+// Authors: see 'credits' file
+//----------------------------------------------------------------------
+
+// ---------------------------------------
+// EXTERNAL AUTHENTICATION MODULES SECTION
+// ---------------------------------------
+
+/**
+ * CLAROLINE EXTERNAL AUTHENTICATION SYSTEM
+ *
+ * This system allows Claroline to rely on external system concerning
+ * authentication and user profile management. It is based on a collection of
+ * authentication drivers stored inside the Claroline/auth/extauth/drivers
+ * directory.
+ *
+ * @version 1.6 $Revision: 14469 $
+ * @copyright   (c) 2001-2011, Universite catholique de Louvain (UCL)
+ * @license http://www.gnu.org/copyleft/gpl.html (GPL) GENERAL PUBLIC LICENSE
+ * @See more information in : /claroline/auth/extauth/README.txt
+ * @author claro Team <cvs@claroline.net>
+ * @copyright   (c) 2001-2011, Universite catholique de Louvain (UCL)
+ *
+ */
+
+
+/* LDAP */
+
+// $extAuthSource['ldap']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+// $extAuthSource['ldap']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+
+/* DB GENERIC */
+
+// $extAuthSource['db-generic']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+// $extAuthSource['db-generic']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+
+/* SPIP */
+
+// $extAuthSource['spip']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/spip.inc.php';
+// $extAuthSource['spip']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/spip.inc.php';
+
+/* POSTNUKE */
+
+// $extAuthSource['postnuke']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/postnuke.inc.php';
+// $extAuthSource['postnuke']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/postnuke.inc.php';
+
+/* PHPNUKE */
+
+// $extAuthSource['phpnuke']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/phpnuke.inc.php';
+// $extAuthSource['phpnuke']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/phpnukev.php';
+
+/* MOODLE */
+
+// $extAuthSource['moodle']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/moodle.inc.php';
+// $extAuthSource['moodle']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/moodle.inc.php';
+
+/* DOKEOS */
+
+// DOKEOS VERSIONS SINCE 1.6.*
+//$extAuthSource['dokeos']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.1.6.inc.php';
+//$extAuthSource['dokeos']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.1.6.inc.php';
+
+// DOKEOS VERSIONS BEFORE 1.6.*
+//$extAuthSource['dokeos']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.inc.php';
+//$extAuthSource['dokeos']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.inc.php';
+
+/* GANESHA */
+
+// $extAuthSource['ganesha']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/ganesha.inc.php';
+// $extAuthSource['ganesha']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/ganesha.inc.php';
+
+/* DOCEBO */
+
+// $extAuthSource['docebo']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/docebo.inc.php';
+// $extAuthSource['docebo']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/docebo.inc.php';
+
+/* A TUTOR */
+
+// $extAuthSource['atutor']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/atutor.inc.php';
+// $extAuthSource['atutor']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/atutor.inc.php';
+
+/* MAMBO */
+// $extAuthSource['mambo']['login'  ] = $clarolineRepositorySys.'auth/extauth/drivers/mambo.inc.php';
+// $extAuthSource['mambo']['newUser'] = $clarolineRepositorySys.'auth/extauth/drivers/mambo.inc.php';
+
+/*
+ * Flag enabling case sensitivity for the username
+ * during the authentication process
+ */
+
+$claro_authUsernameCaseSensitive = true;
+
+
+/*
+ * Flag enabling the display of the Claroline internal
+ * authentication form
+ */
+
+$claro_displayLocalAuthForm    = true;
+
+// --------------------------------------------
+// CENTRAL AUTHENTICATION SERVICE (CAS) SECTION
+// --------------------------------------------
+
+$claro_CasEnabled       = false;
+$claro_CasServerHostUrl  = 'my.cas.server.domain.com';
+$claro_CasServerHostPort = 443;
+$claro_CasLibPath       = $includePath.'/lib/cas/CAS.php';
+$claro_CasProcessPath   = $clarolineRepositorySys.'/auth/extauth/casProcess.inc.php';
+$claro_CasLoginString   = 'Magic Login';
+
+
+
+// ---------------------------------------
+// CLAROLINE SINGLE SIGN ON (SSO) SECTION
+// ---------------------------------------
+
+/**
+ * SINGLE SIGN ON (SSO)
+ *
+ * Once a user logs to the Claroline platform a cookie is sent to the
+ * user browser if the authentication process succeeds. The cookie value
+ * is also stored in a internal table of the Claroline platform for a certain
+ * time.
+ *
+ * If requested, the Claroline SSO server provides a way a way to retrieve
+ * the user parameters from another server on the internet on the base of this
+ * cookie value.
+ */
+
+
+// SSO ENABLED. Enable the Claroline SSO system.
+// Set this parameter to TRUE if you want to enable SSO.
+
+$ssoEnabled          = false;
+
+// COOKIE NAME. The name of the cookie the Claroline platform has set into the
+// user browser. By default this name is 'clarolineSsoCookie'. But it can be
+// changed by the Claroline platform administrator.
+
+$ssoCookieName       = 'clarolineSsoCookie';
+
+// SSO COOKIE PERIOD VALIDITY. Number of seconds before before the
+// cookie to expire.
+
+$ssoCookiePeriodValidity = 3600;
+
+// SSO COOKIE DOMAIN.  The domain that the cookie is available.  To make
+// the cookie available on all subdomains of example.com then you'd set
+// it to '.example.com'. The . is not required but makes it compatible
+// with more browsers. Setting it to www.example.com  will make the
+// cookie only available in the www  subdomain.
+
+$ssoCookieDomain     = 'www.my.domain.com';
+
+// SSO COOKIE PATH. The path on the server in which the cookie will be
+// available on.  If set to '/', the cookie will be available within the
+// entire domain. If set to '/foo/', the cookie will only be available
+// within the /foo/ directory and all sub-directories such as /foo/bar/
+// of domain. The default value is the current directory that the cookie
+// is being set in.
+
+$ssoCookiePath       = '/';
+
+
+// SSO AUTHENTICATION KEY LIST. A list of keys allowing requests to
+// the Claroline SSO server. The SSO client have to provide one of the
+// keys contained into this list to receive any answer from the Claroline
+// SSO server.
+
+$ssoAuthenticationKeyList = array();

@@ -1,0 +1,33 @@
+<module>
+  <label>CLWIKI</label>
+  <name>Wiki</name>
+  <version>2.0</version>
+  <license>GPL</license>
+  <icon>icon.png</icon>
+  <type>tool</type>
+  <context>course</context>
+  <context>group</context>
+  <web>http://wiki.claroline.net/index.php/CLWIKI</web>
+  <entry>wiki.php</entry>
+
+  <description>
+     This is the original Wiki tool for the Claroline platform. It allows
+     online collaborative edition of web pages using a simplified Wiki
+     syntax based on Olivier Meunier's wiki2xhtml renderer from the
+     Dotclear blog project.
+  </description>
+
+  <author>
+     <name>Frederic Minne</name>
+     <email>zefredz@claroline.net</email>
+     <web>http://wiki.claroline.net/index.php/CLWIKI</web>
+  </author>
+
+  <requirements>
+    <claroline>
+      <version>1.10</version>
+      <configuration>
+      </configuration>
+    </claroline>
+  </requirements>
+ </module>

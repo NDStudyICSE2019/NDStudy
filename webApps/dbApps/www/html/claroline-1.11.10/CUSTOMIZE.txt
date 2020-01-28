@@ -1,0 +1,26 @@
+CUSTOMIZING THE CLAROLINE PLATFORM
+
+A. STYLESHEETS
+
+You can customize the Claroline stylesheet by copying the contents of the 
+web/css/classic folder into a subfolder in platform/css.
+
+You can then modify the file in this subfolder to adapt the Claroline stylesheet 
+to your needs.
+
+B. LANGUAGE FILES
+
+You can provide custom language files with custom translation of some language
+variable by creating a file in platform/lang/NAMEOFLANGUAGE/complete.lang.php
+
+For example you can add custom french translations in the file
+platform/lang/french/complete.lang.php
+
+C. TEMPLATES
+
+You can personnalize the Claroline templates by copying the files
+you want to modify from the claroline/inc/templates folder to the 
+platform/templates folder and modify those copies.
+
+If you do not follow these instructions you risk to loose
+all your modifications if you upgrade your Claroline platform !

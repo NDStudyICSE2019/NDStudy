@@ -1,0 +1,79 @@
+<?php // $Id: auth.shibboleth.conf.php.dist 11797 2009-05-29 11:36:20Z zefredz $
+if ( count( get_included_files() ) == 1 ) die( '---' );
+
+/**
+ * Claroline Shibboleth / Switch AAI
+ *
+ * Library and Configuration
+ *
+ * @version 0.4
+ *
+ * @author Daniel Streiff <daniel.streiff@fh-htwchur.ch>
+ */
+
+/**
+ * Config
+ */
+
+/* Claroline Shibboleth / Switch AAI */
+
+$claro_ShibbolethEnabled = true;
+$claro_ShibbolethText    = 'Shibboleth Login';
+$claro_ShibbolethLogo    = $rootWeb . 'claroline/img/image_shibboleth_logo_color.png';
+$claro_ShibbolethUser    = 'Change to Shibboleth Account';
+$claro_ShibbolethPath    = $rootWeb . 'claroline/auth/extauth/shibboleth/';
+
+// AuthSource name
+$shibbolethAuthSource = "shibboleth";
+
+// Column in user table to store shibbolethUniqueId in (`password` is preferred, `username` is possible too)
+// CAUTION: this fields length has to be >= 64! (varchar(64))
+$shibbolethUidTbl = 'password';
+
+// Multiple emails are character separated
+$shibbolethEmailSep = ';';
+
+// If no email is provided us a default email
+$shibbolethDefaultEmail = get_conf('administrator_email');
+
+// Map Shibboleth attributes
+$shibbolethUniqueIdAttr            = 'HTTP_SHIB_SWISSEP_UNIQUEID';        // unique ID
+// Collect following account data from Shibboleth attributes
+$shibbolethData['nom']             = 'HTTP_SHIB_PERSON_SURNAME';          // lastname
+$shibbolethData['prenom']          = 'HTTP_SHIB_INETORGPERSON_GIVENNAME'; // firstname
+$shibbolethData['email']           = 'HTTP_SHIB_INETORGPERSON_MAIL';      // the first email will be used
+$shibbolethData['isCourseCreator'] = 0;                                   // account creation as student
+//$shibbolethData['phoneNumber']     = null;                              // not configured
+//$shibbolethData['officialCode']    = null;                              // not configured
+
+$shibboleth_conf['HTTP_SHIB_APPLICATION_ID'] = 'default';
+$shibboleth_conf['HTTP_SHIB_ATTRIBUTES'] = '';
+$shibboleth_conf['HTTP_SHIB_AUTHENTICATION_METHOD'] = 'urn:oasis:names:tc:SAML:1.0:am:unspecified';
+$shibboleth_conf['HTTP_SHIB_EP_AFFILIATION'] = 'student';
+$shibboleth_conf['HTTP_SHIB_EP_ENTITLEMENT'] = 'http://unil.ch/aai/resources/biblio92;http://switch.ch/aai/agreement-01021';
+$shibboleth_conf['HTTP_SHIB_EP_ORGDN'] = 'o=SWITCH,c=CH';
+$shibboleth_conf['HTTP_SHIB_EP_ORGUNITDN'] = 'ou=aaitest,o=SWITCH,c=CH';
+$shibboleth_conf['HTTP_SHIB_IDENTITY_PROVIDER'] = 'urn:mace:switch.ch:aaitest:dukono.switch.ch';
+$shibboleth_conf['HTTP_SHIB_INETORGPERSON_GIVENNAME'] = 'Demouser2';
+$shibboleth_conf['HTTP_SHIB_INETORGPERSON_HOMEPHONE'] = '+41 61 123 4567';
+$shibboleth_conf['HTTP_SHIB_INETORGPERSON_HOMEPOSTALADDRESS'] = 'Seestrasse 99$CH-4000 Basel';
+$shibboleth_conf['HTTP_SHIB_INETORGPERSON_MAIL'] = 'dummy@aaitest.switch.ch';
+$shibboleth_conf['HTTP_SHIB_INETORGPERSON_MOBILE'] = '+41 78 123 4567';
+$shibboleth_conf['HTTP_SHIB_INETORGPERSON_PREFERREDLANGUAGE'] = 'en';
+$shibboleth_conf['HTTP_SHIB_NAMEIDENTIFIER_FORMAT'] = '';
+$shibboleth_conf['HTTP_SHIB_ORGPERSON_POSTALADDRESS'] = 'Département d\'informatique$Limmatquai 138$CH-8001 Zurich';
+$shibboleth_conf['HTTP_SHIB_ORIGIN_SITE'] = 'urn:mace:switch.ch:aaitest:dukono.switch.ch';
+$shibboleth_conf['HTTP_SHIB_PERSON_SURNAME'] = 'SWITCHaai';
+$shibboleth_conf['HTTP_SHIB_PERSON_TELEPHONENUMBER'] = '+41 1 268 1520';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_DATEOFBIRTH'] = '20030605';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_GENDER'] = '0';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_HOMEORGANIZATION'] = 'aaitest.switch.ch';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_HOMEORGANIZATIONTYPE'] = 'others';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_SWISSEDUPERSONSTAFFCATEGORY'] = '';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_SWISSEDUPERSONSTUDYBRANCH1'] = '4444';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_SWISSEDUPERSONSTUDYBRANCH2'] = '42';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_SWISSEDUPERSONSTUDYBRANCH3'] = '4800';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_SWISSEDUPERSONSTUDYLEVEL'] = '4800-20';
+$shibboleth_conf['HTTP_SHIB_SWISSEP_UNIQUEID'] = '3141592@aaitest.switch.ch';
+
+?>

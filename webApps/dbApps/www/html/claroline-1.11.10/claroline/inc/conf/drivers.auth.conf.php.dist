@@ -1,0 +1,94 @@
+<?php // $Id: drivers.auth.conf.php.dist 14469 2013-06-10 08:58:56Z zefredz $
+//----------------------------------------------------------------------
+// CLAROLINE
+//----------------------------------------------------------------------
+// @copyright   (c) 2001-2011, Universite catholique de Louvain (UCL)
+//----------------------------------------------------------------------
+// This program is under the terms of the GENERAL PUBLIC LICENSE (GPL)
+// as published by the FREE SOFTWARE FOUNDATION. The GPL is available
+// through the world-wide-web at http://www.gnu.org/copyleft/gpl.html
+//----------------------------------------------------------------------
+// Authors: see 'credits' file
+//----------------------------------------------------------------------
+
+// ---------------------------------------
+// EXTERNAL AUTHENTICATION MODULES SECTION
+// ---------------------------------------
+
+/**
+ * CLAROLINE EXTERNAL AUTHENTICATION SYSTEM
+ *
+ * This system allows Claroline to rely on external system concerning
+ * authentication and user profile management. It is based on a collection of
+ * authentication drivers stored inside the Claroline/auth/extauth/drivers
+ * directory.
+ *
+ * @version 1.6 $Revision: 14469 $
+ * @copyright   (c) 2001-2011, Universite catholique de Louvain (UCL)
+ * @license http://www.gnu.org/copyleft/gpl.html (GPL) GENERAL PUBLIC LICENSE
+ * @See more information in : /claroline/auth/extauth/README.txt
+ * @author claro Team <cvs@claroline.net>
+ * @copyright   (c) 2001-2011, Universite catholique de Louvain (UCL)
+ *
+ */
+
+
+/* LDAP */
+
+// $extAuthSource['ldap']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+// $extAuthSource['ldap']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+
+/* DB GENERIC */
+
+// $extAuthSource['db-generic']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+// $extAuthSource['db-generic']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/ldap.inc.php';
+
+/* SPIP */
+
+// $extAuthSource['spip']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/spip.inc.php';
+// $extAuthSource['spip']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/spip.inc.php';
+
+/* POSTNUKE */
+
+// $extAuthSource['postnuke']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/postnuke.inc.php';
+// $extAuthSource['postnuke']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/postnuke.inc.php';
+
+/* PHPNUKE */
+
+// $extAuthSource['phpnuke']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/phpnuke.inc.php';
+// $extAuthSource['phpnuke']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/phpnukev.php';
+
+/* MOODLE */
+
+// $extAuthSource['moodle']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/moodle.inc.php';
+// $extAuthSource['moodle']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/moodle.inc.php';
+
+/* DOKEOS */
+
+// DOKEOS VERSIONS SINCE 1.6.*
+//$extAuthSource['dokeos']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.1.6.inc.php';
+//$extAuthSource['dokeos']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.1.6.inc.php';
+
+// DOKEOS VERSIONS BEFORE 1.6.*
+//$extAuthSource['dokeos']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.inc.php';
+//$extAuthSource['dokeos']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/dokeos.inc.php';
+
+/* GANESHA */
+
+// $extAuthSource['ganesha']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/ganesha.inc.php';
+// $extAuthSource['ganesha']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/ganesha.inc.php';
+
+/* DOCEBO */
+
+// $extAuthSource['docebo']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/docebo.inc.php';
+// $extAuthSource['docebo']['newUser'] = $clarolineRepositorySys.'/auth/extauth/drivers/docebo.inc.php';
+
+/* A TUTOR */
+
+// $extAuthSource['atutor']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/atutor.inc.php';
+// $extAuthSource['atutor']['login'  ] = $clarolineRepositorySys.'/auth/extauth/drivers/atutor.inc.php';
+
+/* MAMBO */
+// $extAuthSource['mambo']['login'  ] = $clarolineRepositorySys.'auth/extauth/drivers/mambo.inc.php';
+// $extAuthSource['mambo']['newUser'] = $clarolineRepositorySys.'auth/extauth/drivers/mambo.inc.php';
+

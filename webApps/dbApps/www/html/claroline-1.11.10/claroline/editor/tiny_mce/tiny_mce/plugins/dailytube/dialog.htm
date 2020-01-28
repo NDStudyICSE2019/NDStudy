@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>{#dailytube_dlg.title}</title>
+  <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+  <script type="text/javascript" src="js/dialog.js"></script>
+</head>
+<body>
+
+<form onsubmit="DailyTubeDialog.insert();return false;" action="#">
+  <p>{#dailytube_dlg.instr}</p>
+
+  <div class="mceActionPanel">
+    <fieldset>
+    <legend>{#dailytube_dlg.URL}</legend>
+      <input id="dailytubeURL" name="dailytubeURL" type="text" class="text" size="40" style="width: 98%" value="" />
+      <br />
+      <span style="color: #999;">{#dailytube_dlg.example}</span>
+    </fieldset>
+    
+    <fieldset>
+    <legend>{#dailytube_dlg.format}</legend>
+      <input id="dailytubeSmall" name="dailytubeSize" type="radio" class="text" value="small" /><label for="dailytubeSmall">{#dailytube_dlg.small}</label><br />
+      <input id="dailytubeMedium" name="dailytubeSize" type="radio" class="text" value="medium" checked="checked" /><label for="dailytubeMedium">{#dailytube_dlg.medium}</label><br />
+      <input id="dailytubeLarge" name="dailytubeSize" type="radio" class="text" value="large" /><label for="dailytubeLarge">{#dailytube_dlg.large}</label>
+    </fieldset>
+  </div>
+
+  <div class="mceActionPanel">
+    <div style="float:left;padding-top:23px">
+      <input type="button" id="insert" name="insert" value="{#insert}" onclick="DailyTubeDialog.insert();" />
+    </div>
+    <div style="float:right;padding-top:23px">
+      <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+    </div>
+  </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+/**
+ $Id: ui_black.css 13754 2011-10-26 12:41:11Z abourguignon $
+ **/
+ 
+/* Black */
+.clarolineSkinBlack .mceToolbar .mceToolbarStart span, .clarolineSkinBlack .mceToolbar .mceToolbarEnd span, .clarolineSkinBlack .mceButton, .clarolineSkinBlack .mceSplitButton, .clarolineSkinBlack .mceSeparator, .clarolineSkinBlack .mceSplitButton a.mceOpen, .clarolineSkinBlack .mceListBox a.mceOpen {background-image:url(img/button_bg_black.png)}
+.clarolineSkinBlack td.mceToolbar, .clarolineSkinBlack td.mceStatusbar, .clarolineSkinBlack .mceMenuItemTitle a, .clarolineSkinBlack .mceMenuItemTitle span.mceText, .clarolineSkinBlack .mceStatusbar div, .clarolineSkinBlack .mceStatusbar span, .clarolineSkinBlack .mceStatusbar a {background:#535353; color:#FFF}
+.clarolineSkinBlack table.mceListBoxEnabled .mceText, o2k7SkinBlack .mceListBox .mceText {background:#FFF; border:1px solid #CBCFD4; border-bottom-color:#989FA9; border-right:0}
+.clarolineSkinBlack table.mceListBoxEnabled:hover .mceText, .clarolineSkinBlack .mceListBoxHover .mceText, .clarolineSkinBlack .mceListBoxSelected .mceText {background:#FFF; border:1px solid #FFBD69; border-right:0}
+.clarolineSkinBlack .mceExternalToolbar, .clarolineSkinBlack .mceListBox .mceText, .clarolineSkinBlack div.mceMenu, .clarolineSkinBlack table.mceLayout, .clarolineSkinBlack .mceMenuItemTitle a, .clarolineSkinBlack table.mceLayout tr.mceFirst td, .clarolineSkinBlack table.mceLayout, .clarolineSkinBlack .mceMenuItemTitle a, .clarolineSkinBlack table.mceLayout tr.mceLast td, .clarolineSkinBlack .mceIframeContainer {border-color: #535353;}
+.clarolineSkinBlack table.mceSplitButtonEnabled:hover a.mceAction, .clarolineSkinBlack .mceSplitButtonHover a.mceAction, .clarolineSkinBlack .mceSplitButtonSelected {background-image:url(img/button_bg_black.png)}
+.clarolineSkinBlack .mceMenu .mceMenuItemEnabled a:hover, .clarolineSkinBlack .mceMenu .mceMenuItemActive {background-color:#FFE7A1}

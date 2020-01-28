@@ -8,7 +8,7 @@ from datetime import datetime
 from decimal import Decimal
 from pythonDBCreator import ALGOS
 from threshold_data import STATISTICS
-from globalNames import FILTER, THRESHOLD_SETS, DB_SETS, APPS, isDockerized, DOCKER_LOCATION, isNd3App
+from globalNames import FILTER, THRESHOLD_SETS, DB_SETS, APPS, isDockerized, DOCKER_LOCATION, isNd3App, getDockerName
 import glob
 
 
@@ -161,6 +161,24 @@ def getAllThresholds(app = None):
 ###########################################################################
 
 def restartDocker(dockerName):
+
+	if(dockerName=='dbApps'):
+		yml = os.path.join(DOCKER_LOCATION,  dockerName ,'docker-compose.yml')
+		stopDocker = ['docker-compose', '-f', yml, 'stop']
+		try:
+			check_call(stopDocker)
+		except CalledProcessError as ex:
+			print("Could not stop docker docker? ")
+			print(ex)
+
+		startDocker = ['docker-compose', '-f', yml, 'up', '-d']
+		try:
+			check_call(startDocker)
+			sleep(30)
+		except CalledProcessError as ex:
+			print("No matching processes Found for docker? ")
+			print(ex)
+		return
 
 	stopDocker = ['docker', 'stop', dockerName]
 
@@ -436,8 +454,8 @@ def runAlgo(appName, algo, runtime, threshold = -1, logFile = os.path.join( "log
 		command.append(str(maxStates))
 	
 	host = "localhost"
-	if(isDockerized(appName)):
-		host = "192.168.99.101"
+	# if(isDockerized(appName)):
+	# 	host = "192.168.99.101"
 
 	existingValidCrawls = []
 	crawlFolderName = appName + "_" + algo + "_" + str(float(threshold))+ "_" + str(runtime) + "mins"
@@ -462,7 +480,7 @@ def runAlgo(appName, algo, runtime, threshold = -1, logFile = os.path.join( "log
 
 
 	if isDockerized(appName):
-		restartDocker(appName)
+		restartDocker(getDockerName(appName))
 
 	proc = startProcess(command, logFile)
 	if proc==None:
@@ -497,7 +515,7 @@ def testGetThresholds():
 	print(getAllThresholds('ppma'))
 
 def testRestartDocker():
-	restartDocker("dimeshift")
+	restartDocker(getDockerName("addressbook"))
 
 def testChangeDir():
 	current = os.getcwd();
@@ -520,6 +538,7 @@ if __name__ == "__main__":
 
 	BASE_COMMAND=['java', '-jar', '../crawljax/examples/target/crawljax-examples-3.7-SNAPSHOT-jar-with-dependencies.jar']
 
+	testRestartDocker()
 	# runBestCrawls()
 	# runAllAlgos()
 	

@@ -1,0 +1,278 @@
+*******************************************************************************
+                            CLAROLINE 1.11 - CREDITS
+*******************************************************************************
+
+------------------------------------------------------------------------------
+                                PROJECT HISTORY
+------------------------------------------------------------------------------
+
+The Claroline project was initiated in 2000 at the Catholic University of
+Louvain (Belgium - http://www.uclouvain.be/) by Thomas De Praetere and was
+financially supported by the Louvain Foundation.
+
+In 2004, the CERDECAM (http://www.cerdecam.be), research center of ECAM
+(Engineering higher school - Belgium) joined the development team.
+
+Since 2007, the development of the project is made under the direction of the
+Claroline Consortium involving several institutions over the world
+(for more details see http://www.claroline.net/en/consortium/consortium-3.html).
+
+------------------------------------------------------------------------------
+                                CLAROLINE TEAM
+------------------------------------------------------------------------------
+
+Claroline Consortium :
+    
+    Philippe Dekimpe        (dkp@ecam.be)
+    Stéphane Klein          (stephane.klein@claroline.net)
+    Nicolas Godfraind       (nicolas.godfraind@gmail.com)
+    Emmanuel Gevry          (emmanuel.gervy@claroline.net)
+
+Main contributors :
+
+    Université catholique de Louvain (UCL) :
+
+    Frédéric Fervaille      (frederic.fervaille@uclouvain.be)
+    Frédéric Minne          (zefredz@claroline.net)
+
+    Facultés Universitaires Notre-Dame de la Paix (FUNDP) :
+
+    Laurence Dumortier      (laurence.dumortier@fundp.ac.be)
+    Jean-Roch Meurisse      (jean-roch.meurisse@fundp.ac.be)
+
+Former members of the Claroline Team :
+
+    Antonin Bourguignon         (Developer - Claroline Consortium)
+    Christophe Gesché           (moosh@claroline.net) aka Moosh
+    Anais Hulet                 (Communication - CERDECAM)
+    Florence Hortmans           (Communication - CERDECAM)
+    Grégory Koch                (Developer - UCL)
+    Mathieu Laurent             (Developer - CERDECAM)
+    Guillaume Lederer           (Developer - CERDECAM)
+    Nicolas Leblanc             (Developer - CERDECAM)
+    Hugues Peeters              (Developer and Project Manager - UCL)
+    Sébastien Piraux            (seb@claroline.net) aka Fragile
+    Dimitri Rambout             (Developer - UCL)
+    Philippe Van Eerdenbrugghe  (Developer - HELV)
+    Aurelien Van Hamme          (Developer - CERDECAM)
+
+Former contributors :
+
+    Marina Zelwer       (marina.zelwer@univ-st-etienne.fr)
+
+------------------------------------------------------------------------------
+                                SPECIFIC CODE CONTRIBUTIONS
+------------------------------------------------------------------------------
+
+Pages authoring tool :          Benjamin Sokay
+
+Internal Messaging :            Christophe Mertens (thetotof@gmail.com)
+
+Linker feature :                Renaud Fallier (captren@gmail.com)
+
+SCORM and IMS-QTI export :      Amand Tihon (amand@alrj.org)
+
+Administration section :        Benoit Muret (muret_ben@hotmail.com)
+                                Guillaume Lederer (lederer@cerdecam.be)
+
+Announcement tool improvement:  Pablo Rey (prey@cesga.es)
+
+Password Encryption :           Fabio Spelta (fabio.spelta@tiscali.it)
+
+Personnal Agenda :              Eric Remy (eremy@rmwc.edu),
+                                Toon Van Hoecke (Toon.VanHoecke@UGent.be)
+
+LDAP :                          Roan Embrechts (roan.embrechts@ugent.be)
+                                Frédéric Minne (frederic.minne@uclouvain.be)
+
+Events since last visit :       René Haentjens (rene.haentjens@intec.ugent.be)
+                                Guillaume Lederer
+
+Quizz Tool :                    Olivier Brouckaert (oli.brouckaert@skynet.be)
+                                Sebastien Piraux (piraux@cerdecam.be)
+
+Learning Path Tool :            Sebastien Piraux (Cerdecam)
+                                Guillaume Lederer
+
+Tracking system :               Sebastien Piraux (piraux@cerdecam.be)
+
+Single DB customisation :       Roger Hedlund (rhedlund@passagen.se)
+
+User Image :                    Miguel (miguel@cesga.es)
+                                Patrick Cool (patrick.cool@ugent.be)
+
+Upgrade tool :                  Mathieu Laurent (laurent@cerdecam.be)
+                                Christophe Gesché (gesche@ipm.ucl.ac.be)
+
+Export class to csv, display 
+user classes, reset all 
+passwords, Lost password 
+email,Learning Path tool 
+enhancements :                  Samuel Champagne ( schampagne@libergia.com )
+                                development made at Solutions Libergia inc.
+
+------------------------------------------------------------------------------
+                                EXTERNAL CODE
+------------------------------------------------------------------------------
+
+Forum tool :                    adpated from PHPBB 1.4 (http://www.phpbb.com)
+
+Zip / unzipping option  :       PclZip library - Vincent Blavet
+                                (http://www.phpconcept.net)
+
+CAS system :                    based on phpCas library from ESUP-Portail project
+                                (http://esup-phpcas.sourceforge.net/)
+
+External Authentication :       based on PEAR_Auth http://pear.php.net
+
+SOAP Support :                  based on NuSOAP SOAP library by NuSphere and
+                                Dietrich Ayala
+                                http://sourceforge.net/projects/nusoap/
+
+iCal support :                  based on Michael Wimmer <flaimo@gmx.net> iCal
+                                PHP Classes
+
+RSS reader :                    based on LastRSS by http://lastrss.oslab.net/
+
+PEAR Modules :                  http://pear.php.net
+
+PHP email transport :           based on PHP Mailer class by Brent R. Matzelle
+
+------------------------------------------------------------------------------
+                                GRAPHICS
+------------------------------------------------------------------------------
+
+Tango icon set :                by The Tango Desktop Project 
+                                (http://tango.freedesktop.org/)
+
+Famfamfam icon set :            by Mark James (http://www.famfamfam.com/)
+
+------------------------------------------------------------------------------
+                                TRANSLATIONS
+------------------------------------------------------------------------------
+
+Arabic translation :            Yassine Jelman (yjelmam@myrealbox.com)
+                                Eng.Ali Ismaeel (ali@parmaja.com,a-s-is@scs-net.org)
+                                (http://www.arabeyes.org, http://www.parmaja.com/)
+
+Bulgarian translation :         Alexander Simidchiev (simid@mail.bg)
+
+Catalan translation :           Xavier de Pedro (xavidp@confluencia.net)
+
+Chinese translation :           Maizeman (Maizeman@21cn.com)
+                                Barry (barry@synu.edu.cn)
+                                Ping Pingjianban (pingjianban@gmail.com)
+                                Derek Zhou (zhous1998@gmail.com) http://www.claroline.net.cn/
+
+Chinese (traditionnal) :        Kiang (kiange@gmail.com) - Taiwan PHP User Group http://twpug.net/
+                                Allen Uhomist universe_plushk@yahoo.com.hk
+
+Croatian translation :          Dragan Misovic
+                                Karolj Skala (skala@irb.hr)
+                                Bozo Jonic (bjonic@irb.hr)
+
+Dutch translation :             Inès Du Four (inesdufour@hotmail.com)
+                                Denis Smidts (Smidts@ipm.ucl.ac.be)
+                                Isabel Deprez (isabel.deprez@rug.ac.be)
+                                Roan Embrechts (roan.embrechts@ugent.be)
+                                Stefan De Wannemacker (sdwannem@cage.rug.ac.be)
+                                Toon Van Hoecke (toon.vanhoecke@ugent.be)
+                                Michael Van Canneyt (michael.vancanneyt@wisa.be)
+                                Svenn d'hert - wmtown.com
+
+Dutch (Nerderlands) :           de Vries Dominicus (dominiquedevries@tiscali.nl)
+
+French translation :            Jean-Claude Cordier (Jean-Claude.Cordier@univ-rouen.fr)
+                                Paul Muraille (info@tictips.com)
+                                Jean-Roch Meurisse (jean-roch.meurisse@fundp.ac.be)
+
+Finnish translation :           Asmo Koskinen (asmo.koskinen@asmokoskinen.net)
+
+Galician translation :          Maria Jose Rodriges Malmierca
+                                Gerardo Albela Gonzalez (galbela@uvigo.es)
+
+German translation :            Stiehl Nikolai  (nikolai.stiehl@web.de)
+                                Markus Petz
+                                Angela Büchler (buechler@gp.tu-berlin.de)
+                                Christine Knieriemen (tine@knieriemen.de)
+
+Greek translation:              Costas Tsibanis (costas@noc.uoa.gr)
+                                Yannis Exidaridis (jexi@noc.uoa.gr)
+                                Spiros Ktenas (claroline@claroline.gr,
+                                unofficial greek community website :
+                                http://www.claroline.gr)
+                                Lefteris Zacharia (lzachari@cytanet.com.cy)
+                                Spiros Ioannou From School of Electrical & Computer Eng.
+                                                    National Technical University of Athens
+                                                    http://www.image.ece.ntua.gr/
+
+Hungarian translation :         Balázs Györök (gyorok.balazs@vgszi.szie.hu)
+                                Maxigas <maxigas@anargeek.net>
+
+Italian translation :           Maurizio Guercio  (mguercio@libero.it),
+                                Furio Petrossi  (Furio.Petrossi@scuolefvg.org)
+                                Giuseppe Filice (Università della Calabria)
+                                Fausto Barbarito (http://www.nosmet.com)
+                                Stefano Crosatti (krosa@libero.it)
+
+Indonesian translation :        Ery Atmodjo (eryatmodjo@yahoo.com)
+
+Japanese translation :          Akira Yoshii (yoshii@cc.hokkyodai.ac.jp)
+
+Persian translation :           Elnaz Sarbar (elnaz.s@gmail.com)
+
+Polish translation :            Slawomir Gurdala (guslaw@uni.lodz.pl)
+                                Jacek Grudzien (bel2@bel.biz.pl)
+                                Kamil Kiereta (kamil.kiereta@gmail.com)
+
+Portugese translation :         Marcello R. Minholi (minholi@unipar.br)
+
+Romanian Translation :          Antonio Apostoliu (antonio.apostoliu@meteo.inmh.ro)
+
+Swedish translation :           Jan Olsson (jano@artedi.nordmaling.se)
+
+Slovenian translation :         Sergej Rinc - http://sergej.rinc.ws
+                                Sasa Divjak (sasa@fri.uni-lj.si)
+
+Spanish translation :           Xavier Casassas (xcc@mail.ics.co.at)
+                                Jorge Gonzales (jgonzalez@athenasoft.com.mx)
+                                Javier Picado Ladrón de Guevara (jpicado@eurosur.com)
+                                Oda Begares (begaeres@arch.ucl.ac.be)
+                                Rodrigo Alejandro Parra Soto
+                                Gerardo Albela Gonzalez (galbela@uvigo.es)
+                                Daniel Marimon (danielmf@gmail.com)
+
+Spanish_Latin :                 Carlos Brys (brys@fce.unam.edu.ar)
+                                Mario Augusto Mendez Secaira <mendezsecaira@galileo.edu>
+
+Thaï translation :              Sutas Jitchuen (dtsjc@mucc.mahidol.ac.th)
+                                Prachid Tinnabutr (prachid@prachid.com, prachid007@gmail.com)
+
+Turkish translation :           Cuneyt Birkok (cbirkok@insanbilimleri.com)
+
+Claroline Documentation :       Andrew Lynn (alynn@strathclyde.ac.be)
+                                Emmanuel Pecquet (emmanuel.pecquet@wanadoo.fr)
+                                Nikolai Stiehl (nikolai.stiehl@web.de)
+                                Isabel Deprez (isabel.deprez@rug.ac.be)
+                                Philippe Danckaert
+                                Slawomir Gurdala
+                                Paul Muraille
+                                Dalton Piegas Simoni
+                                Maria Jose Rodriges Malmierca
+
+------------------------------------------------------------------------------
+                                SECURITY
+------------------------------------------------------------------------------
+
+Deepfear, Netcraft and Siegfried from the Zone-H Team
+
+The Digital Security Research Group [DSecRG] <http://www.dsec.ru>
+
+Fernando Munoz and dimkrayan on the Claroline.net forum
+
+Gerendi Sandor Attila <http://gsasec.blogspot.com/>
+
+=========================================================================
+    Europe, Belgium, Louvain-la-Neuve
+    $Date: 2012-07-24 08:04:40 +0200 (mar 24 jui 2012) $
+================================== END ===================================

@@ -1,0 +1,28 @@
+<module>
+  <label>CLCHAT</label>
+  <name>Chat</name>
+  <version>1.0</version>
+  <license>GPL</license>
+  <type>tool</type>
+  <entry>index.php</entry>
+  <icon>icon.png</icon>
+  
+  <context>course</context>
+  <context>group</context>
+
+  <description>
+    
+  </description>
+
+  <author>
+     <name>Sebastien Piraux</name>
+     <email>seb@claroline.net</email>
+     <web>http://www.claroline.net</web>
+  </author>
+
+  <requirements>
+    <claroline>
+      <version>1.9</version>
+    </claroline>
+ </requirements>
+</module>

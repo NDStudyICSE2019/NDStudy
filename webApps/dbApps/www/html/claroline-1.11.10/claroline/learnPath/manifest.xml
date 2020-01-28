@@ -1,0 +1,33 @@
+<module>
+  <label>CLLNP</label>
+  <name>Learning path</name>
+  <version>1.0</version>
+  <license>GPL</license>
+  <icon>icon.png</icon>
+  <type>tool</type>
+  <web>http://www.claroline.net/wiki/CLLNP/</web>
+  <entry>learningPathList.php</entry>
+  <description>
+  <![CDATA[
+     This tool is an original tool of claroline.
+     It's able to ordering course step.
+     Each step can be a text, a document or a qwizz.
+     This tool can read ane write SCORM
+  ]]>
+  </description>
+
+  <author>
+     <name>Claro team</name>
+     <email>devteam@claroline.net</email>
+     <web>http://www.claroline.net/</web>
+  </author>
+
+  <requirements>
+    <claroline>
+      <version>1.10</version>
+      <configuration>
+      </configuration>
+    </claroline>
+ </requirements>
+
+</module>

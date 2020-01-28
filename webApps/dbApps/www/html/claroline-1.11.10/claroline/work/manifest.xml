@@ -1,0 +1,30 @@
+<module>
+  <label>CLWRK</label>
+  <name>Assignments</name>
+  <version>1.8</version>
+  <license>GPL</license>
+  <icon>icon.png</icon>
+  <type>tool</type>
+  <entry>work.php</entry>
+  <description>
+  <![CDATA[
+     This  tool  is an  original tool of claroline
+     It's  able to record and show an event list.
+  ]]>
+  </description>
+
+  <author>
+     <name>Claro team</name>
+     <email>devteam@claroline.net</email>
+     <web>http://www.claroline.net/</web>
+  </author>
+
+  <requirements>
+    <claroline>
+      <version>1.10</version>
+      <configuration>
+      </configuration>
+    </claroline>
+ </requirements>
+
+</module>

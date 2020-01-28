@@ -1,0 +1,25 @@
+/**
+ $Id: coursehomepage.css 13400 2011-08-09 14:49:32Z abourguignon $
+ **/
+
+td.coursePortletList .claroDialogBox { margin-top:0; }
+
+dl#portletAnnouncements dd, 
+dl#portletAnnouncements dt, 
+dl#portletAbout dd, 
+dl#portletAbout dt 
+{
+    margin-left: 0;
+}
+dl#portletAnnouncements dd, 
+dl#portletAbout dd
+{
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #EDF1E3;
+}
+dl#portletAnnouncements dd:last-child, 
+dl#portletAbout dd:last-child
+{
+    border-bottom: 0;
+}
