@@ -12,7 +12,7 @@ __New Additions for the submission__
 Usage :
 
 	build :	mvn clean package -DskipTests
-	run : comparator/pythonCode/runCrawljaxBatch.py
+	run : ../comparator/pythonCode/runCrawljaxBatch.py
 
 Crawljax 
 ========
