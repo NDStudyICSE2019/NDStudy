@@ -12,8 +12,10 @@ Contains two web apps "Addressbook" and "Claroline"
 
 2. <h3>Claroline</h3>
 
-        URL:http://localhost/claroline-1.11.10/
+        URL:http://localhost/claroline-1.11.10/claroline/install
 
+        Original experiments were done after installing claroline and creating users with following credentials and addition of a course "SE123" under category "science"  
+        
         credentials:
           admin
             username : admin
