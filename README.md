@@ -2,8 +2,7 @@
 
 Virtual Machine set up with the tools
 
-    Download from https://doi.org/10.5281/zenodo.3629093
-    (Old version : https://doi.org/10.5281/zenodo.3387760)
+    Download from : https://zenodo.org/record/3387759
     password for VM : ICSE2019
 
 Tools Provided
