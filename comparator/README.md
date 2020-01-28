@@ -19,3 +19,8 @@
                 pythonCode/analyzeCrawl.py can get statistics for the crawl after analysis
           
          
+2. PythonCode
+        
+        1. Uses Crawljax for running crawls
+        2. Uses comparator java project for analysis
+        
