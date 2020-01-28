@@ -20,6 +20,6 @@ services:
     command: --init-file /data/application/init.sql
     volumes:
       - ./mysql/init.sql:/data/application/init.sql
-      - ./data/mysql}:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
