@@ -1,4 +1,5 @@
-start by running "docker-compose up" 
+build Dockerfile inside www/ folder by running "docker build . -t test"
+Then from parent folder start by running "docker-compose up" 
 
 Contains two web apps "Addressbook" and "Claroline"
 
