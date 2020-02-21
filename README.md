@@ -17,7 +17,7 @@ DataSets Provided
     DS.db (contains 493K state-pairs and 1000 labelled pairs) 
     SS.db (contains 97.5K labelled state-pairs for 9 subjects)
     TS.db (same as DS but 500 labelled pairs (disjoint from 1000 in DS) to validate
-    More info on usage [here](./DataSetUsage.md) 
+    More info on usage [here](https://github.com/NDStudyICSE2019/NDStudy/blob/master/DataSetUsage.md) 
     
 Complete set of Crawl Models 
     
@@ -25,7 +25,7 @@ Complete set of Crawl Models
     Crawls from web used to build DS.db (DS_Crawls)
     GroundTruths for Subjects (GroundTruthModels) - manually labelled
     Crawls used for RQ3 (RQ3Crawls) - manually labelled
-    More info on models in [here](./GoldStandards/readme.md)
+    More info on models in [here](https://github.com/NDStudyICSE2019/NDStudy/blob/master/GoldStandards/readme.md)
     
 Sample Ground Truth Model, Crawl Models Provided for 
 
