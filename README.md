@@ -4,6 +4,8 @@ Virtual Machine set up with the tools
 
     Download from : https://zenodo.org/record/3387759
     password for VM : ICSE2019
+    The vm is missing 3 python dependencies in version 2. Run the shell script provided installDeps.sh to fix the issue
+    
 
 Tools Provided
 
@@ -84,13 +86,13 @@ Getting Results
     For getting distance between states in a crawl model (has to be produced by crawljax latest version):
  
         build the comparator project
-        set the location of the crawl to use in  comparator/runBatch_GSComp.sh
-        run the shell script : ./comparator/runBatch_GSComp.sh
+        set the location of the crawl to use in  comparator/batchRun_GSComp.sh (variable crawledFolder on the first line of the script)
+        run the shell script : ./comparator/batchRun_GSComp.sh
 
     
     To create a ground truth Model 
     
-        set the location of crawl you want to use as ground truth in (htmlCreator.py) and run :
+        set the location of crawl (on line 375, variable CRAWL_PATH) you want to use as ground truth in (htmlCreator.py) and run :
         python htmlCreator.py
     
         After labelling the pairs by open html file in crawl_folder/gs/gs.html, save the gsResults.json in the same folder.
@@ -105,8 +107,8 @@ Getting Results
 
     
     For running crawls :
-        set the location of crawljax/examples/target/example_xxx_jar_with_dependencies.jar in 
-            comparator/pythonCode/runCrawljaxBatch.py (BASE_COMMAND)
+    (Skip for VM)     set the location of crawljax/examples/target/example_xxx_jar_with_dependencies.jar in 
+            comparator/pythonCode/runCrawljaxBatch.py (BASE_COMMAND) 
      
         python comparator/runCrawljaxBatch.py
 
@@ -116,6 +118,11 @@ Getting Results
      
 
      For RQ2 run : 
+        * Requires Databases provided in (https://doi.org/10.5281/zenodo.3376730) 
+        to be placed in (comparator/src/main/resources/GoldStandards/)
+        The thresholds to be used are set in pythonCode/globalNames.py THRESHOLD_SETS)
+        You will need to uncomment HUMAN_QUART3, OPTIMAL_CLASSIFICATION_CLONE and OPTIMAL_CLASSIFICATION_ND
+        
         python3 comparator/pythonCode/RQ1.py
      
      For RQ3:
@@ -125,7 +132,7 @@ Getting Results
             for 30 minute crawls: analyzeBestCrawls()
          }
          
-         - Needs to be twice to generate classification.html for a crawl to be analyzed.
+         - Needs to be run twice to generate classification.html for a crawl to be analyzed.
          - save the classification json in "saveJsons" folder by opening classification.html.
          - run analyzeCrawl.py again to obtain the statistics for the crawl.
  
