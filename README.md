@@ -4,7 +4,6 @@ Virtual Machine set up with the tools
 
     Download from : https://zenodo.org/record/3387759
     password for VM : ICSE2019
-    The vm is missing 3 python dependencies in version 2. Run the shell script provided installDeps.sh to fix the issue
     
 
 Tools Provided
@@ -93,7 +92,7 @@ Getting Results
     To create a ground truth Model 
     
         set the location of crawl (on line 375, variable CRAWL_PATH) you want to use as ground truth in (htmlCreator.py) and run :
-        python htmlCreator.py
+        python3 htmlCreator.py
     
         After labelling the pairs by open html file in crawl_folder/gs/gs.html, save the gsResults.json in the same folder.
     
@@ -110,7 +109,7 @@ Getting Results
     (Skip for VM)     set the location of crawljax/examples/target/example_xxx_jar_with_dependencies.jar in 
             comparator/pythonCode/runCrawljaxBatch.py (BASE_COMMAND) 
      
-        python comparator/runCrawljaxBatch.py
+        python3 comparator/runCrawljaxBatch.py
 
             for 5 minute crawls: runAllAlgos()
             for 30 minute crawls: runBestCrawls()
@@ -126,7 +125,7 @@ Getting Results
         python3 comparator/pythonCode/RQ1.py
      
      For RQ3:
-        python comparator/analyzeCrawl.py
+        python3 comparator/analyzeCrawl.py
         {
             for 5 minute crawls: analyzeAllCrawls()
             for 30 minute crawls: analyzeBestCrawls()
