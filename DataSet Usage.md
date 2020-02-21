@@ -3,6 +3,7 @@ SS.db (contains 97.5K labelled state-pairs for 9 subjects)
 TS.db (same as DS but 500 labelled pairs (disjoint from 1000 in DS) for validation 
 
   DS.db:
+        
         Contains all state-pairs from 1031 web apps randomly selected from alexa top sites
         
         contains 3 tables 
@@ -14,11 +15,13 @@ TS.db (same as DS but 500 labelled pairs (disjoint from 1000 in DS) for validati
         states contains the characteristics for each state in all the crawls.
         
   SS.db:
+         
+         Only difference from DS.db (nearduplicates table contains tags for each row). Tags are used to differentiate between different categories of near-duplicates 
          contains 3 tables 
          apps, nearduplicates, states
          
          apps contains names and characteristics for ground truth crawls of the nine subject apps used in the study
-         nearduplicates contains the distance values and manual classification for each of the 97.5K state-pairs in ground truth models 
+         nearduplicates contains the distance values and manual classification for each of the 97.5K state-pairs in ground truth models.
          states contains the characteristics for each state in all ground truth models.
          
   TS.db
